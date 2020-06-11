@@ -1,0 +1,8 @@
+stty: standard input: Inappropriate ioctl for device
+Warning: jsrun wrapper does not handle unexpected option '--print_placement=1', may prevent LLNL-specific error detection
+         If option '--print_placement=1' valid,  please tell John Gyllenhaal (gyllen@llnl.gov, 4-5485)
+ 
+Warning! : Core id 20085640 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 353 does not exist on this architecture! 
+CPU Affinity is undefined 

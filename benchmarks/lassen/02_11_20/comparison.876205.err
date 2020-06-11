@@ -1,0 +1,13 @@
+stty: standard input: Inappropriate ioctl for device
+[lassen8:12288] *** An error occurred in MPI_Send
+[lassen8:12288] *** reported by process [2154496201,0]
+[lassen8:12288] *** on communicator MPI_COMM_WORLD
+[lassen8:12288] *** MPI_ERR_BUFFER: invalid buffer pointer
+[lassen8:12288] *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+[lassen8:12288] ***    and potentially your MPI job)
+[lassen9:179951] *** An error occurred in MPI_Recv
+[lassen9:179951] *** reported by process [2154496201,1]
+[lassen9:179951] *** on communicator MPI_COMM_WORLD
+[lassen9:179951] *** MPI_ERR_BUFFER: invalid buffer pointer
+[lassen9:179951] *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+[lassen9:179951] ***    and potentially your MPI job)

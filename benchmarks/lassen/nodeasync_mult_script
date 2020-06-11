@@ -1,0 +1,20 @@
+#!/bin/bash
+#BSUB -J node_async_mult
+#BSUB -e node_async_mult.%J.err
+#BSUB -o node_async_mult.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:35
+
+module load hwloc
+module load nsight-systems
+
+cd /g/g14/bienz1/nodecomm
+
+#export MP_USE_BULK_XFER=yes
+#export MP_BULK_MIN_MSG_SIZE=1000000
+
+
+jsrun -a36 -c36 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_node_async_multiple
+
+

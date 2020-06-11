@@ -1,0 +1,39 @@
+stty: standard input: Inappropriate ioctl for device
+Warning: jsrun wrapper does not handle unexpected option '--print_placement=1', may prevent LLNL-specific error detection
+         If option '--print_placement=1' valid,  please tell John Gyllenhaal (gyllen@llnl.gov, 4-5485)
+ 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 65536 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 32768 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 1024 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2048 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 4096 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 131072 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 512 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 16384 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 256 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 8192 does not exist on this architecture! 
+CPU Affinity is undefined 
+Warning! : Core id 2213312 does not exist on this architecture! 
+CPU Affinity is undefined 
+User defined signal 2

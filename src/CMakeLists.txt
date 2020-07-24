@@ -1,15 +1,17 @@
 include_directories(.)
 
+find_package(CUDAToolkit REQUIRED)
+
 add_subdirectory(collective)
 add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
 
-add_library(heterobench STATIC 
+add_library(heterobench 
     ${collective_SOURCES} ${collective_HEADERS}
     ${memcpy_SOURCES} ${memcpy_HEADERS}
     ${ping_pong_SOURCES} ${ping_pong_HEADERS})
 
-target_link_libraries(heterobench ${EXTERNAL_LIBS})
+target_link_libraries(heterobench ${MPI_LIBRARIES} CUDA::cudart ${EXTERNAL_LIBS})
 
 install(TARGETS heterobench DESTINATION "lib")
 install(FILES heterobench.hpp DESTINATION "include/HeteroBench")

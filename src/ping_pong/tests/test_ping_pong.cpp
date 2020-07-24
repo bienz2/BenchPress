@@ -22,13 +22,13 @@ TEST(MemcpyTest, TestsInMemcpy)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-    profile_ping_pong(2, 10);
+//    profile_ping_pong(2, 10);
 
-//    profile_ping_pong_gpu();
+    profile_ping_pong_gpu(2, 10);
 
-//    profile_max_rate();
+//    profile_max_rate(false, 2, 10);
 
-//    profile_max_rate_gpu();
+//    profile_max_rate_gpu(false, 2, 10);
 
 
 } // end of  TEST(ParStrengthTest, TestsInTests) //

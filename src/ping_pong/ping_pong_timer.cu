@@ -12,6 +12,7 @@ double time_ping_pong(bool active, int rank0, int rank1, float* data,
     MPI_Status status;
 
     // Warm Up
+    
     MPI_Barrier(MPI_COMM_WORLD);
     if (active)
     {

@@ -4,7 +4,6 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-find_package(CUDAToolkit REQUIRED)
 message(STATUS "${CMAKE_CXX_COMPILER}")
 
 include(options)

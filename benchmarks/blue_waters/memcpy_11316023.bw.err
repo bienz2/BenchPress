@@ -1,0 +1,23 @@
+Rank 3 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+Rank 2 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+Rank 1 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+Rank 4 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+Rank 5 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+Rank 6 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+_pmiu_daemon(SIGCHLD): [NID 02385] [c4-0c0s7n3] [Mon Jun 22 10:37:42 2020] PE RANK 3 exit signal Aborted
+Rank 7 [Mon Jun 22 10:37:42 2020] [c4-0c0s7n3] Fatal error in PMPI_Reduce: Invalid buffer pointer, error stack:
+PMPI_Reduce(1394): MPI_Reduce(sbuf=MPI_IN_PLACE, rbuf=0x7fffffff57c8, count=1, MPI_DOUBLE, MPI_MAX, root=0, MPI_COMM_WORLD) failed
+PMPI_Reduce(1325): sendbuf cannot be MPI_IN_PLACE
+[NID 02385] 2020-06-22 10:37:42 Apid 91616584: initiated application termination

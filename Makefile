@@ -1,55 +1,43 @@
-all : time_memcpy time_memcpy_peer time_ping_pong profile_ping_pong time_inj_bw time_node_ping_pong time_allreduce time_memcpy_all time_memcpy_all_node time_ping_pong_multiple time_comparison time_memcpy_async time_node_async time_memcpy_multiple time_node_async_multiple stream
+#MPICXX=mpicxx
+MPICXX=CC
+#MPIFLAGS="-arch=sm_70"
+
+all : time_memcpy time_memcpy_ppn time_ping_pong profile_ping_pong time_inj_bw time_node_ping_pong time_allreduce time_ping_pong_multiple time_comparison stream
 
 
 time_memcpy : time_memcpy.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy.cu -o time_memcpy
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_memcpy.cu -o time_memcpy
 
-time_memcpy_async : time_memcpy_async.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy_async.cu -o time_memcpy_async
+time_memcpy_ppn : time_memcpy_ppn.cu
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_memcpy_ppn.cu -o time_memcpy_ppn
 
-time_memcpy_peer : time_memcpy_peer.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy_peer.cu -o time_memcpy_peer
+time_memcpy_ppn_partial : time_memcpy_ppn_partial.cu
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_memcpy_ppn_partial.cu -o time_memcpy_ppn_partial
 
 time_ping_pong : time_ping_pong.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_ping_pong.cu -o time_ping_pong
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_ping_pong.cu -o time_ping_pong
 
 time_ping_pong_multiple : time_ping_pong_multiple.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_ping_pong_multiple.cu -o time_ping_pong_multiple
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_ping_pong_multiple.cu -o time_ping_pong_multiple
 
 time_comparison : time_comparison.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_comparison.cu -o time_comparison
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_comparison.cu -o time_comparison
 
 profile_ping_pong : profile_ping_pong.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx profile_ping_pong.cu -o profile_ping_pong
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} profile_ping_pong.cu -o profile_ping_pong
 
 time_inj_bw : time_inj_bw.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_inj_bw.cu -o time_inj_bw
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_inj_bw.cu -o time_inj_bw
 
 time_node_ping_pong : time_node_ping_pong.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_node_ping_pong.cu -o time_node_ping_pong
-
-time_node_async : time_node_async.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_node_async.cu -o time_node_async
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_node_ping_pong.cu -o time_node_ping_pong
 
 time_allreduce : time_allreduce.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_allreduce.cu -o time_allreduce
-
-time_memcpy_all : time_memcpy_all.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy_all.cu -o time_memcpy_all
-
-time_memcpy_multiple : time_memcpy_multiple.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy_multiple.cu -o time_memcpy_multiple
-
-time_memcpy_all_node : time_memcpy_all_node.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_memcpy_all_node.cu -o time_memcpy_all_node
-
-time_node_async_multiple : time_node_async_multiple.cu
-	nvcc -arch=sm_70 -ccbin=mpicxx time_node_async_multiple.cu -o time_node_async_multiple
+	nvcc ${MPIFLAGS} -ccbin=${MPICXX} time_allreduce.cu -o time_allreduce
 
 stream : stream.c
 	nvcc -o stream stream.c
 
 clean :
-	rm time_memcpy time_memcpy_peer time_ping_pong profile_ping_pong time_inj_bw time_node_ping_pong time_ping_pong_multiple time_comparison time_memcpy_async time_node_async time_memcpy_multiple time_node_async_multiple time_allreduce time_memcpy_all time_memcpy_all_node stream
-
+	rm time_memcpy time_memcpy_ppn time_memcpy_ppn_partial
 

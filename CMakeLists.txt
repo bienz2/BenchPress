@@ -1,0 +1,60 @@
+cmake_minimum_required(VERSION 3.17 FATAL_ERROR)
+project(heterobench LANGUAGES CUDA CXX VERSION 0.1.0)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+find_package(MPI REQUIRED)
+include_directories(${MPI_INCLUDE_PATH})
+find_package(CUDAToolkit REQUIRED)
+message(STATUS "${CMAKE_CXX_COMPILER}")
+
+include(options)
+include(testing)
+include(source)
+
+set(MPIRUN "mpirun" CACHE STRING "MPIRUN command")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CUDA_FLAGS "-ccbin=${CUDA_HOST_COMPILER}")
+
+
+#/////////////////////////// star information of google test ///////////////////////////////
+set(GOOGLETEST_ROOT external/googletest CACHE STRING "Google Test source root")
+#MESSAGE( STATUS "GOOGLETEST_ROOT: "    ${GOOGLETEST_ROOT} )
+
+include_directories(
+    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}
+    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/include
+    )
+
+#MESSAGE( STATUS "PROJECT_SOURCE_DIR: "    ${PROJECT_SOURCE_DIR} )
+
+set(GOOGLETEST_SOURCES
+    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest-all.cc
+    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest_main.cc
+    )
+
+
+foreach(_source ${GOOGLETEST_SOURCES})
+    set_source_files_properties(${_source} PROPERTIES GENERATED 1)
+    #MESSAGE( STATUS "_source: "                 ${_source} )
+endforeach()
+
+
+add_library(googletest STATIC ${GOOGLETEST_SOURCES})
+#///////////////////////////// end information of google test //////////////////////////////
+
+add_subdirectory(src)
+
+target_compile_options(heterobench PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>: # Flags for CUDA Objects
+    -lineinfo
+    -Xcompiler -Wall
+    >
+    $<$<COMPILE_LANGUAGE:CXX>: # Flags for C++ Objects
+    -fno-omit-frame-pointer
+    >
+    )
+
+set_property(TARGET heterobench PROPERTY CUDA_SEPARABLE_COMPILATION ON)
+
+

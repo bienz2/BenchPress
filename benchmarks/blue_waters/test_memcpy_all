@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=16:xk
+#PBS -l walltime=00:10:00
+#PBS -A bbcg
+#PBS -N memcpy_all
+#PBS -e memcpy_all_$PBS_JOBID.err  
+#PBS -o memcpy_all_$PBS_JOBID.out  
+
+module load cudatoolkit
+
+# Multiple Procs Per GPU
+export CRAY_CUDA_MPS=1
+
+# Cuda-Aware MPI
+export MPICH_RDMA_ENABLED_CUDA=1
+
+# Pipeline GPUtoGPU transfers 
+# Up to set number of messages
+# Try 4, 8, 16
+export MPICH_RDMA_ENABLED_CUDA=4
+
+
+
+cd /u/sciteam/bienz/HeteroBench
+aprun -n 8 -d 2 ./time_memcpy_all

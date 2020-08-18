@@ -5,7 +5,7 @@
 // while EXPECT_* variants continue with the run.
 
 #include "gtest/gtest.h"
-#include "ping_pong/ping_pong_profiler.h"
+#include "collective/collective_profiler.h"
 
 int main(int argc, char** argv)
 {
@@ -22,17 +22,10 @@ TEST(CollectiveTest, TestsInCollective)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-    profile_ping_pong(2, 10);
-
-    profile_ping_pong_gpu(2, 10);
-
-    profile_max_rate(false, 2, 10);
-
-    profile_max_rate_gpu(false, 2, 10);
-
-    profile_ping_pong_mult(2, 10);
-
-    profile_ping_pong_mult_gpu(2, 10);
+    allreduce_profile_cuda_aware(2);
+    allreduce_profile_3step(2);
+    allreduce_profile_3step_extra_msg(2);
+    allreduce_profile_3step_dup_devptr(2);
 
 
 } // end of  TEST(ParStrengthTest, TestsInTests) //

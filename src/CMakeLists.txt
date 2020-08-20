@@ -6,7 +6,7 @@ add_subdirectory(collective)
 add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
 
-add_library(heterobench 
+add_library(heterobench heterobench.hpp 
     ${collective_SOURCES} ${collective_HEADERS}
     ${memcpy_SOURCES} ${memcpy_HEADERS}
     ${ping_pong_SOURCES} ${ping_pong_HEADERS})

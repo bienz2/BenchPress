@@ -63,10 +63,15 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     MPI_Comm_free(&node_comm);
     int procs_per_gpu = node_size / num_gpus;
     int gpu = node_rank / procs_per_gpu;
+    int total_num_gpus = num_procs / procs_per_gpu; 
+    if (total_num_gpus == 1) 
+    {
+        printf("Only one GPU...\n");
+        return;
+    }
 
     cudaSetDevice(gpu);
     cudaMalloc((void**)&data, max_bytes);
-
 
     if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
@@ -112,12 +117,22 @@ void profile_max_rate(bool split_data, int max_i, int n_tests)
     MPI_Comm_rank(node_comm, &node_rank);
     MPI_Comm_size(node_comm, &ppn);
     MPI_Comm_free(&node_comm);
+    int num_nodes = num_procs / ppn;
+    int node = rank / ppn;
+
+    if (num_nodes == 1)
+    {
+        if (rank == 0) printf("Only one node...\n");
+        return;
+    }
 
     cudaMallocHost((void**)&data, max_bytes);
 
     int master, partner;
     if ((rank / ppn) % 2 == 0)
     {
+        if (node == num_nodes-1)
+            node_rank = ppn;
         master = rank;
         partner = rank + ppn;
     }
@@ -180,6 +195,15 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
 
     int procs_per_gpu = ppn / num_gpus;
     int gpu = num_gpus;
+    int num_nodes = num_procs / ppn;
+
+    if (num_nodes == 1)
+    {
+        if (rank == 0) printf("Only one node...\n");
+        return;
+    }
+
+    int node = rank / ppn;
     if (node_rank % procs_per_gpu == 0)
     {
         gpu = node_rank / procs_per_gpu;
@@ -192,6 +216,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     {
         master = rank;
         partner = rank + ppn;
+        if (node == num_nodes-1) partner = master;
     }
     else
     {
@@ -212,7 +237,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
         {
             if (split_data) msg_size = size / np;
             if (msg_size < 1) break;
-            active = gpu < np;
+            active = gpu < np && partner != master;
             time = time_ping_pong(active, master, partner, data, msg_size, nt);
             MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
             if (rank == 0) printf("%e\t", max_time);
@@ -247,6 +272,13 @@ void profile_ping_pong_mult(int max_i, int n_tests)
     double time, max_time;
     bool master = false;
     int max_n = num_procs - ppn;
+
+    int num_nodes = num_procs / ppn;
+    if (num_nodes == 1)
+    {
+        if (rank == 0) printf("Only one node...\n");
+        return;
+    }
 
     // Rank 0 is master
     if (rank == 0) 
@@ -331,6 +363,12 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
     int num_nodes = num_procs / ppn;
     int gpu = num_gpus;
     master = false;
+
+    if (num_nodes == 1)
+    {
+        if (rank == 0) printf("Only one node...\n");
+        return;
+    }
 
     // Rank 0 is master rank for GPU 0
     int max_n_msgs = num_gpus * (num_nodes-1);

@@ -4,6 +4,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
+set(heterobench_INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 message(STATUS "${CMAKE_CXX_COMPILER}")
 
 include(options)
@@ -56,4 +57,6 @@ target_compile_options(heterobench PRIVATE
 
 set_property(TARGET heterobench PROPERTY CUDA_SEPARABLE_COMPILATION ON)
 
-
+if (BUILD_EXAMPLES)
+      add_subdirectory(examples)
+endif()

@@ -1,0 +1,13 @@
+#!/bin/bash
+#BSUB -J memcpy_async
+#BSUB -e memcpy_async.%J.err
+#BSUB -o memcpy_async.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:05
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+jsrun -a36 -c36 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy_async
+

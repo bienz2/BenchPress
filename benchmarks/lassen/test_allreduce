@@ -1,0 +1,18 @@
+#!/bin/bash
+#BSUB -J all_reduce
+#BSUB -e all_reduce.%J.err
+#BSUB -o all_reduce.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load hwloc
+
+cd /g/g14/bienz1/HeteroBench/build/examples
+
+#export MP_USE_BULK_XFER=yes
+#export MP_BULK_MIN_MSG_SIZE=1000000
+
+jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective
+
+

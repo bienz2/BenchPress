@@ -1,0 +1,13 @@
+#!/bin/bash
+#BSUB -J memcpy_mult
+#BSUB -e memcpy_mult.%J.err
+#BSUB -o memcpy_mult.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+jsrun -a36 -c36 -g4 -r1 -n1 -M "-gpu -mca btl_smcuda_eager_limit 0" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy_multiple
+

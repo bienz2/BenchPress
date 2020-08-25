@@ -1,0 +1,14 @@
+#!/bin/bash
+#BSUB -J info
+#BSUB -e info.%J.err
+#BSUB -o info.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:05
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+
+jsrun -a1 -c1 -g1 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ompi_info --all --level 9 
+

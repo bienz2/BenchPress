@@ -78,7 +78,8 @@ double time_allreduce_3step_msg(int size, float* cpu_data, float* gpu_data,
     double t0, tfinal;
     int bytes = size * sizeof(float);
     int msg_size = size / ppg;
-    bool master = node_rank % ppg == 0;
+    int gpu_rank = node_rank % ppg;
+    bool master = gpu_rank == 0;
     int ping_tag = 1234;
     int pong_tag = 4321;
     MPI_Status status;
@@ -102,7 +103,7 @@ double time_allreduce_3step_msg(int size, float* cpu_data, float* gpu_data,
         }
         else
         {
-            MPI_Recv(cpu_data, msg_size, MPI_FLOAT, rank - node_rank, ping_tag, MPI_COMM_WORLD, &status);
+            MPI_Recv(cpu_data, msg_size, MPI_FLOAT, rank - gpu_rank, ping_tag, MPI_COMM_WORLD, &status);
         }
 
         MPI_Allreduce(MPI_IN_PLACE, cpu_data, msg_size, MPI_FLOAT, MPI_MAX, group_comm);
@@ -119,7 +120,7 @@ double time_allreduce_3step_msg(int size, float* cpu_data, float* gpu_data,
         }
         else
         {
-           MPI_Send(cpu_data, msg_size, MPI_FLOAT, rank - node_rank, pong_tag,
+           MPI_Send(cpu_data, msg_size, MPI_FLOAT, rank - gpu_rank, pong_tag,
                   MPI_COMM_WORLD); 
         }
     }
@@ -144,7 +145,7 @@ double time_allreduce_3step_msg(int size, float* cpu_data, float* gpu_data,
         }
         else
         {
-            MPI_Recv(cpu_data, msg_size, MPI_FLOAT, rank - node_rank, ping_tag, MPI_COMM_WORLD, &status);
+            MPI_Recv(cpu_data, msg_size, MPI_FLOAT, rank - gpu_rank, ping_tag, MPI_COMM_WORLD, &status);
         }
 
         MPI_Allreduce(MPI_IN_PLACE, cpu_data, msg_size, MPI_FLOAT, MPI_MAX, group_comm);
@@ -161,7 +162,7 @@ double time_allreduce_3step_msg(int size, float* cpu_data, float* gpu_data,
         }
         else
         {
-           MPI_Send(cpu_data, msg_size, MPI_FLOAT, rank - node_rank, pong_tag,
+           MPI_Send(cpu_data, msg_size, MPI_FLOAT, rank - gpu_rank, pong_tag,
                   MPI_COMM_WORLD); 
         }
     }

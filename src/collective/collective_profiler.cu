@@ -168,6 +168,7 @@ void allreduce_profile_3step_extra_msg(int max_i)
     // Time 3-Step, Extra Msg
     if (rank == 0) printf("3-Step Allreduce, Extra Message:\n");
     n_tests = 1000;
+
     for (int i = 0; i < max_i; i++)
     {
         if (i > 14) n_tests = 100;

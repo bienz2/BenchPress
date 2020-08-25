@@ -7,6 +7,14 @@ void profile_ping_pong(int max_i, int n_tests)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
+    MPI_Comm node_comm;
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank,
+            MPI_INFO_NULL, &node_comm);
+    int node_size, node_rank;
+    MPI_Comm_rank(node_comm, &node_rank);
+    MPI_Comm_size(node_comm, &node_size);
+    MPI_Comm_free(&node_comm);
+
     float* data;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
     int nt;
@@ -16,7 +24,7 @@ void profile_ping_pong(int max_i, int n_tests)
     cudaMallocHost((void**)&data, max_bytes);
 
     if (rank == 0) printf("Profiling Standard CPU Ping-Pongs:\n");
-    for (int rank0 = 0; rank0 < num_procs; rank0++)
+    for (int rank0 = 0; rank0 < node_size; rank0++)
     {
         for (int rank1 = rank0+1; rank1 < num_procs; rank1++)
         {
@@ -76,7 +84,7 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
     {
-        for (int rank1 = node_size; rank1 < num_procs; rank1 += procs_per_gpu)
+        for (int rank1 = node_size; rank1 < 2*node_size; rank1 += procs_per_gpu)
         {
             nt = n_tests;
             active = (rank == rank0 || rank == rank1);
@@ -138,8 +146,8 @@ void profile_max_rate(bool split_data, int max_i, int n_tests)
     }
     else
     {
-        partner = rank;
         master = rank - ppn;
+        partner = rank;
     }
 
     nt = n_tests;
@@ -247,7 +255,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     if (rank == 0) printf("\n\n");
 
     if (node_rank % procs_per_gpu == 0)
-        cudaFreeHost(data);
+        cudaFree(data);
 }
 
 

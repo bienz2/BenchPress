@@ -12,6 +12,7 @@ add_library(heterobench heterobench.hpp
     ${ping_pong_SOURCES} ${ping_pong_HEADERS})
 
 target_link_libraries(heterobench ${MPI_LIBRARIES} CUDA::cudart ${EXTERNAL_LIBS})
+#set_property(TARGET heterobench PROPERTY CUDA_ARCHITECTURES 70)
 
 install(TARGETS heterobench DESTINATION "lib")
 install(FILES heterobench.hpp DESTINATION "include/HeteroBench")

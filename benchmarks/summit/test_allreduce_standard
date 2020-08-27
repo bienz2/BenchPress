@@ -1,0 +1,17 @@
+#!/bin/bash
+#BSUB -J all_reduce_std
+#BSUB -e all_reduce_std.%J.err
+#BSUB -o all_reduce_std.%J.out
+#BSUB -nnodes 2
+#BSUB -W 00:15
+#BSUB -P CSC422
+
+module load gcc
+module load cmake/3.18.1
+module load cuda
+
+cd /ccs/home/bienz/HeteroBench/build/examples
+
+jsrun -a6 -c6 -g6 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective_standard
+
+

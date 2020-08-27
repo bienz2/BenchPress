@@ -1,0 +1,87 @@
+-------------------------------------------------------------
+STREAM version $Revision: 5.10 $
+-------------------------------------------------------------
+This system uses 8 bytes per array element.
+-------------------------------------------------------------
+Array size = 10000000 (elements), Offset = 0 (elements)
+Memory per array = 76.3 MiB (= 0.1 GiB).
+Total memory required = 228.9 MiB (= 0.2 GiB).
+Each kernel will be executed 10 times.
+ The *best* time for each kernel (excluding the first iteration)
+ will be used to compute the reported bandwidth.
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 1 microseconds.
+Each test below will take on the order of 86637 microseconds.
+   (= 86637 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:            1836.0     0.096717     0.087144     0.104556
+Scale:           2046.0     0.083455     0.078200     0.087447
+Add:             2786.3     0.090368     0.086137     0.096783
+Triad:           2951.1     0.084545     0.081327     0.088252
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1142864: <streaminfo> in cluster <lassen> Done
+
+Job <streaminfo> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Tue May 26 11:15:06 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue May 26 11:47:14 2020
+                            <40*lassen18>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue May 26 11:47:14 2020
+Terminated at Tue May 26 11:47:24 2020
+Results reported at Tue May 26 11:47:24 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J streaminfo
+#BSUB -e stream.%J.err
+#BSUB -o stream.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+jsrun -a1 -c1 -g0 -r1 -m1 ./stream
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.32 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   9 sec.
+    Turnaround time :                            1938 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <stream.1142864.err> for stderr output of this job.
+

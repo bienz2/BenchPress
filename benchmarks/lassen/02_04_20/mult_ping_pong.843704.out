@@ -1,0 +1,133 @@
+Host 0 [lassen9] ranks 0, 2, 4, 6
+Host 1 [lassen10] ranks 1, 3, 5, 7
+
+ host | 0    1
+======|===========
+    0 : pami pami
+    1 : pami pami
+
+Connection summary:
+  on-host:  all connections are pami
+  off-host: all connections are pami
+
+GPU on 0 and GPU on 1:
+1:	0.00610	
+2:	0.00606	0.00684	
+4:	0.00600	0.00679	0.00883	
+8:	0.00601	0.00673	0.00892	0.01243	
+16:	0.00605	0.00680	0.00895	0.01247	0.02914	
+32:	0.00609	0.00683	0.00892	0.01249	0.01969	0.03369	
+64:	0.00614	0.00690	0.00897	0.01248	0.01966	0.03404	0.06162	
+128:	0.00622	0.00695	0.00912	0.01260	0.01969	0.03419	0.06182	0.11857	
+256:	0.00634	0.00701	0.00915	0.01265	0.01975	0.03430	0.06176	0.11850	0.23114	
+512:	0.00648	0.00718	0.00902	0.01286	0.01982	0.03448	0.06199	0.11879	0.23149	0.45806	
+1024:	0.00706	0.00757	0.00915	0.01284	0.01989	0.03427	0.06206	0.11898	0.23139	0.45777	0.92585	
+2048:	0.00759	0.00815	0.01015	0.01306	0.04273	0.04061	0.06659	0.11912	0.23256	0.46041	0.92553	2.26764	
+4096:	0.00852	0.00868	0.01048	0.01463	0.02026	0.03424	0.06237	0.11962	0.23349	0.46318	0.93252	2.19564	5.29189	
+8192:	0.01013	0.01046	0.01097	0.01527	0.02409	0.03494	0.06267	0.12032	0.23628	0.46697	0.95469	2.23266	5.30533	11.99305	
+
+QUEUE: GPU on 0 and GPU on 1:
+1:	0.00601	
+2:	0.00664	0.00676	
+4:	0.00605	0.00680	0.00895	
+8:	0.00607	0.00683	0.00896	0.01264	
+16:	0.00606	0.00684	0.00899	0.01275	0.02087	
+32:	0.00610	0.00688	0.00908	0.01294	0.02100	0.03743	
+64:	0.00617	0.00690	0.00913	0.01279	0.02100	0.03759	0.07704	
+128:	0.00624	0.00700	0.00910	0.01288	0.02097	0.03753	0.07707	0.19162	
+256:	0.00631	0.00703	0.00918	0.01303	0.02106	0.03765	0.07732	0.19210	0.55184	
+512:	0.00648	0.00715	0.00919	0.01300	0.02103	0.03758	0.07717	0.19188	0.55246	1.73602	
+1024:	0.00703	0.00760	0.00935	0.01304	0.02095	0.03760	0.07717	0.19180	0.55259	1.73633	6.06040	
+2048:	0.00746	0.00815	0.01009	0.01328	0.02109	0.03740	0.07735	0.19192	0.55246	1.73682	6.04664	25.39638	
+4096:	0.00841	0.00854	0.01049	0.01503	0.02137	0.03770	0.07733	0.19214	0.55288	1.73619	6.04116	25.34209	124.26519	
+8192:	0.01017	0.01030	0.01087	0.01543	0.02519	0.03809	0.07730	0.19284	0.55293	1.73752	6.02897	25.33676	124.26119	522.87217	
+
+app 0: ./time_ping_pong_multiple 
+rank: 0: { host: 1; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 1: { host: 2; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 2: { host: 1; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 3: { host: 2; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 4: { host: 1; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 5: { host: 2; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 6: { host: 1; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 7: { host: 2; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 843704: <mult_ping_pong> in cluster <lassen> Done
+
+Job <mult_ping_pong> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Feb  2 13:49:15 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Sun Feb  2 13:49:16 2020
+                            <40*lassen9>
+                            <40*lassen10>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Sun Feb  2 13:49:16 2020
+Terminated at Sun Feb  2 13:56:17 2020
+Results reported at Sun Feb  2 13:56:17 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J mult_ping_pong
+#BSUB -e mult_ping_pong.%J.err
+#BSUB -o mult_ping_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+#module load hwloc
+#module load nsight-systems
+
+cd /g/g14/bienz1/nodecomm
+
+#export MP_USE_BULK_XFER=yes
+#export MP_BULK_MIN_MSG_SIZE=1000000
+
+
+jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu -prot" --print_placement=1 ./time_ping_pong_multiple
+
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu -prot" --print_placement=1 ./time_ping_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-intra=vader -prot" --latency_priority=gpu-cpu --print_placement=1 ./time_ping_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu -intra=vader" --latency_priority=gpu-cpu --print_placement=1 ./time_ping_pong_gpu
+
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 \
+#nsys profile \
+#--trace=mpi,cuda,nvtx \
+#--mpi-impl=openmpi \
+#--output=profile_%q{OMPI_COMM_WORLD_RANK} \
+#--stats=true \
+#./profile_ping_pong
+
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.28 sec.
+    Max Memory :                                 58 MB
+    Average Memory :                             57.12 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1424 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   421 sec.
+    Turnaround time :                            422 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <mult_ping_pong.843704.err> for stderr output of this job.
+

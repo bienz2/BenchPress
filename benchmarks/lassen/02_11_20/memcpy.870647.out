@@ -1,0 +1,60 @@
+41 total processes failed to start
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 870647: <memcpy> in cluster <lassen> Exited
+
+Job <memcpy> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Tue Feb 11 09:53:19 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Feb 11 09:53:23 2020
+                            <40*lassen15>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue Feb 11 09:53:23 2020
+Terminated at Tue Feb 11 09:53:28 2020
+Results reported at Tue Feb 11 09:53:28 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J memcpy
+#BSUB -e memcpy.%J.err
+#BSUB -o memcpy.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+#jsrun -a4 -c4 -g4 -r1 -n1 -M "-gpu -mca btl_smcuda_eager_limit 0" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy
+jsrun -a36 -c36 -g4 -r1 -n1 -M "-gpu =mca btl_smcuda_eager_limit 0" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy_multiple
+#jsrun -a4 -c4 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy_peer
+
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   0.18 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   4 sec.
+    Turnaround time :                            9 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <memcpy.870647.err> for stderr output of this job.
+

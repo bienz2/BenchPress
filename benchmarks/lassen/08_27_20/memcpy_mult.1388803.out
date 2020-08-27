@@ -1,0 +1,25 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1388803: <memcpy_mult> in cluster <lassen> Done
+
+Job <memcpy_mult> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Thu Aug 27 10:59:09 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Thu Aug 27 10:59:11 2020
+                            <40*lassen10>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/HeteroBench/benchmarks/lassen> was used as the working directory.
+Started at Thu Aug 27 10:59:11 2020
+Terminated at Thu Aug 27 10:59:28 2020
+Results reported at Thu Aug 27 10:59:28 2020
+Cannot open your job file: /g/g14/bienz1/.lsbatch/1598551149.1388803
+Successfully completed.
+
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <memcpy_mult.1388803.err> for stderr output of this job.
+

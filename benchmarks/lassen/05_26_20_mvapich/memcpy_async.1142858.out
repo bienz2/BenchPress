@@ -1,0 +1,58 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1142858: <memcpy_async> in cluster <lassen> Exited
+
+Job <memcpy_async> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Tue May 26 11:14:34 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue May 26 11:23:20 2020
+                            <40*lassen1>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue May 26 11:23:20 2020
+Terminated at Tue May 26 11:28:30 2020
+Results reported at Tue May 26 11:28:30 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J memcpy_async
+#BSUB -e memcpy_async.%J.err
+#BSUB -o memcpy_async.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:05
+
+module load hwloc
+
+cd /g/g14/bienz1/nodecomm
+jsrun -a36 -c36 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_memcpy_async
+
+
+------------------------------------------------------------
+
+TERM_RUNLIMIT: job killed after reaching LSF run time limit.
+Exited with exit code 140.
+
+Resource usage summary:
+
+    CPU time :                                   0.65 sec.
+    Max Memory :                                 79 MB
+    Average Memory :                             79.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1424 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   303 sec.
+    Turnaround time :                            836 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <memcpy_async.1142858.err> for stderr output of this job.
+

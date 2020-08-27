@@ -1,0 +1,81 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 876206: <comparison> in cluster <lassen> Exited
+
+Job <comparison> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Tue Feb 11 20:30:53 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Feb 11 20:30:55 2020
+                            <40*lassen2>
+                            <40*lassen8>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue Feb 11 20:30:55 2020
+Terminated at Tue Feb 11 20:46:00 2020
+Results reported at Tue Feb 11 20:46:00 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J comparison
+#BSUB -e comparison.%J.err
+#BSUB -o comparison.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+#module load hwloc
+#module load nsight-systems
+
+cd /g/g14/bienz1/nodecomm
+
+#export MP_USE_BULK_XFER=yes
+#export MP_BULK_MIN_MSG_SIZE=1000000
+
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-prot" --print_placement=1 ./time_comparison
+
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu -prot" --print_placement=1 ./time_ping_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-intra=vader -prot" --latency_priority=gpu-cpu --print_placement=1 ./time_ping_pong
+jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_ping_pong_gpu
+
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 \
+#nsys profile \
+#--trace=mpi,cuda,nvtx \
+#--mpi-impl=openmpi \
+#--output=profile_%q{OMPI_COMM_WORLD_RANK} \
+#--stats=true \
+#./profile_ping_pong
+
+
+
+
+------------------------------------------------------------
+
+TERM_RUNLIMIT: job killed after reaching LSF run time limit.
+Exited with exit code 140.
+
+Resource usage summary:
+
+    CPU time :                                   0.89 sec.
+    Max Memory :                                 58 MB
+    Average Memory :                             58.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1424 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   904 sec.
+    Turnaround time :                            907 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <comparison.876206.err> for stderr output of this job.
+

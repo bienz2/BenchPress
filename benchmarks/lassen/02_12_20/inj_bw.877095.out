@@ -1,0 +1,210 @@
+Rank 22, Socket Rank 11, Node Rank 11
+Rank 19, Socket Rank 9, Node Rank 9
+Rank 62, Socket Rank 13, Node Rank 31
+Rank 48, Socket Rank 6, Node Rank 24
+Rank 25, Socket Rank 12, Node Rank 12
+Rank 13, Socket Rank 6, Node Rank 6
+Rank 36, Socket Rank 0, Node Rank 18
+Rank 27, Socket Rank 13, Node Rank 13
+Rank 34, Socket Rank 17, Node Rank 17
+Rank 4, Socket Rank 2, Node Rank 2
+Rank 5, Socket Rank 2, Node Rank 2
+Rank 47, Socket Rank 5, Node Rank 23
+Rank 30, Socket Rank 15, Node Rank 15
+Rank 6, Socket Rank 3, Node Rank 3
+Rank 51, Socket Rank 7, Node Rank 25
+Rank 37, Socket Rank 0, Node Rank 18
+Rank 2, Socket Rank 1, Node Rank 1
+Rank 10, Socket Rank 5, Node Rank 5
+Rank 20, Socket Rank 10, Node Rank 10
+Rank 7, Socket Rank 3, Node Rank 3
+Rank 65, Socket Rank 14, Node Rank 32
+Rank 39, Socket Rank 1, Node Rank 19
+Rank 52, Socket Rank 8, Node Rank 26
+Rank 8, Socket Rank 4, Node Rank 4
+Rank 0, Socket Rank 0, Node Rank 0
+Rank 56, Socket Rank 10, Node Rank 28
+Rank 64, Socket Rank 14, Node Rank 32
+Rank 49, Socket Rank 6, Node Rank 24
+Rank 67, Socket Rank 15, Node Rank 33
+Rank 28, Socket Rank 14, Node Rank 14
+Rank 44, Socket Rank 4, Node Rank 22
+Rank 61, Socket Rank 12, Node Rank 30
+Rank 32, Socket Rank 16, Node Rank 16
+Rank 54, Socket Rank 9, Node Rank 27
+Rank 59, Socket Rank 11, Node Rank 29
+Rank 40, Socket Rank 2, Node Rank 20
+Rank 57, Socket Rank 10, Node Rank 28
+Rank 42, Socket Rank 3, Node Rank 21
+Rank 66, Socket Rank 15, Node Rank 33
+Rank 12, Socket Rank 6, Node Rank 6
+Rank 58, Socket Rank 11, Node Rank 29
+Rank 26, Socket Rank 13, Node Rank 13
+Rank 24, Socket Rank 12, Node Rank 12
+Rank 15, Socket Rank 7, Node Rank 7
+Rank 60, Socket Rank 12, Node Rank 30
+Rank 50, Socket Rank 7, Node Rank 25
+Rank 38, Socket Rank 1, Node Rank 19
+Rank 21, Socket Rank 10, Node Rank 10
+Rank 16, Socket Rank 8, Node Rank 8
+Rank 18, Socket Rank 9, Node Rank 9
+Rank 14, Socket Rank 7, Node Rank 7
+Rank 46, Socket Rank 5, Node Rank 23
+Rank 17, Socket Rank 8, Node Rank 8
+Rank 68, Socket Rank 16, Node Rank 34
+Rank 70, Socket Rank 17, Node Rank 35
+Rank 29, Socket Rank 14, Node Rank 14
+Rank 69, Socket Rank 16, Node Rank 34
+Rank 63, Socket Rank 13, Node Rank 31
+Rank 45, Socket Rank 4, Node Rank 22
+Rank 35, Socket Rank 17, Node Rank 17
+Rank 9, Socket Rank 4, Node Rank 4
+Rank 71, Socket Rank 17, Node Rank 35
+Rank 55, Socket Rank 9, Node Rank 27
+Rank 33, Socket Rank 16, Node Rank 16
+Rank 23, Socket Rank 11, Node Rank 11
+Rank 31, Socket Rank 15, Node Rank 15
+Rank 53, Socket Rank 8, Node Rank 26
+Rank 1, Socket Rank 0, Node Rank 0
+Rank 43, Socket Rank 3, Node Rank 21
+Rank 3, Socket Rank 1, Node Rank 1
+Rank 41, Socket Rank 2, Node Rank 20
+Rank 11, Socket Rank 5, Node Rank 5
+app 0: ./time_inj_bw 
+rank: 0: { host: 1; cpu: {0-3}, {4-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 1: { host: 2; cpu: {0-3}, {4-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 2: { host: 1; cpu: {4-7}, {0-3,8-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 3: { host: 2; cpu: {4-7}, {0-3,8-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 4: { host: 1; cpu: {8-11}, {0-7,12-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 5: { host: 2; cpu: {8-11}, {0-7,12-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 6: { host: 1; cpu: {12-15}, {0-11,16-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 7: { host: 2; cpu: {12-15}, {0-11,16-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 8: { host: 1; cpu: {16-19}, {0-15,20-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 9: { host: 2; cpu: {16-19}, {0-15,20-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 10: { host: 1; cpu: {20-23}, {0-19,24-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 11: { host: 2; cpu: {20-23}, {0-19,24-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 12: { host: 1; cpu: {24-27}, {0-23,28-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 13: { host: 2; cpu: {24-27}, {0-23,28-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 14: { host: 1; cpu: {28-31}, {0-27,32-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 15: { host: 2; cpu: {28-31}, {0-27,32-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 16: { host: 1; cpu: {32-35}, {0-31,36-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 17: { host: 2; cpu: {32-35}, {0-31,36-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 18: { host: 1; cpu: {36-39}, {0-35,40-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 19: { host: 2; cpu: {36-39}, {0-35,40-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 20: { host: 1; cpu: {40-43}, {0-39,44-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 21: { host: 2; cpu: {40-43}, {0-39,44-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 22: { host: 1; cpu: {44-47}, {0-43,48-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 23: { host: 2; cpu: {44-47}, {0-43,48-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 24: { host: 1; cpu: {48-51}, {0-47,52-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 25: { host: 2; cpu: {48-51}, {0-47,52-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 26: { host: 1; cpu: {52-55}, {0-51,56-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 27: { host: 2; cpu: {52-55}, {0-51,56-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 28: { host: 1; cpu: {56-59}, {0-55,60-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 29: { host: 2; cpu: {56-59}, {0-55,60-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 30: { host: 1; cpu: {60-63}, {0-59,64-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 31: { host: 2; cpu: {60-63}, {0-59,64-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 32: { host: 1; cpu: {64-67}, {0-63,68-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 33: { host: 2; cpu: {64-67}, {0-63,68-71,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 34: { host: 1; cpu: {68-71}, {0-67,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 35: { host: 2; cpu: {68-71}, {0-67,80-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 36: { host: 1; cpu: {80-83}, {0-71,84-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 37: { host: 2; cpu: {80-83}, {0-71,84-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 38: { host: 1; cpu: {84-87}, {0-71,80-83,88-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 39: { host: 2; cpu: {84-87}, {0-71,80-83,88-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 40: { host: 1; cpu: {88-91}, {0-71,80-87,92-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 41: { host: 2; cpu: {88-91}, {0-71,80-87,92-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 42: { host: 1; cpu: {92-95}, {0-71,80-91,96-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 43: { host: 2; cpu: {92-95}, {0-71,80-91,96-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 44: { host: 1; cpu: {96-99}, {0-71,80-95,100-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 45: { host: 2; cpu: {96-99}, {0-71,80-95,100-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 46: { host: 1; cpu: {100-103}, {0-71,80-99,104-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 47: { host: 2; cpu: {100-103}, {0-71,80-99,104-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 48: { host: 1; cpu: {104-107}, {0-71,80-103,108-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 49: { host: 2; cpu: {104-107}, {0-71,80-103,108-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 50: { host: 1; cpu: {108-111}, {0-71,80-107,112-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 51: { host: 2; cpu: {108-111}, {0-71,80-107,112-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 52: { host: 1; cpu: {112-115}, {0-71,80-111,116-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 53: { host: 2; cpu: {112-115}, {0-71,80-111,116-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 54: { host: 1; cpu: {116-119}, {0-71,80-115,120-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 55: { host: 2; cpu: {116-119}, {0-71,80-115,120-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 56: { host: 1; cpu: {120-123}, {0-71,80-119,124-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 57: { host: 2; cpu: {120-123}, {0-71,80-119,124-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 58: { host: 1; cpu: {124-127}, {0-71,80-123,128-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 59: { host: 2; cpu: {124-127}, {0-71,80-123,128-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 60: { host: 1; cpu: {128-131}, {0-71,80-127,132-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 61: { host: 2; cpu: {128-131}, {0-71,80-127,132-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 62: { host: 1; cpu: {132-135}, {0-71,80-131,136-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 63: { host: 2; cpu: {132-135}, {0-71,80-131,136-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 64: { host: 1; cpu: {136-139}, {0-71,80-135,140-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 65: { host: 2; cpu: {136-139}, {0-71,80-135,140-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 66: { host: 1; cpu: {140-143}, {0-71,80-139,144-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 67: { host: 2; cpu: {140-143}, {0-71,80-139,144-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 68: { host: 1; cpu: {144-147}, {0-71,80-143,148-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 69: { host: 2; cpu: {144-147}, {0-71,80-143,148-151} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 70: { host: 1; cpu: {148-151}, {0-71,80-147} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+rank: 71: { host: 2; cpu: {148-151}, {0-71,80-147} ; gpu: {0,1,2,3} ; mem: {0-146717,163036-309753} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 877095: <inj_bw> in cluster <lassen> Done
+
+Job <inj_bw> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Tue Feb 11 22:56:45 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Feb 11 22:56:47 2020
+                            <40*lassen17>
+                            <40*lassen18>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue Feb 11 22:56:47 2020
+Terminated at Tue Feb 11 22:57:03 2020
+Results reported at Tue Feb 11 22:57:03 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J inj_bw
+#BSUB -e inj_bw.%J.err
+#BSUB -o inj_bw.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load hwloc
+module load nsight-systems
+
+cd /g/g14/bienz1/nodecomm
+
+#export MP_USE_BULK_XFER=yes
+#export MP_BULK_MIN_MSG_SIZE=1000000
+
+jsrun -a36 -c36 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_inj_bw
+
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.23 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   15 sec.
+    Turnaround time :                            18 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <inj_bw.877095.err> for stderr output of this job.
+

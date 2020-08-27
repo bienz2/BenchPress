@@ -1,0 +1,64 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1142854: <comparison_reuse> in cluster <lassen> Exited
+
+Job <comparison_reuse> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Tue May 26 11:14:10 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue May 26 11:47:14 2020
+                            <40*lassen16>
+                            <40*lassen17>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/nodecomm> was used as the working directory.
+Started at Tue May 26 11:47:14 2020
+Terminated at Tue May 26 12:02:15 2020
+Results reported at Tue May 26 12:02:15 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J comparison_reuse
+#BSUB -e comparison_reuse.%J.err
+#BSUB -o comparison_reuse.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+#module load hwloc
+#module load nsight-systems
+
+cd /g/g14/bienz1/nodecomm
+
+jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --print_placement=1 ./time_comparison
+
+
+
+
+
+------------------------------------------------------------
+
+TERM_RUNLIMIT: job killed after reaching LSF run time limit.
+Exited with exit code 140.
+
+Resource usage summary:
+
+    CPU time :                                   1.01 sec.
+    Max Memory :                                 58 MB
+    Average Memory :                             58.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1424 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   901 sec.
+    Turnaround time :                            2885 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <comparison_reuse.1142854.err> for stderr output of this job.
+

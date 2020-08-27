@@ -9,6 +9,9 @@ target_link_libraries(time_memcpy_mult heterobench)
 add_executable(time_collective time_collective.cpp)
 target_link_libraries(time_collective heterobench)
 
+add_executable(time_collective_standard time_collective_standard.cpp)
+target_link_libraries(time_collective_standard heterobench)
+
 add_executable(time_ping_pong time_ping_pong.cpp)
 target_link_libraries(time_ping_pong heterobench)
 

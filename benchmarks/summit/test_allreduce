@@ -1,8 +1,8 @@
 #!/bin/bash
-#BSUB -J all_reduce
-#BSUB -e all_reduce.%J.err
-#BSUB -o all_reduce.%J.out
-#BSUB -nnodes 2
+#BSUB -J all_reduce_16
+#BSUB -e all_reduce_16.%J.err
+#BSUB -o all_reduce_16.%J.out
+#BSUB -nnodes 16
 #BSUB -W 00:15
 #BSUB -P CSC422
 #BSUB -alloc_flags "gpumps gpudefault smt1"
@@ -13,6 +13,6 @@ module load cuda
 
 cd /ccs/home/bienz/HeteroBench/build/examples
 
-jsrun -a36 -c36 -g6 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective
+jsrun -a36 -c36 -g6 -r1 -n16 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_collective
 
-
+#jsrun -a36 -c36 -g6 -r1 -n4 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective

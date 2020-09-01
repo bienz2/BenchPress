@@ -1,0 +1,37 @@
+Cuda-Aware Allreduce:
+1.376614e-04	8.834719e-05	6.654418e-05	4.776921e-05	4.689202e-05	4.745714e-05	4.734286e-05	4.759093e-05	4.838890e-05	5.024614e-05	5.549162e-05	6.078602e-05	7.285567e-05	9.486156e-05	1.424442e-04	2.487635e-04	3.828837e-04	5.900140e-04	
+
+3-Step Allreduce:
+5.137155e-05	3.785345e-05	4.715209e-05	4.365299e-05	5.019765e-05	3.810642e-05	3.778108e-05	3.800736e-05	3.873129e-05	4.079417e-05	4.595471e-05	5.338553e-05	6.253421e-05	8.798909e-05	1.361170e-04	2.398497e-04	3.759411e-04	5.817713e-04	
+
+3-Step Allreduce, Extra Message:
+2.771490e-05	2.767750e-05	2.778159e-05	4.227008e-05	4.183226e-05	6.804492e-05	5.031838e-05	6.724304e-05	6.273571e-05	5.696928e-05	6.018055e-05	5.664840e-05	5.865361e-05	6.559122e-05	8.293930e-05	1.313565e-04	1.962047e-04	2.988770e-04	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.004367e-04	1.041243e-04	1.051966e-04	1.044396e-04	1.045196e-04	9.857440e-05	1.013478e-04	1.004471e-04	1.073960e-04	1.096505e-04	1.118304e-04	1.120841e-04	1.337117e-04	1.611232e-04	2.320453e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch3>
+Subject: Job 315795: <all_reduce_4> in cluster <summit> Done
+
+Job <all_reduce_4> was submitted from host <login4> by user <bienz> in cluster <summit> at Tue Sep  1 18:37:53 2020
+Job was executed on host(s) <1*batch3>, in queue <batch>, as user <bienz> in cluster <summit> at Tue Sep  1 18:38:08 2020
+                            <42*h26n08>
+                            <42*h33n12>
+                            <42*h50n05>
+                            <42*h50n08>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/HeteroBench/benchmarks/summit> was used as the working directory.
+Started at Tue Sep  1 18:38:08 2020
+Terminated at Tue Sep  1 18:39:02 2020
+Results reported at Tue Sep  1 18:39:02 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_4.315795.err> for stderr output of this job.
+

@@ -1,5 +1,5 @@
 Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
-Memcpy Device To Host:
+Memcpy Host To Device Mult:
 NP 0
 1.370415e-05	1.353397e-05	1.364393e-05	1.355319e-05	1.363994e-05	1.370596e-05	1.387724e-05	1.382690e-05	1.370923e-05	1.399144e-05	2.080196e-05	1.493659e-05	1.539071e-05	1.636484e-05	1.792726e-05	1.951924e-05	2.135941e-05	2.506819e-05	
 NP 1

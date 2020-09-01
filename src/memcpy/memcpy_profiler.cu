@@ -189,7 +189,8 @@ void profile_memcpy_mult(cudaMemcpyKind copy_kind, int max_i, int n_tests)
             if (i > 20) nt = n_tests / 10;
             if (i > 25) nt = n_tests / 100;
             bytes = pow(2, i) * sizeof(float);
-MPI_Barrier(MPI_COMM_WORLD);
+
+            MPI_Barrier(MPI_COMM_WORLD);
             if (gpu_rank <= np) time = time_memcpy(bytes, cpu_data, gpu_data, 
                     copy_kind, proc_stream, nt);
             else time = 0;
@@ -212,7 +213,7 @@ void profile_host_to_device_mult(int max_i, int n_tests)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-    if (rank == 0) printf("Memcpy Device To Host:\n");
+    if (rank == 0) printf("Memcpy Host To Device Mult:\n");
     profile_memcpy_mult(cudaMemcpyHostToDevice, max_i, n_tests);
 }
 void profile_device_to_host_mult(int max_i, int n_tests)

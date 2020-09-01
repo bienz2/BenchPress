@@ -84,7 +84,7 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
     {
-        for (int rank1 = node_size; rank1 < 2*node_size; rank1 += procs_per_gpu)
+        for (int rank1 = rank0+procs_per_gpu; rank1 < 2*node_size; rank1 += procs_per_gpu)
         {
             nt = n_tests;
             active = (rank == rank0 || rank == rank1);

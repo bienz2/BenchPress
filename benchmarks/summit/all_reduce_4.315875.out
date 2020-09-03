@@ -1,0 +1,37 @@
+Cuda-Aware Allreduce:
+1.109394e-04	4.933472e-05	5.924960e-05	4.813348e-05	4.784708e-05	4.819525e-05	4.810849e-05	4.863485e-05	4.935617e-05	5.110427e-05	5.707828e-05	6.319680e-05	7.400067e-05	9.015375e-05	1.680385e-04	2.654439e-04	3.767687e-04	7.658302e-04	1.173322e-03	2.076604e-03	
+
+3-Step Allreduce:
+3.920349e-05	3.774609e-05	3.763197e-05	3.796495e-05	3.789809e-05	3.790609e-05	3.858711e-05	3.794745e-05	4.432162e-05	4.079160e-05	4.606055e-05	5.187235e-05	6.311647e-05	8.432851e-05	1.424500e-04	2.439894e-04	4.605426e-04	5.829269e-04	1.226393e-03	2.186310e-03	
+
+3-Step Allreduce, Extra Message:
+2.829462e-05	3.210655e-05	2.824965e-05	4.290936e-05	4.237706e-05	4.214910e-05	4.324374e-05	4.319828e-05	4.934708e-05	4.907763e-05	4.932346e-05	5.258140e-05	6.362083e-05	7.867531e-05	8.419215e-05	1.306590e-04	1.954838e-04	4.379331e-04	6.222619e-04	1.376309e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.007617e-04	1.137602e-04	1.028030e-04	1.135549e-04	1.093179e-04	1.011345e-04	1.005674e-04	1.010496e-04	1.017174e-04	1.056132e-04	1.077104e-04	1.153675e-04	1.343152e-04	1.968125e-04	2.614530e-04	4.425287e-04	7.520317e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 315875: <all_reduce_4> in cluster <summit> Done
+
+Job <all_reduce_4> was submitted from host <login4> by user <bienz> in cluster <summit> at Tue Sep  1 19:22:33 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Tue Sep  1 19:26:42 2020
+                            <42*h33n17>
+                            <42*h34n07>
+                            <42*h50n01>
+                            <42*h50n09>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/HeteroBench/benchmarks/summit> was used as the working directory.
+Started at Tue Sep  1 19:26:42 2020
+Terminated at Tue Sep  1 19:27:35 2020
+Results reported at Tue Sep  1 19:27:35 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_4.315875.err> for stderr output of this job.
+

@@ -1,0 +1,41 @@
+Cuda-Aware Allreduce:
+1.054500e-04	5.389253e-05	5.085932e-05	5.090069e-05	5.094955e-05	5.159171e-05	5.143079e-05	5.188706e-05	6.452273e-05	5.649883e-05	6.925845e-05	7.838555e-05	8.593431e-05	1.167195e-04	2.134590e-04	3.323727e-04	5.541040e-04	9.672580e-04	1.829922e-03	3.779203e-03	
+
+3-Step Allreduce:
+5.539232e-05	4.101579e-05	4.076456e-05	4.090149e-05	4.124348e-05	4.632487e-05	5.448039e-05	4.268958e-05	6.123630e-05	5.135258e-05	5.498581e-05	8.129743e-05	8.071696e-05	1.019670e-04	1.621968e-04	2.427479e-04	5.043675e-04	9.911702e-04	1.966025e-03	3.732551e-03	
+
+3-Step Allreduce, Extra Message:
+3.586828e-05	3.207953e-05	3.627456e-05	1.180376e-04	7.406349e-05	7.216058e-05	6.294975e-05	8.184564e-05	5.075533e-05	5.886719e-05	6.105571e-05	6.272286e-05	6.404625e-05	8.729621e-05	1.035501e-04	1.853352e-04	2.533578e-04	3.260506e-04	7.144062e-04	1.471984e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.092842e-04	1.138322e-04	1.098899e-04	1.165970e-04	1.145287e-04	1.098769e-04	1.106484e-04	1.063252e-04	1.091794e-04	1.214571e-04	1.291995e-04	1.336348e-04	1.492324e-04	1.685387e-04	2.655998e-04	4.194661e-04	1.013315e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch4>
+Subject: Job 315871: <all_reduce_8> in cluster <summit> Done
+
+Job <all_reduce_8> was submitted from host <login4> by user <bienz> in cluster <summit> at Tue Sep  1 19:22:08 2020
+Job was executed on host(s) <1*batch4>, in queue <batch>, as user <bienz> in cluster <summit> at Tue Sep  1 19:24:38 2020
+                            <42*h26n14>
+                            <42*h26n18>
+                            <42*h27n08>
+                            <42*h27n10>
+                            <42*h30n02>
+                            <42*h33n08>
+                            <42*h33n12>
+                            <42*h33n16>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/HeteroBench/benchmarks/summit> was used as the working directory.
+Started at Tue Sep  1 19:24:38 2020
+Terminated at Tue Sep  1 19:25:36 2020
+Results reported at Tue Sep  1 19:25:36 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_8.315871.err> for stderr output of this job.
+

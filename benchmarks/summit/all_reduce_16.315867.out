@@ -1,0 +1,49 @@
+Cuda-Aware Allreduce:
+7.710275e-05	5.360693e-05	5.399407e-05	5.380557e-05	5.299193e-05	5.851188e-05	5.347365e-05	5.887259e-05	5.593590e-05	6.892132e-05	8.202363e-05	8.509916e-05	9.794418e-05	2.138197e-04	2.021277e-04	3.078564e-04	5.808561e-04	1.176352e-03	2.778621e-03	4.779229e-03	
+
+3-Step Allreduce:
+4.467478e-05	4.797946e-05	5.405103e-05	5.205578e-05	5.873913e-05	5.939642e-05	4.324463e-05	4.404462e-05	5.058727e-05	5.824785e-05	6.047378e-05	7.252393e-05	8.744175e-05	1.308549e-04	2.189043e-04	3.541542e-04	7.207992e-04	1.169705e-03	2.335686e-03	4.705760e-03	
+
+3-Step Allreduce, Extra Message:
+3.284469e-05	3.329386e-05	3.226472e-05	6.925262e-05	5.809301e-05	6.011475e-05	5.729343e-05	5.909509e-05	4.987674e-05	5.145026e-05	5.334726e-05	6.203315e-05	7.862955e-05	1.956595e-04	2.423461e-04	2.406985e-04	5.107897e-04	3.414839e-04	8.357009e-04	2.766950e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.426534e-04	1.290614e-04	1.202366e-04	1.170448e-04	1.183028e-04	1.232254e-04	1.157682e-04	1.173254e-04	1.229642e-04	1.522667e-04	1.330260e-04	1.423587e-04	2.292631e-04	2.197170e-04	3.186201e-04	6.517789e-04	1.409247e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch3>
+Subject: Job 315867: <all_reduce_16> in cluster <summit> Done
+
+Job <all_reduce_16> was submitted from host <login4> by user <bienz> in cluster <summit> at Tue Sep  1 19:21:53 2020
+Job was executed on host(s) <1*batch3>, in queue <batch>, as user <bienz> in cluster <summit> at Tue Sep  1 19:22:08 2020
+                            <42*f32n16>
+                            <42*f32n17>
+                            <42*f33n02>
+                            <42*f33n04>
+                            <42*f33n08>
+                            <42*f33n11>
+                            <42*f33n13>
+                            <42*f34n01>
+                            <42*f34n02>
+                            <42*f34n03>
+                            <42*f34n05>
+                            <42*f34n06>
+                            <42*f34n08>
+                            <42*f34n09>
+                            <42*h24n03>
+                            <42*h25n15>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/HeteroBench/benchmarks/summit> was used as the working directory.
+Started at Tue Sep  1 19:22:08 2020
+Terminated at Tue Sep  1 19:23:09 2020
+Results reported at Tue Sep  1 19:23:09 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_16.315867.err> for stderr output of this job.
+

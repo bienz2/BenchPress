@@ -9,7 +9,7 @@
 module load gcc
 module load cuda
 
-cd /g/g14/bienz1/HeteroBench/build/examples
+cd /g/g14/bienz1/BenchPress/build/examples
 
 nvidia-cuda-mps-control -d
 

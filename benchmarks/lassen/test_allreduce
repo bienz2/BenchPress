@@ -1,21 +1,21 @@
 #!/bin/bash
-#BSUB -J all_reduce_16
-#BSUB -e all_reduce_16.%J.err
-#BSUB -o all_reduce_16.%J.out
-#BSUB -nnodes 16
+#BSUB -J all_reduce_2
+#BSUB -e all_reduce_2.%J.err
+#BSUB -o all_reduce_2.%J.out
+#BSUB -nnodes 2
 #BSUB -q pdebug
 #BSUB -W 00:15
 
 module load gcc
 module load cuda
 
-cd /g/g14/bienz1/HeteroBench/build/examples
+cd /g/g14/bienz1/BenchPress/build/examples
 
 nvidia-cuda-mps-control -d
 
-jsrun -a40 -c40 -g4 -r1 -n16 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_collective
+jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_collective
 
-#jsrun -a40 -c40 -g4 -r1 -n8 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective
+#jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective
 
 echo quit | nvidia-cuda-mps-control
 

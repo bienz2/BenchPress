@@ -259,7 +259,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
 }
 
 
-void profile_ping_pong_mult(int max_i, int n_tests)
+void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -275,7 +275,7 @@ void profile_ping_pong_mult(int max_i, int n_tests)
 
     float* data = NULL;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
-    int n_msgs, nt, size;
+    int n_msgs, nt, size, s;
     int* procs = NULL;
     double time, max_time;
     bool master = false;
@@ -317,18 +317,23 @@ void profile_ping_pong_mult(int max_i, int n_tests)
     for (int i = 0; i < max_i; i++)
     {
         size = pow(2, i);
+        if (split_data && size < max_n) continue;
+
         if (rank == 0) printf("Size %d\t", size);
         if (i > 14) nt = n_tests / 10;
         if (i > 20) nt = n_tests / 100;
         for (int n = 0; n < max_n; n++)
         {
+            if (split_data)
+                s = size / (n+1);
+            else s = size;
             if (rank == 0) 
                 n_msg = n+1;
             else if (rank >= ppn && rank - ppn <= n)
                 n_msg = 1;
             else
                 n_msg = 0;
-            time = time_ping_pong_mult(master, n_msg, procs, data, size, nt);
+            time = time_ping_pong_mult(master, n_msg, procs, data, s, nt);
             MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
             if (rank == 0) printf("%e\t", max_time);
         }
@@ -345,7 +350,7 @@ void profile_ping_pong_mult(int max_i, int n_tests)
 }
 
 // ASSUMES SMP ORDERING
-void profile_ping_pong_mult_gpu(int max_i, int n_tests)
+void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -356,7 +361,7 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
 
     float* data = NULL;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
-    int n_msgs, nt, size;
+    int n_msgs, nt, size, s;
     int* procs = NULL;
     double time, max_time;
     bool master;
@@ -413,11 +418,16 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
     for (int i = 0; i < max_i; i++)
     {
         size = pow(2, i);
+        if (split_data && size < max_n_msgs) continue;
         if (rank == 0) printf("Size %d\t", size);
         if (i > 14) nt = n_tests / 10;
         if (i > 20) nt = n_tests / 100;
         for (int n = 0; n < max_n_msgs; n++)
         {
+            if (split_data) 
+                s = size / (n+1);
+            else s = size;
+
             if (rank == 0) 
                 n_msg = n+1;
             else if (rank >= ppn && node_rank % procs_per_gpu == 0 && 
@@ -425,7 +435,7 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
                 n_msg = 1;
             else 
                 n_msg = 0;
-            time = time_ping_pong_mult(master, n_msg, procs, data, size, nt);
+            time = time_ping_pong_mult(master, n_msg, procs, data, s, nt);
             MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0,
                     MPI_COMM_WORLD);
             if (rank == 0) printf("%e\t", max_time);

@@ -21,5 +21,8 @@ target_link_libraries(time_maxrate heterobench)
 add_executable(time_mult_pong time_mult_pong.cpp)
 target_link_libraries(time_mult_pong heterobench)
 
+add_executable(time_mult_pong_split time_mult_pong_split.cpp)
+target_link_libraries(time_mult_pong_split heterobench)
+
 add_executable(time_node_pong time_node_pong.cpp)
 target_link_libraries(time_node_pong heterobench)

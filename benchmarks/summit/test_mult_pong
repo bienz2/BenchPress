@@ -11,7 +11,7 @@ module load gcc
 module load cmake/3.18.1
 module load cuda
 
-cd /ccs/home/bienz/HeteroBench/build/examples
+cd /ccs/home/bienz/BenchPress/build/examples
 
 jsrun -a40 -c40 -g6 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_mult_pong
 

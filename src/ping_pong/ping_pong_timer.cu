@@ -148,6 +148,7 @@ double time_ping_pong_mult(bool master, int n_msgs, int* procs,
 
     // Warm Up
     MPI_Barrier(MPI_COMM_WORLD);
+
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
@@ -156,12 +157,12 @@ double time_ping_pong_mult(bool master, int n_msgs, int* procs,
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Send(&(data[j*size]), size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD);
+                MPI_Send(data, size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD);
             }
             for (int j = 0; j < n_msgs; j++)
             { 
                 proc = procs[j];
-                MPI_Recv(&(data[j*size]), size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD, 
+                MPI_Recv(data, size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD, 
                         &status);
             }
         }
@@ -170,19 +171,20 @@ double time_ping_pong_mult(bool master, int n_msgs, int* procs,
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Recv(&(data[j*size]), size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD,
+                MPI_Recv(data, size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD,
                         &status);
             }
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Send(&(data[j*size]), size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD);
+                MPI_Send(data, size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD);
             }
         }
     }
     tfinal = (MPI_Wtime() - t0) / (2 * n_tests);
 
-    // Time Ping-Pong
+
+
     MPI_Barrier(MPI_COMM_WORLD);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -192,12 +194,12 @@ double time_ping_pong_mult(bool master, int n_msgs, int* procs,
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Send(&(data[j*size]), size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD);
+                MPI_Send(data, size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD);
             }
             for (int j = 0; j < n_msgs; j++)
-            {
+            { 
                 proc = procs[j];
-                MPI_Recv(&(data[j*size]), size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD,
+                MPI_Recv(data, size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD, 
                         &status);
             }
         }
@@ -206,13 +208,13 @@ double time_ping_pong_mult(bool master, int n_msgs, int* procs,
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Recv(&(data[j*size]), size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD,
-                    &status);
+                MPI_Recv(data, size, MPI_FLOAT, proc, ping_tag, MPI_COMM_WORLD,
+                        &status);
             }
             for (int j = 0; j < n_msgs; j++)
             {
                 proc = procs[j];
-                MPI_Send(&(data[j*size]), size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD);
+                MPI_Send(data, size, MPI_FLOAT, proc, pong_tag, MPI_COMM_WORLD);
             }
         }
     }

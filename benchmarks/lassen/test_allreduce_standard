@@ -9,7 +9,7 @@
 module load gcc
 module load cuda
 
-cd /g/g14/bienz1/HeteroBench/build/examples
+cd /g/g14/bienz1/BenchPress/build/examples
 
 jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective_standard
 

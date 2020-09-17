@@ -273,7 +273,7 @@ void profile_ping_pong_mult(int max_i, int n_tests)
     MPI_Comm_size(node_comm, &ppn);
     MPI_Comm_free(&node_comm);
 
-    float* data;
+    float* data = NULL;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
     int n_msgs, nt, size;
     int* procs = NULL;
@@ -288,6 +288,8 @@ void profile_ping_pong_mult(int max_i, int n_tests)
         return;
     }
 
+    cudaMallocHost((void**)&data, max_bytes);
+
     // Rank 0 is master
     if (rank == 0) 
     {
@@ -296,18 +298,17 @@ void profile_ping_pong_mult(int max_i, int n_tests)
         procs = new int[n_msgs];
         for (int i = 0; i < n_msgs; i++)
             procs[i] = ppn + i;
-        cudaMallocHost((void**)&data, max_bytes * n_msgs);
     }
     else if (rank >= ppn)
     {
         n_msgs = 1;
         procs = new int[n_msgs];
         procs[0] = 0;
-        cudaMallocHost((void**)&data, max_bytes);
     }
     else
     {
         n_msgs = 0;
+        procs = NULL;
     }
 
     if (rank == 0) printf("Timing CPU Multiple Messages\n");
@@ -338,8 +339,9 @@ void profile_ping_pong_mult(int max_i, int n_tests)
     if (n_msgs)
     {
         delete[] procs;
-        cudaFreeHost(data);
     }
+
+    cudaFreeHost(data);
 }
 
 // ASSUMES SMP ORDERING
@@ -352,7 +354,7 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
     int num_gpus;
     cudaGetDeviceCount(&num_gpus);
 
-    float* data;
+    float* data = NULL;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
     int n_msgs, nt, size;
     int* procs = NULL;
@@ -378,18 +380,19 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
         return;
     }
 
+    cudaMalloc((void**)&data, max_bytes);
+
     // Rank 0 is master rank for GPU 0
     int max_n_msgs = num_gpus * (num_nodes-1);
     if (rank == 0) 
     {
-	    gpu = 0;
-	    cudaSetDevice(gpu);
-	    master = true;
+        gpu = 0;
+        cudaSetDevice(gpu);
+        master = true;
         n_msgs = max_n_msgs;
         procs = new int[n_msgs];
         for (int i = 0; i < n_msgs; i++)
-            procs[i] = ppn + procs_per_gpu * i;
-        cudaMalloc((void**)&data, max_bytes * n_msgs);
+            procs[i] = ppn + (procs_per_gpu * i);
     }
     else if (node_rank % procs_per_gpu == 0 && rank >= ppn)
     {
@@ -398,7 +401,6 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
         n_msgs = 1;
         procs = new int[n_msgs];
         procs[0] = 0;
-        cudaMalloc((void**)&data, max_bytes);
     }
     else
     {
@@ -418,7 +420,8 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
         {
             if (rank == 0) 
                 n_msg = n+1;
-            else if (rank >= ppn && rank - ppn <= n) 
+            else if (rank >= ppn && node_rank % procs_per_gpu == 0 && 
+                    ((rank-ppn) / procs_per_gpu) <= n) 
                 n_msg = 1;
             else 
                 n_msg = 0;
@@ -436,6 +439,6 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests)
     if (n_msgs)
     {
         delete[] procs;
-        cudaFree(data);
     }
+    cudaFree(data);
 }

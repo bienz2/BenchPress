@@ -5,7 +5,9 @@
 
 #include "memcpy/memcpy_profiler.h"
 #include "ping_pong/ping_pong_profiler.h"
-#include "collective/collective_profiler.h"
+#include "collective/allreduce_profiler.h"
+#include "collective/alltoall_profiler.h"
+#include "collective/alltoallv_profiler.h"
 
 #endif
 

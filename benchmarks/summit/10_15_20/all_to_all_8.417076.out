@@ -1,0 +1,41 @@
+Cuda-Aware Allreduce:
+5.360591e-05	6.521605e-05	5.517503e-05	6.220232e-05	5.813365e-05	6.256474e-05	7.877540e-05	9.825229e-05	7.931538e-05	1.330921e-04	2.119322e-04	4.532214e-04	7.463819e-04	1.272861e-03	2.202929e-03	4.118785e-03	8.358099e-03	1.596373e-02	3.858723e-02	7.937620e-02	
+
+3-Step Allreduce:
+4.436574e-05	4.900968e-05	5.796100e-05	5.279916e-05	5.527406e-05	5.922557e-05	1.762351e-04	9.180759e-05	9.058240e-05	1.245008e-04	1.870158e-04	5.609324e-04	9.092364e-04	1.541607e-03	2.970072e-03	5.934845e-03	1.143458e-02	2.271693e-02	5.028277e-02	1.045368e-01	
+
+3-Step Allreduce, Extra Message:
+3.374289e-05	3.418916e-05	3.484867e-05	7.370413e-05	6.279540e-05	7.397021e-05	1.024364e-04	1.290358e-04	1.623941e-04	2.505471e-04	3.619661e-04	5.464457e-04	1.038860e-03	2.346591e-03	4.864850e-03	9.428732e-03	1.913818e-02	3.844592e-02	7.585116e-02	1.493688e-01	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.084682e-04	1.124943e-04	1.128442e-04	1.152129e-04	1.271951e-04	1.248470e-04	1.677773e-04	1.853108e-04	2.678121e-04	5.181341e-04	1.161548e-03	2.047916e-03	3.834564e-03	8.733088e-03	1.532028e-02	4.037063e-02	8.502052e-02	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 417076: <all_to_all_8> in cluster <summit> Done
+
+Job <all_to_all_8> was submitted from host <login1> by user <bienz> in cluster <summit> at Thu Oct 15 20:11:48 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Thu Oct 15 20:12:05 2020
+                            <42*b22n13>
+                            <42*b22n14>
+                            <42*b28n09>
+                            <42*b28n10>
+                            <42*b28n11>
+                            <42*b28n12>
+                            <42*b28n13>
+                            <42*b28n14>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Thu Oct 15 20:12:05 2020
+Terminated at Thu Oct 15 20:16:31 2020
+Results reported at Thu Oct 15 20:16:31 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_8.417076.err> for stderr output of this job.
+

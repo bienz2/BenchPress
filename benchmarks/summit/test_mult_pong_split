@@ -1,0 +1,20 @@
+#!/bin/bash
+#BSUB -J mult_pong_split
+#BSUB -e mult_pong_split.%J.err
+#BSUB -o mult_pong_split.%J.out
+#BSUB -nnodes 2
+#BSUB -W 00:15
+#BSUB -P CSC422
+#BSUB -alloc_flags "gpumps gpudefault smt1"
+
+module load gcc
+module load cmake/3.18.1
+module load cuda
+
+cd /ccs/home/bienz/BenchPress/build/examples
+
+jsrun -a40 -c40 -g6 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_mult_pong_split
+
+
+
+

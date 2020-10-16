@@ -1,0 +1,35 @@
+Cuda-Aware Allreduce:
+7.423610e-05	6.679897e-05	5.193936e-05	5.214857e-05	5.099912e-05	5.264266e-05	5.348979e-05	5.729353e-05	6.342679e-05	7.345623e-05	8.610251e-05	1.356469e-04	1.998022e-04	2.986421e-04	4.565097e-04	8.085404e-04	1.498874e-03	2.984797e-03	5.597788e-03	1.091337e-02	
+
+3-Step Allreduce:
+4.390094e-05	7.105005e-05	3.970177e-05	4.135367e-05	4.250096e-05	4.454690e-05	4.706882e-05	4.955193e-05	5.771094e-05	6.270534e-05	8.628931e-05	1.520872e-04	2.349172e-04	3.690311e-04	6.247362e-04	1.239100e-03	2.245012e-03	4.246473e-03	8.378294e-03	1.659038e-02	
+
+3-Step Allreduce, Extra Message:
+2.849712e-05	2.867424e-05	2.889056e-05	4.794201e-05	4.834859e-05	5.089029e-05	5.316974e-05	5.886027e-05	9.126655e-05	1.054584e-04	1.332080e-04	1.894411e-04	2.869019e-04	5.637839e-04	9.596607e-04	1.891245e-03	3.902784e-03	8.434918e-03	1.729247e-02	3.429150e-02	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	9.433015e-05	9.360645e-05	9.428591e-05	9.462129e-05	9.309657e-05	9.343983e-05	9.746067e-05	1.011036e-04	1.019753e-04	1.161926e-04	1.835739e-04	3.995579e-04	7.786722e-04	1.527846e-03	2.689323e-03	5.407441e-03	1.108853e-02	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 416917: <all_to_all_2> in cluster <summit> Done
+
+Job <all_to_all_2> was submitted from host <login5> by user <bienz> in cluster <summit> at Thu Oct 15 19:15:44 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Thu Oct 15 19:16:40 2020
+                            <42*h20n06>
+                            <42*h36n12>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Thu Oct 15 19:16:40 2020
+Terminated at Thu Oct 15 19:18:12 2020
+Results reported at Thu Oct 15 19:18:12 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_2.416917.err> for stderr output of this job.
+

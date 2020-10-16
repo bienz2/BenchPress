@@ -5,7 +5,7 @@
 // while EXPECT_* variants continue with the run.
 
 #include "gtest/gtest.h"
-#include "collective/collective_profiler.h"
+#include "collective/allreduce_profiler.h"
 
 int main(int argc, char** argv)
 {

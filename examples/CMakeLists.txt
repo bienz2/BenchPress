@@ -6,11 +6,17 @@ target_link_libraries(time_memcpy heterobench)
 add_executable(time_memcpy_mult time_memcpy_mult.cpp)
 target_link_libraries(time_memcpy_mult heterobench)
 
-add_executable(time_collective time_collective.cpp)
-target_link_libraries(time_collective heterobench)
+add_executable(time_allreduce time_allreduce.cpp)
+target_link_libraries(time_allreduce heterobench)
 
-add_executable(time_collective_standard time_collective_standard.cpp)
-target_link_libraries(time_collective_standard heterobench)
+add_executable(time_alltoall time_alltoall.cpp)
+target_link_libraries(time_alltoall heterobench)
+
+add_executable(time_alltoallv time_alltoallv.cpp)
+target_link_libraries(time_alltoallv heterobench)
+
+add_executable(time_allreduce_standard time_allreduce_standard.cpp)
+target_link_libraries(time_allreduce_standard heterobench)
 
 add_executable(time_ping_pong time_ping_pong.cpp)
 target_link_libraries(time_ping_pong heterobench)

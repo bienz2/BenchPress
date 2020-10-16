@@ -1,0 +1,37 @@
+Cuda-Aware Allreduce:
+5.522774e-05	5.418405e-05	5.453778e-05	5.533444e-05	5.667271e-05	5.799523e-05	6.219491e-05	7.172066e-05	7.612904e-05	7.792088e-05	1.133910e-04	3.404768e-04	4.048445e-04	6.251843e-04	1.090286e-03	2.157036e-03	3.846845e-03	7.610934e-03	1.492354e-02	2.856167e-02	
+
+3-Step Allreduce:
+4.655142e-05	4.770194e-05	5.761206e-05	9.322582e-05	4.866008e-05	5.044485e-05	7.284212e-05	6.527836e-05	7.128902e-05	8.507051e-05	1.218654e-04	3.141086e-04	4.706035e-04	7.794063e-04	1.436096e-03	2.974969e-03	5.232472e-03	1.063650e-02	2.081363e-02	4.018949e-02	
+
+3-Step Allreduce, Extra Message:
+2.948898e-05	2.972016e-05	3.061038e-05	6.785159e-05	6.067210e-05	6.315229e-05	6.386323e-05	1.063544e-04	1.215686e-04	1.494318e-04	2.233902e-04	3.275982e-04	5.112414e-04	1.026103e-03	2.081916e-03	4.498898e-03	9.029956e-03	1.835039e-02	3.678344e-02	7.339972e-02	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.031236e-04	1.024346e-04	1.027916e-04	1.126519e-04	1.033331e-04	1.078729e-04	1.096241e-04	1.113332e-04	1.327866e-04	2.155791e-04	4.504915e-04	9.806494e-04	1.974186e-03	4.436719e-03	7.208136e-03	1.447178e-02	3.663790e-02	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 417074: <all_to_all_4> in cluster <summit> Done
+
+Job <all_to_all_4> was submitted from host <login1> by user <bienz> in cluster <summit> at Thu Oct 15 20:11:19 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Thu Oct 15 20:11:36 2020
+                            <42*e05n08>
+                            <42*e05n09>
+                            <42*e06n08>
+                            <42*h20n16>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Thu Oct 15 20:11:36 2020
+Terminated at Thu Oct 15 20:14:03 2020
+Results reported at Thu Oct 15 20:14:03 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_4.417074.err> for stderr output of this job.
+

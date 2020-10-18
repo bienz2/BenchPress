@@ -9,11 +9,15 @@
 module load gcc
 module load cuda
 
-nvidia-cuda-mps-control -d
+nvidia-smi
+
+#nvidia-cuda-mps-control -d
+
+#nvidia-smi
 
 cd /g/g14/bienz1/BenchPress/build/examples
 
 jsrun -a40 -c40 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy_mult 
 
 
-echo quit | nvidia-cuda-mps-control
+#echo quit | nvidia-cuda-mps-control

@@ -1,0 +1,92 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoall:
+6.009789e-05	5.617949e-05	5.709724e-05	5.929832e-05	6.395440e-05	7.452222e-05	9.273729e-05	8.669289e-05	9.783271e-05	1.325800e-04	1.657112e-04	5.255917e-04	9.424570e-04	1.639910e-03	2.044784e-03	3.973003e-03	
+
+3-Step Alltoall:
+5.851672e-05	4.474685e-05	4.632605e-05	5.408732e-05	5.746112e-05	6.907876e-05	7.972400e-05	8.225386e-05	1.092622e-04	1.132716e-04	1.653618e-04	5.181957e-04	9.960755e-04	1.288686e-03	1.960765e-03	4.257663e-03	
+
+3-Step Alltoall, Extra Message:
+3.584369e-05	3.740636e-05	3.864196e-05	3.813351e-05	1.438373e-04	1.143539e-04	1.290013e-04	1.742465e-04	1.610548e-04	2.285381e-04	4.612734e-04	5.823223e-04	6.842826e-04	1.351367e-03	2.586077e-03	4.950156e-03	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	-1	8.422818e-04	8.464878e-04	8.422320e-04	8.433665e-04	8.460377e-04	8.637214e-04	2.638213e-04	3.031166e-04	4.411458e-04	8.346105e-04	1.364202e-03	2.701818e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1559133: <all_to_all_16> in cluster <lassen> Done
+
+Job <all_to_all_16> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Oct 18 13:00:16 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Sun Oct 18 13:07:02 2020
+                            <40*lassen3>
+                            <40*lassen4>
+                            <40*lassen6>
+                            <40*lassen7>
+                            <40*lassen8>
+                            <40*lassen9>
+                            <40*lassen10>
+                            <40*lassen11>
+                            <40*lassen12>
+                            <40*lassen13>
+                            <40*lassen14>
+                            <40*lassen15>
+                            <40*lassen16>
+                            <40*lassen17>
+                            <40*lassen18>
+                            <40*lassen19>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen> was used as the working directory.
+Started at Sun Oct 18 13:07:02 2020
+Terminated at Sun Oct 18 13:09:23 2020
+Results reported at Sun Oct 18 13:09:23 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_16
+#BSUB -e all_to_all_16.%J.err
+#BSUB -o all_to_all_16.%J.out
+#BSUB -nnodes 16
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n16 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoall
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 88 MB
+    Average Memory :                             79.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1426 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   141 sec.
+    Turnaround time :                            547 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_16.1559133.err> for stderr output of this job.
+

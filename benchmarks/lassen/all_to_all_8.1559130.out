@@ -1,0 +1,84 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoall:
+5.730503e-05	5.162627e-05	6.094097e-05	6.040692e-05	6.485160e-05	5.883983e-05	7.056485e-05	7.450159e-05	6.723637e-05	7.773522e-05	9.932371e-05	3.036472e-04	5.072047e-04	7.294002e-04	1.139585e-03	1.923773e-03	
+
+3-Step Alltoall:
+5.926290e-05	4.064532e-05	4.706638e-05	4.303841e-05	4.443091e-05	4.785816e-05	7.134818e-05	6.273397e-05	6.790556e-05	7.022934e-05	9.938690e-05	2.805641e-04	4.726728e-04	6.610775e-04	1.098061e-03	1.864857e-03	
+
+3-Step Alltoall, Extra Message:
+3.675084e-05	3.831013e-05	3.637368e-05	3.832557e-05	6.711324e-05	5.935400e-05	7.904163e-05	6.271066e-05	9.146589e-05	1.275158e-04	2.482656e-04	2.913555e-04	4.073731e-04	5.809168e-04	1.560154e-03	2.456643e-03	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	-1	8.443553e-04	8.469459e-04	8.389154e-04	8.405635e-04	8.404612e-04	8.476557e-04	8.517893e-04	1.222506e-04	1.927181e-04	3.717845e-04	6.432109e-04	1.243984e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1559130: <all_to_all_8> in cluster <lassen> Done
+
+Job <all_to_all_8> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Oct 18 12:59:54 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Sun Oct 18 13:01:19 2020
+                            <40*lassen3>
+                            <40*lassen4>
+                            <40*lassen6>
+                            <40*lassen7>
+                            <40*lassen8>
+                            <40*lassen9>
+                            <40*lassen20>
+                            <40*lassen21>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen> was used as the working directory.
+Started at Sun Oct 18 13:01:19 2020
+Terminated at Sun Oct 18 13:02:46 2020
+Results reported at Sun Oct 18 13:02:46 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_8
+#BSUB -e all_to_all_8.%J.err
+#BSUB -o all_to_all_8.%J.out
+#BSUB -nnodes 8
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n8 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoall
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 65 MB
+    Average Memory :                             58.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1425 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   86 sec.
+    Turnaround time :                            172 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_8.1559130.err> for stderr output of this job.
+

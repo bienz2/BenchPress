@@ -1,5 +1,4 @@
 #include "alltoallv_timer.h"
-#include <numeric>
 
 void send_recv(int size, int n_msgs, int* send_procs, int* recv_procs,
         MPI_Request* send_req, MPI_Request* recv_req, float* send_data, 
@@ -73,8 +72,11 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
 
     std::vector<int> send_procs(num_procs);
     std::vector<int> recv_procs(num_procs);
-    std::iota(send_procs.begin(), send_procs.end(), 0);
-    std::iota(recv_procs.begin(), recv_procs.end(), 0);
+    for (int i = 0; i < num_procs; i++)
+    {
+        send_procs[i] = i;
+        recv_procs[i] = i;
+    }
     std::vector<MPI_Request> send_req(num_procs);
     std::vector<MPI_Request> recv_req(num_procs);
 
@@ -174,8 +176,11 @@ double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv
 
     std::vector<int> send_procs(num_procs);
     std::vector<int> recv_procs(num_procs);
-    std::iota(send_procs.begin(), send_procs.end(), 0);
-    std::iota(recv_procs.begin(), recv_procs.end(), 0);
+    for (int i = 0; i < num_procs; i++)
+    {
+        send_procs[i] = i;
+        recv_procs[i] = i;
+    }
     std::vector<MPI_Request> send_req(num_procs);
     std::vector<MPI_Request> recv_req(num_procs);
 

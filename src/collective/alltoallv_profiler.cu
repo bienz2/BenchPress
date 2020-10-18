@@ -1,7 +1,7 @@
 #include "alltoallv_profiler.h"
 #include "alltoallv_timer.h"
 
-void alltoallv_profile_cuda_aware(int max_i)
+void alltoallv_profile_cuda_aware(int max_i, bool imsg)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -13,7 +13,8 @@ void alltoallv_profile_cuda_aware(int max_i)
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
     int n_tests, size;
-    float* gpu_data;
+    float* gpu_send_data;
+    float* gpu_recv_data;
     double time, max_time;
 
     MPI_Comm node_comm;
@@ -29,7 +30,8 @@ void alltoallv_profile_cuda_aware(int max_i)
     int gpu_rank = node_rank % ppg;
 
     cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
+    cudaMalloc((void**)&gpu_send_data, max_bytes);
+    cudaMalloc((void**)&gpu_recv_data, max_bytes);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
@@ -44,14 +46,18 @@ void alltoallv_profile_cuda_aware(int max_i)
            if (i > 14) n_tests = 100;
            if (i > 20) n_tests = 10;
            size = pow(2, i);
-           time = time_alltoallv(size, gpu_data, gpu_comm, n_tests);
+           if (imsg)
+               time = time_alltoallv_imsg(size, gpu_send_data, gpu_recv_data, gpu_comm, n_tests);
+           else
+               time = time_alltoallv(size, gpu_send_data, gpu_recv_data, gpu_comm, n_tests);
            MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, gpu_comm);
            if (rank == 0) printf("%e\t", max_time);
         }
         if (rank == 0) printf("\n\n");
     }
 
-    cudaFree(gpu_data);
+    cudaFree(gpu_send_data);
+    cudaFree(gpu_recv_data);
     MPI_Comm_free(&gpu_comm);
 
     cudaError err = cudaGetLastError();
@@ -62,7 +68,7 @@ void alltoallv_profile_cuda_aware(int max_i)
     }
 }
 
-void alltoallv_profile_3step(int max_i)
+void alltoallv_profile_3step(int max_i, bool imsg)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -73,10 +79,12 @@ void alltoallv_profile_3step(int max_i)
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
-    float* cpu_data;
+    float* cpu_send_data;
+    float* cpu_recv_data;
     float* gpu_data;
     double time, max_time;
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    cudaMallocHost((void**)&cpu_send_data, max_bytes);
+    cudaMallocHost((void**)&cpu_recv_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -109,7 +117,12 @@ void alltoallv_profile_3step(int max_i)
             if (i > 14) n_tests = 100;
             if (i > 20) n_tests = 10;
             size = pow(2, i);
-            time = time_alltoallv_3step(size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
+            if (imsg)
+                time = time_alltoallv_3step_imsg(size, cpu_send_data, cpu_recv_data,
+                        gpu_data, stream, gpu_comm, n_tests);
+            else
+                time = time_alltoallv_3step(size, cpu_send_data, cpu_recv_data,
+                        gpu_data, stream, gpu_comm, n_tests);
             MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, gpu_comm);
             if (rank == 0) printf("%e\t", max_time);
         }
@@ -118,7 +131,8 @@ void alltoallv_profile_3step(int max_i)
 
     cudaFree(gpu_data);
     cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    cudaFreeHost(cpu_send_data);
+    cudaFreeHost(cpu_recv_data);
     MPI_Comm_free(&gpu_comm);
 
     cudaError err = cudaGetLastError();
@@ -129,7 +143,7 @@ void alltoallv_profile_3step(int max_i)
     }
 }
 
-void alltoallv_profile_3step_extra_msg(int max_i)
+void alltoallv_profile_3step_extra_msg(int max_i, bool imsg)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -140,10 +154,12 @@ void alltoallv_profile_3step_extra_msg(int max_i)
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
-    float* cpu_data;
+    float* cpu_send_data;
+    float* cpu_recv_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    cudaMallocHost((void**)&cpu_send_data, max_bytes);
+    cudaMallocHost((void**)&cpu_recv_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -176,8 +192,12 @@ void alltoallv_profile_3step_extra_msg(int max_i)
         if (i > 14) n_tests = 100;
         if (i > 20) n_tests = 10;
         size = pow(2, i);
-        time = time_alltoallv_3step_msg(size, cpu_data, gpu_data, ppg, node_rank, stream,
-               gpu_comm, n_tests);
+        if (imsg)
+            time = time_alltoallv_3step_msg_imsg(size, cpu_send_data, cpu_recv_data, gpu_data, ppg, 
+                   node_rank, stream, gpu_comm, n_tests);
+        else
+            time = time_alltoallv_3step_msg(size, cpu_send_data, cpu_recv_data, gpu_data, ppg, 
+                   node_rank, stream, gpu_comm, n_tests);
         MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
         if (rank == 0) printf("%e\t", max_time);
     }
@@ -186,7 +206,8 @@ void alltoallv_profile_3step_extra_msg(int max_i)
 
     cudaFree(gpu_data);
     cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    cudaFreeHost(cpu_send_data);
+    cudaFreeHost(cpu_recv_data);
     MPI_Comm_free(&gpu_comm);
 
     cudaError err = cudaGetLastError();
@@ -197,7 +218,7 @@ void alltoallv_profile_3step_extra_msg(int max_i)
     }
 }
 
-void alltoallv_profile_3step_dup_devptr(int max_i)
+void alltoallv_profile_3step_dup_devptr(int max_i, bool imsg)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -208,10 +229,12 @@ void alltoallv_profile_3step_dup_devptr(int max_i)
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
-    float* cpu_data;
+    float* cpu_send_data;
+    float* cpu_recv_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    cudaMallocHost((void**)&cpu_send_data, max_bytes);
+    cudaMallocHost((void**)&cpu_recv_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -224,7 +247,7 @@ void alltoallv_profile_3step_dup_devptr(int max_i)
     int ppg = ppn / num_gpus;
     int gpu = node_rank / ppg;
     int gpu_rank = node_rank % ppg;
-    int n_tests, size, msg_size;
+    int n_tests, size;
     double time, max_time;
 
     cudaSetDevice(gpu);
@@ -243,13 +266,12 @@ void alltoallv_profile_3step_dup_devptr(int max_i)
         if (i > 14) n_tests = 100;
         if (i > 20) n_tests = 10;
         size = pow(2, i);
-        msg_size = size / ppg;
-        if (msg_size < 1)
-        {
-           if (rank == 0) printf("-1\t");
-           continue;
-        }
-        time = time_alltoallv_3step(msg_size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
+        if (imsg)
+            time = time_alltoallv_3step_dup_imsg(size, cpu_send_data, cpu_recv_data, gpu_data, ppg, 
+                   node_rank, stream, gpu_comm, n_tests);
+        else
+            time = time_alltoallv_3step_dup(size, cpu_send_data, cpu_recv_data, gpu_data, ppg, 
+                   node_rank, stream, gpu_comm, n_tests);
         MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
         if (rank == 0) printf("%e\t", max_time);
     }
@@ -257,7 +279,8 @@ void alltoallv_profile_3step_dup_devptr(int max_i)
 
     cudaFree(gpu_data);
     cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    cudaFreeHost(cpu_send_data);
+    cudaFreeHost(cpu_recv_data);
     MPI_Comm_free(&gpu_comm);
 
     cudaError err = cudaGetLastError();

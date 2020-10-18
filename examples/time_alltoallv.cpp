@@ -21,14 +21,21 @@ int main(int argc, char *argv[])
     if (argc > 1) max_i = atoi(argv[1]);
     if (argc > 2) n_iter = atoi(argv[2]);
 
-    alltoallv_profile_cuda_aware(max_i);
+    alltoallv_profile_cuda_aware(max_i, false);
 
-    alltoallv_profile_3step(max_i);
+    alltoallv_profile_3step(max_i, false);
 
-    alltoallv_profile_3step_extra_msg(max_i);
+    alltoallv_profile_3step_extra_msg(max_i, false);
 
-    alltoallv_profile_3step_dup_devptr(max_i);
+    alltoallv_profile_3step_dup_devptr(max_i, false);
 
+    alltoallv_profile_cuda_aware(max_i, true);
+
+    alltoallv_profile_3step(max_i, true);
+
+    alltoallv_profile_3step_extra_msg(max_i, true);
+
+    alltoallv_profile_3step_dup_devptr(max_i, true);
 
     MPI_Finalize();
 

@@ -1,0 +1,105 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoallv:
+1.309902e-04	1.206393e-04	1.151046e-04	1.325346e-04	1.163599e-04	1.231276e-04	1.645998e-04	1.286520e-04	1.662746e-04	1.892940e-04	2.459899e-04	3.672983e-04	6.698198e-04	1.452214e-03	2.375543e-03	4.540708e-03	
+
+3-Step Alltoallv:
+Nmsgs 64, Bytes 256
+1.026146e-04	1.463180e-04	8.722828e-05	9.041469e-05	8.949016e-05	9.819524e-05	9.329095e-05	9.777528e-05	1.382001e-04	1.316806e-04	1.765694e-04	2.957467e-04	5.829551e-04	1.185280e-03	2.206737e-03	4.084155e-03	
+
+3-Step Alltoallv, Extra Message:
+3.710630e-04	3.370797e-04	2.850003e-04	3.032459e-04	3.579749e-04	3.802589e-04	3.005395e-04	2.980957e-04	3.065131e-04	3.614544e-04	4.151193e-04	4.705298e-04	9.001542e-04	1.558828e-03	2.818172e-03	5.204853e-03	
+
+3-Step Alltoallv, Duplicate DevPtr:
+8.385544e-04	8.532989e-04	8.464091e-04	8.466738e-04	8.450447e-04	8.399849e-04	8.407512e-04	8.531147e-04	8.502881e-04	8.555493e-04	5.729003e-04	2.758063e-04	4.883034e-04	9.547408e-04	1.906711e-03	3.560555e-03	
+
+Cuda-Aware Alltoallv:
+2.713838e-04	2.622618e-04	2.702762e-04	2.856879e-04	2.869433e-04	2.628489e-04	2.628500e-04	2.640962e-04	2.589616e-04	2.883028e-04	2.853180e-04	2.978996e-04	4.096186e-04	8.012265e-04	1.542902e-03	2.861400e-03	
+
+3-Step Alltoallv:
+8.426258e-05	1.336203e-04	8.734950e-05	9.028713e-05	8.279351e-05	8.633662e-05	1.020344e-04	1.061594e-04	1.249862e-04	1.360208e-04	1.865711e-04	3.519841e-04	7.704755e-04	1.542720e-03	3.048620e-03	3.217624e-03	
+
+3-Step Alltoallv, Extra Message:
+4.056246e-05	4.043466e-05	4.071619e-05	4.217875e-05	4.480104e-05	4.783097e-05	6.587448e-05	5.657552e-05	6.808586e-05	1.310889e-04	1.503944e-04	2.350615e-04	3.931919e-04	9.096616e-04	1.694260e-03	2.949483e-03	
+
+3-Step Alltoallv, Duplicate DevPtr:
+8.400350e-04	8.432445e-04	8.425783e-04	8.426032e-04	8.422788e-04	8.419123e-04	8.421335e-04	8.453093e-04	8.485515e-04	8.552783e-04	5.110662e-04	1.347824e-04	2.613350e-04	5.055144e-04	9.981880e-04	1.377096e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1559151: <all_to_all_v_16> in cluster <lassen> Done
+
+Job <all_to_all_v_16> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Oct 18 13:07:15 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Sun Oct 18 13:29:24 2020
+                            <40*lassen3>
+                            <40*lassen4>
+                            <40*lassen5>
+                            <40*lassen6>
+                            <40*lassen7>
+                            <40*lassen8>
+                            <40*lassen9>
+                            <40*lassen10>
+                            <40*lassen11>
+                            <40*lassen12>
+                            <40*lassen13>
+                            <40*lassen14>
+                            <40*lassen15>
+                            <40*lassen16>
+                            <40*lassen17>
+                            <40*lassen18>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen> was used as the working directory.
+Started at Sun Oct 18 13:29:24 2020
+Terminated at Sun Oct 18 13:33:27 2020
+Results reported at Sun Oct 18 13:33:27 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_v_16
+#BSUB -e all_to_all_v_16.%J.err
+#BSUB -o all_to_all_v_16.%J.out
+#BSUB -nnodes 16
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n16 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoallv
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 90 MB
+    Average Memory :                             83.92 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1426 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   242 sec.
+    Turnaround time :                            1572 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_v_16.1559151.err> for stderr output of this job.
+

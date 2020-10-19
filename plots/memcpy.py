@@ -1,14 +1,11 @@
 import numpy as np
-import pyfancyplot.plot as plt
 import math
 import glob
+import prof
 
-computer = "summit"
-n_procs = 4
+n_procs = prof.n_gpus
 n_socket = n_procs / 2
-
-folder = "../benchmarks/%s"%computer
-files = glob.glob("%s/memcpy.*.out"%folder)
+files = glob.glob("%s/memcpy.*.out"%prof.folder)
 
 class Times():
     times = ""
@@ -26,20 +23,15 @@ class Times():
 class MemcpyTimes():
     on_socket = ""
     off_socket = ""
-
-    def __init__(self):
-        self.on_socket = Times()
-        self.off_socket = Times()
-
-class D2DTimes():
-    on_socket = ""
-    off_socket = ""
     across_socket = ""
+    d2d = False
 
-    def __init__(self):
+    def __init__(self, d2d = False):
         self.on_socket = Times()
         self.off_socket = Times()
-        self.across_socket = Times()
+        if (d2d):
+            self.across_socket = Times()
+            self.d2d = True
 
 test_list = ""
 time_list = ""
@@ -50,7 +42,7 @@ gpu1 = 0
 
 h2d = MemcpyTimes()
 d2h = MemcpyTimes()
-d2d = D2DTimes()
+d2d = MemcpyTimes(True)
 
 for filename in files:
     f = open(filename, 'r')
@@ -90,43 +82,34 @@ for filename in files:
 
     f.close()
 
-x_data = [2**i for i in range(len(h2d.on_socket.times))]
+if __name__ == '__main__':
+    import pyfancyplot.plot as plt
+    x_data = [2**i for i in range(len(h2d.on_socket.times))]
 
-if 1:
-    # Memcpy Host To Device
-    plt.add_luke_options()
-    plt.set_palette(palette="deep", n_colors = 2)
-    plt.line_plot(h2d.on_socket.times, x_data, label = "On-Socket")
-    plt.line_plot(h2d.off_socket.times, x_data, label = "Off-Socket")
-    plt.add_anchored_legend(ncol=2)
-    plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
-    plt.set_scale('log', 'log')
-    plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-    plt.save_plot("%s_h2d_memcpy.pdf"%computer)
+    if 1:
+        # Memcpy Host To Device
+        plt.add_luke_options()
+        plt.set_palette(palette="deep", n_colors = 2)
+        plt.line_plot(h2d.on_socket.times, x_data, label = "On-Socket")
+        plt.line_plot(h2d.off_socket.times, x_data, label = "Off-Socket")
+        plt.line_plot(d2h.on_socket.times, x_data, tickmark='--')
+        plt.line_plot(d2h.off_socket.times, x_data, tickmark='--')
+        plt.add_anchored_legend(ncol=2)
+        plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
+        plt.set_scale('log', 'log')
+        plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
+        plt.save_plot("%s_memcpy.pdf"%prof.computer)
 
-
-if 1:
-    # Memcpy Device To Host
-    plt.add_luke_options()
-    plt.set_palette(palette="deep", n_colors = 2)
-    plt.line_plot(d2h.on_socket.times, x_data, label = "On-Socket")
-    plt.line_plot(d2h.off_socket.times, x_data, label = "Off-Socket")
-    plt.add_anchored_legend(ncol=2)
-    plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
-    plt.set_scale('log', 'log')
-    plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-    plt.save_plot("%s_d2h_memcpy.pdf"%computer)
-
-if 1:
-    # Memcpy Device To Device
-    plt.add_luke_options()
-    plt.set_palette(palette="deep", n_colors = 3)
-    plt.line_plot(d2d.on_socket.times, x_data, label = "On-Socket")
-    plt.line_plot(d2d.off_socket.times, x_data, label = "Off-Socket")
-    plt.line_plot(d2d.across_socket.times, x_data, label = "CPU Off-Socket")
-    plt.add_anchored_legend(ncol=3)
-    plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
-    plt.set_scale('log', 'log')
-    plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-    plt.save_plot("%s_d2d_memcpy.pdf"%computer)
+    if 0:
+        # Memcpy Device To Device
+        plt.add_luke_options()
+        plt.set_palette(palette="deep", n_colors = 3)
+        plt.line_plot(d2d.on_socket.times, x_data, label = "On-Socket")
+        plt.line_plot(d2d.off_socket.times, x_data, label = "Off-Socket")
+        plt.line_plot(d2d.across_socket.times, x_data, label = "CPU Off-Socket")
+        plt.add_anchored_legend(ncol=3)
+        plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
+        plt.set_scale('log', 'log')
+        plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
+        plt.save_plot("%s_d2d_memcpy.pdf"%prof.computer)
 

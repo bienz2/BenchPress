@@ -25,7 +25,7 @@ class Model():
     def model_times(self):
         return [self.alpha + self.beta * s for s in self.sizes]
 
-    def model_times(self, sizes):
+    def model_time_sizes(self, sizes):
         return [self.alpha + self.beta * s for s in sizes]
 
     def plot_model(self, times, label):
@@ -63,14 +63,18 @@ class MemcpyModel():
         plt.add_anchored_legend(ncol=n_cols)
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_%s_model.pdf"%(prof.computer, name))
+        plt.save_plot("%s/%s_%s_model.pdf"%(prof.folder_out, prof.computer, name))
 
 
 h2d_model = MemcpyModel(memcpy.h2d)
-print("H2D:", h2d_model.alpha, h2d_model.beta)
 d2h_model = MemcpyModel(memcpy.d2h)
-print("D2H:", d2h_model.alpha, d2h_model.beta)
 d2d_model = MemcpyModel(memcpy.d2d)
+
+if 0:
+    print("H2D On Socket:", h2d_model.on_socket.alpha, h2d_model.on_socket.beta)
+    print("H2D Off Socket:", h2d_model.off_socket.alpha, h2d_model.off_socket.beta)
+    print("D2H On Socket:", d2h_model.on_socket.alpha, d2h_model.on_socket.beta)
+    print("D2H Off Socket:", d2h_model.off_socket.alpha, d2h_model.off_socket.beta)
 
 
 
@@ -130,16 +134,35 @@ class PongModel():
         self.on_socket.plot_model(times.on_socket, "On-Socket")
         self.on_node.plot_model(times.on_node, "On-Node")
         self.network.plot_model(times.network, "Network")
+        print(self.sizes, times.network)
         plt.add_anchored_legend(ncol=3)
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_%s_model.pdf"%(prof.computer, name))
+        plt.save_plot("%s/%s_%s_model.pdf"%(prof.folder_out, prof.computer, name))
 
 
 cpu_model = PongModel(ping_pong.cpu_times)
-print("CPU: Rend:", cpu_model.network.rend_model.alpha, cpu_model.network.rend_model.beta)
-print("CPU: Eager:", cpu_model.network.eager_model.alpha, cpu_model.network.eager_model.beta)
 gpu_model = PongModel(ping_pong.gpu_times, True)
+
+if 0:
+    print("CPU: Rend:", cpu_model.network.rend.alpha, cpu_model.network.rend.beta)
+    print("CPU: Eager:", cpu_model.network.eager.alpha, cpu_model.network.eager.beta)
+    print("CPU: Short:", cpu_model.network.short.alpha, cpu_model.network.short.beta)
+
+if 0:
+    print("CPU: Rend:", cpu_model.on_node.rend.alpha, cpu_model.on_node.rend.beta)
+    print("CPU: Eager:", cpu_model.on_node.eager.alpha, cpu_model.on_node.eager.beta)
+    print("CPU: Short:", cpu_model.on_node.short.alpha, cpu_model.on_node.short.beta)
+
+if 0:
+    print("CPU: Rend:", cpu_model.on_socket.rend.alpha, cpu_model.on_socket.rend.beta)
+    print("CPU: Eager:", cpu_model.on_socket.eager.alpha, cpu_model.on_socket.eager.beta)
+    print("CPU: Short:", cpu_model.on_socket.short.alpha, cpu_model.on_socket.short.beta)
+
+if 0:
+    print("GPU: ", gpu_model.network.alpha, gpu_model.network.beta)
+    print("GPU: ", gpu_model.on_node.alpha, gpu_model.on_node.beta)
+    print("GPU: ", gpu_model.on_socket.alpha, gpu_model.on_socket.beta)
 
 
 
@@ -201,7 +224,7 @@ class NodeModel():
         plt.set_scale('log', 'log')
         plt.set_yticks([1e-6,1e-5,1e-4],['1e-6','1e-5','1e-4'])
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_node_model.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_node_model.pdf"%(prof.folder_out, prof.computer))
             
 node_model = NodeModel(node_pong.cpu_times.ppn_times, cpu_model)
 gpu_node_model = NodeModel(node_pong.gpu_times.ppn_times, gpu_model)
@@ -210,7 +233,7 @@ print("GPU NODE:", gpu_node_model.omega)
 
 
 ## Multiple Ping Pongs
-import mult_pong
+import mult_pong_split
 class MultModel():
     sizes = ""
     theta = 0
@@ -234,7 +257,6 @@ class MultModel():
         A = np.matrix(mat)
         b = np.array(t)
         self.theta, = np.linalg.lstsq(A, b)[0]
-        print(self.theta)
 
     def plot_model(self):
         plt.add_luke_options()
@@ -243,23 +265,25 @@ class MultModel():
             ydata = list()
             j_list = list()
             for j in range(len(self.sizes)):
-                if (mult_pong.gpu_times.ppn_times[i][j] > 0):
+                if (mult_pong_split.gpu_times.ppn_times[i][j] > 0):
                     size = (int) (self.sizes[j] / (i+1))
                     j_list.append(j)
                     alpha, beta = gpu_model.network.get_model(size)
-                    model = alpha * (i+1) + beta * self.sizes[j] + self.theta * i;
+                    model = alpha * (i+1) + beta * self.sizes[j];
+                    if 0:
+                        model += self.theta * i;
                     ydata.append(model)
             xdata = [self.sizes[j] for j in j_list]
-            print(i, j_list)
-            print(mult_pong.gpu_times.ppn_times[i])
-            plt.line_plot([mult_pong.gpu_times.ppn_times[i][j] for j in j_list], xdata, label = "%d Msgs"%(i+1))
+            if (i == 0):
+                print(xdata, ydata)
+            plt.line_plot([mult_pong_split.gpu_times.ppn_times[i][j] for j in j_list], xdata, label = "%d Msgs"%(i+1))
             plt.color_ctr -= 1
             plt.line_plot(ydata, xdata, tickmark = '--')
         plt.add_anchored_legend(ncol=3)
         plt.set_scale('log', 'log')
         plt.set_yticks([1e-6,1e-5,1e-4],['1e-6','1e-5','1e-4'])
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_mult_model.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_mult_model.pdf"%(prof.folder_out, prof.computer))
 
     def get_model(self, n_msgs):
         model_t = list()
@@ -270,7 +294,9 @@ class MultModel():
         
 
 
-gpu_mult_model = MultModel(mult_pong.gpu_times.ppn_times, gpu_model)
+gpu_mult_model = MultModel(mult_pong_split.gpu_times.ppn_times, gpu_model)
+print("GPU THETA:", gpu_mult_model.theta)
+
 
 
 
@@ -289,6 +315,8 @@ if __name__=='__main__':
     ## Plot CPU and GPU Ping Pong Times
     if 0:
         cpu_model.plot_model(ping_pong.cpu_times, "cpu")
+    
+    if 1:
         gpu_model.plot_model(ping_pong.gpu_times, "gpu")
 
     ## Plot CUDA-Aware and 3Step Network Times
@@ -310,7 +338,7 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=2)
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_3step_model.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_3step_model.pdf"%(prof.folder_out, prof.computer))
 
     ## Plot Max-Rate Model
     if 0:
@@ -355,7 +383,7 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=3)
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_3step_node_model.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_3step_node_model.pdf"%(prof.folder_out, prof.computer))
 
     ## Plot Cost of Sending Multiple Messages
     if 0:
@@ -363,7 +391,7 @@ if __name__=='__main__':
 
 
     ## Plot Model for Sending N Msgs of Different Sizes, Cuda-Aware vs 3Step
-    if 1:
+    if 0:
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors=4)
 
@@ -373,8 +401,8 @@ if __name__=='__main__':
         for n_msgs in nmsg_list:
             sizes = [s * n_msgs for s in xdata]
 
-            h2d_model_t = h2d_model.on_socket.model_times(sizes)
-            d2h_model_t = d2h_model.on_socket.model_times(sizes)
+            h2d_model_t = h2d_model.on_socket.model_time_sizes(sizes)
+            d2h_model_t = d2h_model.on_socket.model_time_sizes(sizes)
 
             cpu_model_t = list()
             gpu_model_t = list()
@@ -391,7 +419,23 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=2)
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_3step_mult_model.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_3step_mult_model.pdf"%(prof.folder_out, prof.computer))
 
 
+    # Plot Model for MPI_Send vs MPI_Isend
+    import mult_pong
+    plt.add_luke_options()
+    plt.set_palette(palette="deep", n_colors=2)
+    print(mult_pong.gpu_times.ppn_times[0])
+    print(gpu_model.sizes)
+    print(ping_pong.gpu_times.network)
+    plt.line_plot(ping_pong.gpu_times.network, gpu_model.sizes)
+    plt.line_plot(mult_pong.gpu_times.ppn_times[0], gpu_model.sizes)
+
+
+    plt.add_anchored_legend(ncol=3)
+    plt.set_scale('log', 'log')
+    plt.set_yticks([1e-6,1e-5,1e-4],['1e-6','1e-5','1e-4'])
+    plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
+    plt.save_plot("%s/%s_isend.pdf"%(prof.folder_out, prof.computer))
 

@@ -4,8 +4,11 @@ import glob
 import prof
 
 ppn = prof.max_ppn
+split=""
+if 1:
+    split="_split"
 
-files = glob.glob("%s/mult_pong.*.out"%(prof.folder))
+files = glob.glob("%s/mult_pong%s.*.out"%(prof.folder,split))
 
 class TimeList():
     ppn_times = ""
@@ -69,8 +72,11 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=3)
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
-        plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_cpu_mult_pong.pdf"%(prof.computer))
+        if (split==""):
+            plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
+        else:
+            plt.add_labels("Total Bytes", "Time (Seconds)")
+        plt.save_plot("%s_cpu_mult%s_pong.pdf"%(prof.computer,split))
 
     if 1:
         # CPU Mult Slowdown 
@@ -83,8 +89,11 @@ if __name__=='__main__':
             plt.line_plot(y_data, x_data, label = "NMsgs %d"%(n+1))
         plt.add_anchored_legend(ncol=3)
         plt.set_scale('log', 'linear')
-        plt.add_labels("Message Size (Bytes)", "Times Slowdown")
-        plt.save_plot("%s_cpu_mult_slowdown.pdf"%(prof.computer))
+        if (split==""):
+            plt.add_labels("Message Size (Bytes)", "Times Slowdown")
+        else:
+            plt.add_labels("Total Bytes", "Times Slowdown")
+        plt.save_plot("%s_cpu_mult%s_slowdown.pdf"%(prof.computer,split))
 
 
 
@@ -104,8 +113,11 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=prof.n_gpus/2)
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
-        plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_gpu_mult_pong.pdf"%(prof.computer))
+        if (split==""):
+            plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
+        else:
+            plt.add_labels("Total Bytes", "Time (Seconds)")
+        plt.save_plot("%s_gpu_mult%s_pong.pdf"%(prof.computer,split))
 
     if 1:
         # GPU Diff X
@@ -117,8 +129,11 @@ if __name__=='__main__':
             plt.line_plot(y_data, x_data, label = "NMsgs %d"%(i+1))
         plt.add_anchored_legend(ncol=prof.n_gpus/2)
         plt.set_scale('log', 'linear')
-        plt.add_labels("Message Size (Bytes)", "Times Slowdown")
-        plt.save_plot("%s_gpu_mult_slowdown.pdf"%(prof.computer))
+        if (split==""):
+            plt.add_labels("Message Size (Bytes)", "Times Slowdown")
+        else:
+            plt.add_labels("Total Bytes", "Times Slowdown")
+        plt.save_plot("%s_gpu_mult%s_slowdown.pdf"%(prof.computer, split))
 
 
 

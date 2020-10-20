@@ -55,7 +55,7 @@ if __name__=='__main__':
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors=4)
         plt.line_plot(data[0], x_data, label = "Cuda-Aware")
-        plt.line_plot(data[1], x_data, label = "Copy To CPU")
+        plt.line_plot(data[1], x_data, label = "3-Step")
         plt.line_plot(data[2], x_data, label = "Extra Msg")
         yd = list()
         xd = list()
@@ -75,7 +75,8 @@ if __name__=='__main__':
         x_data = [8*2**i for i in range(len(data[0]))]
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors=4)
-        plt.line_plot([data[0][i]/data[1][i] for i in range(len(x_data))], x_data, label = "Copy To CPU")
+        plt.line_plot([1]*len(x_data), x_data)
+        plt.line_plot([data[0][i]/data[1][i] for i in range(len(x_data))], x_data, label = "3-Step")
         plt.line_plot([data[0][i]/data[2][i] for i in range(len(x_data))], x_data, label = "Extra Msg")
         yd = list()
         xd = list()

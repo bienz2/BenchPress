@@ -70,7 +70,7 @@ h2d_model = MemcpyModel(memcpy.h2d)
 d2h_model = MemcpyModel(memcpy.d2h)
 d2d_model = MemcpyModel(memcpy.d2d)
 
-if 0:
+if 1:
     print("H2D On Socket:", h2d_model.on_socket.alpha, h2d_model.on_socket.beta)
     print("H2D Off Socket:", h2d_model.off_socket.alpha, h2d_model.off_socket.beta)
     print("D2H On Socket:", d2h_model.on_socket.alpha, d2h_model.on_socket.beta)
@@ -144,22 +144,25 @@ class PongModel():
 cpu_model = PongModel(ping_pong.cpu_times)
 gpu_model = PongModel(ping_pong.gpu_times, True)
 
-if 0:
+if 1:
+    print("Network:")
     print("CPU: Rend:", cpu_model.network.rend.alpha, cpu_model.network.rend.beta)
     print("CPU: Eager:", cpu_model.network.eager.alpha, cpu_model.network.eager.beta)
     print("CPU: Short:", cpu_model.network.short.alpha, cpu_model.network.short.beta)
 
-if 0:
+if 1:
+    print("Node:")
     print("CPU: Rend:", cpu_model.on_node.rend.alpha, cpu_model.on_node.rend.beta)
     print("CPU: Eager:", cpu_model.on_node.eager.alpha, cpu_model.on_node.eager.beta)
     print("CPU: Short:", cpu_model.on_node.short.alpha, cpu_model.on_node.short.beta)
 
-if 0:
+if 1:
+    print("Socket:")
     print("CPU: Rend:", cpu_model.on_socket.rend.alpha, cpu_model.on_socket.rend.beta)
     print("CPU: Eager:", cpu_model.on_socket.eager.alpha, cpu_model.on_socket.eager.beta)
     print("CPU: Short:", cpu_model.on_socket.short.alpha, cpu_model.on_socket.short.beta)
 
-if 0:
+if 1:
     print("GPU: ", gpu_model.network.alpha, gpu_model.network.beta)
     print("GPU: ", gpu_model.on_node.alpha, gpu_model.on_node.beta)
     print("GPU: ", gpu_model.on_socket.alpha, gpu_model.on_socket.beta)

@@ -10,10 +10,10 @@ The plotting folder includes python files that plot the benchmarks.  Furthermore
 
 # Summit Example Plots
 The modeled performance of communicating data with GPUDirect, 3-step copying to CPU, and split 3-step, which distributes data across all CPUs on Summit.
-![](figures/summit_3step_node_model)
+![](figures/summit_3step_node_model.pdf)
 
 The modeled performance of communicating multiple messages with GPUDirect (solid) versus copying to CPU with a single cudaMemcpyAsync before sending all messages bewteen CPUs (dotted) on Summit.
-![](figures/summit_3step_node_model)
+![](figures/summit_3step_mult_model.pdf)
 
 # License
 

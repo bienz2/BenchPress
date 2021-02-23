@@ -1,0 +1,120 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoallv:
+1.716890e-04	1.576994e-04	2.265166e-04	2.252767e-04	1.858687e-04	1.844593e-04	1.633817e-04	1.834107e-04	3.153889e-04	2.948377e-04	3.816453e-04	7.332603e-04	1.139204e-03	2.094629e-03	4.007088e-03	7.677698e-03	
+
+3-Step Alltoallv:
+Nmsgs 128, Bytes 512
+1.387095e-04	1.530317e-04	1.318869e-04	1.362831e-04	1.298723e-04	1.450269e-04	1.842453e-04	1.644331e-04	1.734383e-04	2.146915e-04	3.032137e-04	6.251968e-04	9.813492e-04	2.009380e-03	3.769382e-03	7.442469e-03	
+
+3-Step Alltoallv, Extra Message:
+1.005958e-03	7.513455e-04	4.550020e-04	4.176136e-04	4.396089e-04	4.577118e-04	5.671337e-04	5.846180e-04	6.769273e-04	6.302197e-04	1.546664e-03	1.070382e-03	1.812161e-03	3.358203e-03	6.278869e-03	1.111725e-02	
+
+3-Step Alltoallv, Duplicate DevPtr:
+1.109976e-03	1.088851e-03	1.140552e-03	8.569374e-04	9.762499e-04	8.573202e-04	9.465988e-04	9.772135e-04	1.041597e-03	6.092353e-04	6.139106e-04	6.383419e-04	1.152520e-03	2.158314e-03	4.390560e-03	8.454385e-03	
+
+Cuda-Aware Alltoallv:
+4.135744e-04	4.146983e-04	4.232837e-04	4.209174e-04	4.122824e-04	4.139726e-04	4.134684e-04	5.038985e-04	4.532615e-04	5.029262e-04	4.717288e-04	6.859117e-04	8.480375e-04	1.432446e-03	2.788535e-03	5.774520e-03	
+
+3-Step Alltoallv:
+1.538494e-04	1.416444e-04	1.458133e-04	1.305161e-04	1.411638e-04	1.526896e-04	1.662070e-04	1.800092e-04	2.194997e-04	2.389159e-04	3.113534e-04	4.896322e-04	9.871330e-04	1.956501e-03	3.634883e-03	5.520367e-03	
+
+3-Step Alltoallv, Extra Message:
+4.530074e-05	4.547238e-05	5.114195e-05	4.896921e-05	6.544076e-05	8.063730e-05	1.166822e-04	1.150750e-04	1.853779e-04	1.656532e-04	3.546484e-04	7.911477e-04	1.221075e-03	1.867823e-03	3.409767e-03	5.790761e-03	
+
+3-Step Alltoallv, Duplicate DevPtr:
+8.498937e-04	8.518037e-04	8.505244e-04	8.517276e-04	8.511737e-04	8.518437e-04	8.540231e-04	8.573708e-04	8.614352e-04	1.743085e-04	1.820438e-04	3.531322e-04	7.037242e-04	1.397534e-03	2.809502e-03	2.995040e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1559152: <all_to_all_v_32> in cluster <lassen> Done
+
+Job <all_to_all_v_32> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Oct 18 13:07:26 2020
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <bienz1> in cluster <lassen> at Sun Oct 18 13:20:15 2020
+                            <40*lassen254>
+                            <40*lassen255>
+                            <40*lassen258>
+                            <40*lassen419>
+                            <40*lassen599>
+                            <40*lassen92>
+                            <40*lassen420>
+                            <40*lassen428>
+                            <40*lassen278>
+                            <40*lassen430>
+                            <40*lassen764>
+                            <40*lassen281>
+                            <40*lassen108>
+                            <40*lassen766>
+                            <40*lassen109>
+                            <40*lassen767>
+                            <40*lassen129>
+                            <40*lassen458>
+                            <40*lassen459>
+                            <40*lassen613>
+                            <40*lassen614>
+                            <40*lassen130>
+                            <40*lassen615>
+                            <40*lassen622>
+                            <40*lassen623>
+                            <40*lassen624>
+                            <40*lassen140>
+                            <40*lassen625>
+                            <40*lassen346>
+                            <40*lassen347>
+                            <40*lassen348>
+                            <40*lassen349>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen> was used as the working directory.
+Started at Sun Oct 18 13:20:15 2020
+Terminated at Sun Oct 18 13:25:49 2020
+Results reported at Sun Oct 18 13:25:49 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_v_32
+#BSUB -e all_to_all_v_32.%J.err
+#BSUB -o all_to_all_v_32.%J.out
+#BSUB -nnodes 32
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n32 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoallv
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 87 MB
+    Average Memory :                             62.28 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1426 MB
+    Max Processes :                              7
+    Max Threads :                                27
+    Run time :                                   334 sec.
+    Turnaround time :                            1103 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_v_32.1559152.err> for stderr output of this job.
+

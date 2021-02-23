@@ -1,0 +1,33 @@
+jsrun -a36 -c36 -g6 -r1 -n4 -M -gpu --latency_priority=gpu-cpu --launch_distribution=packed ./mpi_sparse_mat suitesparse/europe_osm.pm
+Max N 23
+Max TAP N 4
+Global NNZ 108109320, NNZ/GPU 4504555
+Cuda Aware : 1.567385e-03
+Copy To CPU : 1.524687e-03
+Node Aware : 9.635869e-03
+Dup Devptr Node Aware : 1.388921e-03
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch3>
+Subject: Job 749727: <europe_osm_4> in cluster <summit> Done
+
+Job <europe_osm_4> was submitted from host <login3> by user <bienz> in cluster <summit> at Fri Feb 19 14:45:58 2021
+Job was executed on host(s) <1*batch3>, in queue <batch>, as user <bienz> in cluster <summit> at Fri Feb 19 14:46:13 2021
+                            <42*a18n05>
+                            <42*a18n06>
+                            <42*a26n12>
+                            <42*a30n06>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/sparse_mat> was used as the working directory.
+Started at Fri Feb 19 14:46:13 2021
+Terminated at Fri Feb 19 14:47:23 2021
+Results reported at Fri Feb 19 14:47:23 2021
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <europe_osm_4.749727.err> for stderr output of this job.
+

@@ -1,0 +1,33 @@
+jsrun -a36 -c36 -g6 -r1 -n4 -M -gpu --latency_priority=gpu-cpu --launch_distribution=packed ./mpi_sparse_mat suitesparse/hollywood-2009.pm
+Max N 22
+Max TAP N 4
+Global NNZ 113891327, NNZ/GPU 4745471
+Cuda Aware : 1.291569e-03
+Copy To CPU : 9.783294e-04
+Node Aware : 2.176941e-03
+Dup Devptr Node Aware : 9.256279e-04
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch4>
+Subject: Job 750298: <hollywood-2009_4> in cluster <summit> Exited
+
+Job <hollywood-2009_4> was submitted from host <login3> by user <bienz> in cluster <summit> at Fri Feb 19 18:40:40 2021
+Job was executed on host(s) <1*batch4>, in queue <batch>, as user <bienz> in cluster <summit> at Fri Feb 19 18:41:01 2021
+                            <42*h25n09>
+                            <42*h25n10>
+                            <42*h25n11>
+                            <42*h25n12>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/sparse_mat> was used as the working directory.
+Started at Fri Feb 19 18:41:01 2021
+Terminated at Fri Feb 19 18:42:12 2021
+Results reported at Fri Feb 19 18:42:12 2021
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <hollywood-2009_4.750298.err> for stderr output of this job.
+

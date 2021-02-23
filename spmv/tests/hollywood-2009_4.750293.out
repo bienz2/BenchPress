@@ -1,0 +1,58 @@
+jsrun -a36 -c36 -g6 -r1 -n4 -M -gpu --latency_priority=gpu-cpu --launch_distribution=packed ./mpi_sparse_mat suitesparse/hollywood-2009.pm
+CA != NAP (4.245379e+00 vs 8.422986e-01)
+CA != NAP (4.256359e+00 vs 5.472017e-01)
+CA != NAP (2.220905e+02 vs 3.359799e+01)
+CA != NAP (2.307088e+01 vs 2.064402e+01)
+CA != NAP (8.908019e+00 vs 3.409665e+00)
+Max N 22
+Max TAP N 4
+Global NNZ 113891327, NNZ/GPU 4745471
+NAP Communication...
+NAP comm completed
+CA != NAP (3.487214e+00 vs 2.816110e+00)
+Cuda Aware : 1.220283e-03
+Copy To CPU : 9.629835e-04
+Node Aware : 5.588000e-09
+Dup Devptr Node Aware : 1.007095e-03
+CA != NAP (1.477373e+01 vs 1.197988e+01)
+CA != NAP (2.852881e+01 vs 1.397774e+01)
+CA != NAP (2.122865e+01 vs 2.236628e+00)
+CA != NAP (5.907257e+01 vs 7.468963e+00)
+CA != NAP (4.775329e+00 vs 3.728529e+00)
+CA != NAP (3.469541e+01 vs 9.375510e+00)
+CA != NAP (1.939027e+01 vs 1.472101e+00)
+CA != NAP (2.872870e+00 vs 1.113271e+00)
+CA != NAP (2.751045e+00 vs 1.939938e+00)
+CA != NAP (1.003949e+02 vs 5.717068e+01)
+CA != NAP (2.950844e+00 vs 1.760824e+00)
+CA != NAP (4.934591e+01 vs 2.347702e+01)
+CA != NAP (1.396696e+02 vs 2.565033e+01)
+CA != NAP (2.509219e+01 vs 2.077648e+01)
+CA != NAP (5.163309e+00 vs 1.498486e+00)
+CA != NAP (4.155651e+00 vs 9.440876e-01)
+CA != NAP (2.089797e+01 vs 1.409147e+01)
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch2>
+Subject: Job 750293: <hollywood-2009_4> in cluster <summit> Exited
+
+Job <hollywood-2009_4> was submitted from host <login3> by user <bienz> in cluster <summit> at Fri Feb 19 18:36:24 2021
+Job was executed on host(s) <1*batch2>, in queue <batch>, as user <bienz> in cluster <summit> at Fri Feb 19 18:36:42 2021
+                            <42*h31n12>
+                            <42*h31n18>
+                            <42*h32n01>
+                            <42*h32n02>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/sparse_mat> was used as the working directory.
+Started at Fri Feb 19 18:36:42 2021
+Terminated at Fri Feb 19 18:37:50 2021
+Results reported at Fri Feb 19 18:37:50 2021
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <hollywood-2009_4.750293.err> for stderr output of this job.
+

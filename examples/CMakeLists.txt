@@ -21,6 +21,12 @@ target_link_libraries(time_allreduce_standard heterobench)
 add_executable(time_ping_pong time_ping_pong.cpp)
 target_link_libraries(time_ping_pong heterobench)
 
+add_executable(time_ping_pong_cpu time_ping_pong_cpu.cpp)
+target_link_libraries(time_ping_pong_cpu heterobench)
+
+add_executable(time_ping_pong_gpu time_ping_pong_gpu.cpp)
+target_link_libraries(time_ping_pong_gpu heterobench)
+
 add_executable(time_maxrate time_maxrate.cpp)
 target_link_libraries(time_maxrate heterobench)
 

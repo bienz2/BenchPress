@@ -1,0 +1,25 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch1>
+Subject: Job 750285: <hollywood-2009_4> in cluster <summit> Exited
+
+Job <hollywood-2009_4> was submitted from host <login3> by user <bienz> in cluster <summit> at Fri Feb 19 18:26:39 2021
+Job was executed on host(s) <1*batch1>, in queue <batch>, as user <bienz> in cluster <summit> at Fri Feb 19 18:27:44 2021
+                            <42*h31n18>
+                            <42*h32n01>
+                            <42*h32n02>
+                            <42*h32n03>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/sparse_mat> was used as the working directory.
+Started at Fri Feb 19 18:27:44 2021
+Terminated at Fri Feb 19 18:27:54 2021
+Results reported at Fri Feb 19 18:27:54 2021
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <hollywood-2009_4.750285.err> for stderr output of this job.
+

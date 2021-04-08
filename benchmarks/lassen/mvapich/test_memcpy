@@ -1,0 +1,19 @@
+#!/bin/bash
+#BSUB -J memcpy
+#BSUB -e memcpy.%J.err
+#BSUB -o memcpy.%J.out
+#BSUB -nnodes 1
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+cd /g/g14/bienz1/BenchPress/mvapich_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a4 -c4 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy  
+
+echo quit | nvidia-cuda-mps-control

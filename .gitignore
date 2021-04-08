@@ -33,3 +33,7 @@
 
 # Build folder
 build/
+
+# Python Cache files
+.DS_Store
+__pycache__/

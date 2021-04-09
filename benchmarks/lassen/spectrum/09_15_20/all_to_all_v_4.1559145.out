@@ -1,0 +1,93 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoallv:
+7.412428e-05	7.431379e-05	7.439438e-05	7.509539e-05	8.127446e-05	7.650967e-05	8.215416e-05	7.842063e-05	8.227216e-05	8.685456e-05	9.409877e-05	1.195792e-04	1.629289e-04	2.498407e-04	4.426351e-04	7.649162e-04	
+
+3-Step Alltoallv:
+Nmsgs 16, Bytes 64
+5.704705e-05	6.121230e-05	5.400711e-05	4.674466e-05	4.753081e-05	4.789926e-05	5.562255e-05	5.120227e-05	5.399664e-05	5.865298e-05	8.189616e-05	8.890924e-05	1.474604e-04	2.120922e-04	3.704790e-04	7.257993e-04	
+
+3-Step Alltoallv, Extra Message:
+6.944220e-05	6.801630e-05	5.749770e-05	6.876519e-05	7.059784e-05	8.752759e-05	7.876903e-05	6.310328e-05	9.726071e-05	1.174808e-04	1.053694e-04	1.691481e-04	2.061345e-04	3.076530e-04	5.623682e-04	1.084778e-03	
+
+3-Step Alltoallv, Duplicate DevPtr:
+8.416060e-04	8.493391e-04	8.382447e-04	8.421679e-04	8.459382e-04	8.374766e-04	8.381637e-04	8.416525e-04	8.392719e-04	8.411461e-04	8.442460e-04	8.530510e-04	3.335310e-04	1.496516e-04	2.678553e-04	5.529264e-04	
+
+Cuda-Aware Alltoallv:
+1.362521e-04	1.358421e-04	1.436432e-04	1.357076e-04	1.353173e-04	1.360198e-04	1.352553e-04	1.505193e-04	1.353582e-04	1.407904e-04	1.425272e-04	1.425395e-04	1.438795e-04	1.522663e-04	2.613723e-04	5.351203e-04	
+
+3-Step Alltoallv:
+6.568373e-05	4.273507e-05	4.281926e-05	4.313217e-05	4.343073e-05	4.422666e-05	4.825055e-05	5.119193e-05	5.421290e-05	5.654201e-05	6.882993e-05	8.866233e-05	1.395602e-04	2.335018e-04	4.307996e-04	7.492738e-04	
+
+3-Step Alltoallv, Extra Message:
+3.822762e-05	3.768725e-05	3.746181e-05	4.291519e-05	4.326256e-05	4.002394e-05	4.176873e-05	4.374182e-05	4.654472e-05	5.646776e-05	7.010093e-05	1.026583e-04	1.527845e-04	2.031108e-04	3.702742e-04	6.372126e-04	
+
+3-Step Alltoallv, Duplicate DevPtr:
+8.383205e-04	8.387753e-04	8.392272e-04	8.387937e-04	8.391797e-04	8.376989e-04	8.373215e-04	8.380819e-04	8.386077e-04	8.395163e-04	8.438493e-04	8.502909e-04	3.316063e-04	1.095049e-04	2.060837e-04	3.057535e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1559145: <all_to_all_v_4> in cluster <lassen> Done
+
+Job <all_to_all_v_4> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Sun Oct 18 13:06:37 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Sun Oct 18 13:15:15 2020
+                            <40*lassen5>
+                            <40*lassen6>
+                            <40*lassen7>
+                            <40*lassen8>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen> was used as the working directory.
+Started at Sun Oct 18 13:15:15 2020
+Terminated at Sun Oct 18 13:17:15 2020
+Results reported at Sun Oct 18 13:17:15 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_v_4
+#BSUB -e all_to_all_v_4.%J.err
+#BSUB -o all_to_all_v_4.%J.out
+#BSUB -nnodes 4
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n4 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoallv
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.25 sec.
+    Max Memory :                                 60 MB
+    Average Memory :                             56.50 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1424 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   120 sec.
+    Turnaround time :                            638 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_v_4.1559145.err> for stderr output of this job.
+

@@ -1,0 +1,85 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Allreduce:
+4.838501e-05	4.694655e-05	5.159150e-05	4.667438e-05	4.683806e-05	4.715955e-05	5.194533e-05	5.312735e-05	5.374059e-05	5.276068e-05	6.345374e-05	6.768734e-05	8.330183e-05	9.943144e-05	1.645232e-04	2.729022e-04	5.759533e-04	9.067733e-04	1.961968e-03	3.730761e-03	
+
+3-Step Allreduce:
+3.653527e-05	4.017338e-05	4.614366e-05	3.957393e-05	3.973922e-05	3.634101e-05	3.714146e-05	4.545095e-05	4.727055e-05	5.112448e-05	4.997457e-05	5.779506e-05	8.223727e-05	1.020776e-04	1.512018e-04	2.978520e-04	4.731926e-04	9.699359e-04	1.852115e-03	3.608069e-03	
+
+3-Step Allreduce, Extra Message:
+3.472463e-05	3.442438e-05	3.591834e-05	3.756573e-05	6.481499e-05	1.249297e-04	6.600572e-05	9.997086e-05	5.898241e-05	6.845207e-05	7.070333e-05	7.810880e-05	7.163446e-05	7.667578e-05	1.218284e-04	3.111751e-04	2.566011e-04	4.094401e-04	7.891376e-04	1.878108e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	-1	9.233076e-04	9.057475e-04	9.085381e-04	9.064650e-04	9.065980e-04	9.042765e-04	9.066844e-04	9.111389e-04	9.077270e-04	9.134136e-04	9.099559e-04	9.204067e-04	1.190485e-04	1.601759e-04	3.614876e-04	7.626894e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 1397160: <all_reduce_8> in cluster <lassen> Done
+
+Job <all_reduce_8> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Tue Sep  1 16:20:06 2020
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Sep  1 16:23:14 2020
+                            <40*lassen22>
+                            <40*lassen25>
+                            <40*lassen26>
+                            <40*lassen27>
+                            <40*lassen30>
+                            <40*lassen31>
+                            <40*lassen32>
+                            <40*lassen33>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/HeteroBench/benchmarks/lassen> was used as the working directory.
+Started at Tue Sep  1 16:23:14 2020
+Terminated at Tue Sep  1 16:24:56 2020
+Results reported at Tue Sep  1 16:24:56 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_reduce_8
+#BSUB -e all_reduce_8.%J.err
+#BSUB -o all_reduce_8.%J.out
+#BSUB -nnodes 8
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+
+cd /g/g14/bienz1/HeteroBench/build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n8 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_collective
+
+#jsrun -a40 -c40 -g4 -r1 -n8 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.41 sec.
+    Max Memory :                                 68 MB
+    Average Memory :                             61.56 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1428 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   102 sec.
+    Turnaround time :                            290 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_8.1397160.err> for stderr output of this job.
+

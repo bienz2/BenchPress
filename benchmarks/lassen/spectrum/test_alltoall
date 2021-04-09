@@ -9,7 +9,7 @@ module load gcc
 module load cuda/10.2.89
 module load hwloc
 
-cd /g/g14/bienz1/BenchPress/build/examples
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
 
 nvidia-cuda-mps-control -d
 

@@ -1,0 +1,107 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Alltoall:
+7.115424e-05	6.513514e-05	7.080785e-05	7.696451e-05	1.074796e-04	1.357978e-04	2.177952e-04	2.386750e-04	1.805013e-04	2.547308e-04	4.883303e-04	2.118022e-03	3.612439e-03	6.288547e-03	9.334801e-03	8.343788e-03	
+
+3-Step Alltoall:
+1.146437e-04	8.867180e-05	1.034713e-04	1.136612e-04	1.463211e-04	1.759305e-04	1.910548e-04	2.115328e-04	2.720685e-04	4.150199e-04	5.878491e-04	2.394774e-03	3.879548e-03	4.370470e-03	9.313090e-03	8.298187e-03	
+
+3-Step Alltoall, Extra Message:
+3.922341e-05	3.516503e-05	3.718254e-05	3.978646e-05	1.092461e-04	1.214519e-04	1.473176e-04	2.077736e-04	1.002771e-03	1.380482e-03	8.370918e-04	1.104562e-03	1.908532e-03	3.918405e-03	7.403085e-03	1.394760e-02	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	-1	9.270302e-04	9.537483e-04	9.378492e-04	9.367016e-04	9.455013e-04	4.556363e-04	6.438417e-04	1.047161e-03	1.807792e-03	3.526729e-03	6.005954e-03	1.171941e-02	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2414773: <all_to_all_32> in cluster <lassen> Done
+
+Job <all_to_all_32> was submitted from host <lassen709> by user <bienz1> in cluster <lassen> at Fri Apr  9 10:22:52 2021
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <bienz1> in cluster <lassen> at Fri Apr  9 10:40:02 2021
+                            <40*lassen405>
+                            <40*lassen250>
+                            <40*lassen738>
+                            <40*lassen271>
+                            <40*lassen272>
+                            <40*lassen273>
+                            <40*lassen274>
+                            <40*lassen275>
+                            <40*lassen276>
+                            <40*lassen435>
+                            <40*lassen764>
+                            <40*lassen280>
+                            <40*lassen436>
+                            <40*lassen765>
+                            <40*lassen281>
+                            <40*lassen437>
+                            <40*lassen766>
+                            <40*lassen282>
+                            <40*lassen438>
+                            <40*lassen109>
+                            <40*lassen283>
+                            <40*lassen286>
+                            <40*lassen287>
+                            <40*lassen288>
+                            <40*lassen111>
+                            <40*lassen440>
+                            <40*lassen112>
+                            <40*lassen441>
+                            <40*lassen770>
+                            <40*lassen113>
+                            <40*lassen442>
+                            <40*lassen771>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen/spectrum> was used as the working directory.
+Started at Fri Apr  9 10:40:02 2021
+Terminated at Fri Apr  9 10:43:49 2021
+Results reported at Fri Apr  9 10:43:49 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_to_all_32
+#BSUB -e all_to_all_32.%J.err
+#BSUB -o all_to_all_32.%J.out
+#BSUB -nnodes 32
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n32 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_alltoall
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 64 MB
+    Average Memory :                             60.61 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1427 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   227 sec.
+    Turnaround time :                            1257 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_32.2414773.err> for stderr output of this job.
+

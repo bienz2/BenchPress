@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
     if (argc > 1) max_i = atoi(argv[1]);
     if (argc > 2) n_iter = atoi(argv[2]);
 
-    profile_max_rate(false, max_i, n_iter);
+    profile_ping_pong(max_i, n_iter);
 
-    profile_max_rate_gpu(false, max_i, n_iter);
+    profile_ping_pong_gpu(max_i, n_iter);
 
     MPI_Finalize();
 

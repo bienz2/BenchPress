@@ -33,3 +33,4 @@
 
 # Build folder
 build/
+mvapich_build/

@@ -33,6 +33,7 @@
 
 # Build folder
 build/
+mvapich_build/
 
 # Python Cache files
 .DS_Store

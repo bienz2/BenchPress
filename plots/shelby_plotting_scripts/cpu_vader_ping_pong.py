@@ -7,7 +7,7 @@ ppn = 40
 n_procs = ppn*n_nodes
 n_socket = ppn / 2
 
-folder = '../../benchmarks/lassen/04_08_21/ping_pong_cpu.*.out'
+folder = '../../benchmarks/lassen/04_08_21/ping_pong_cpu_vader.*.out'
 files = sorted(glob.glob(folder))
 
 class Times():
@@ -39,6 +39,7 @@ class Times():
 
 
 cpu_times = Times()
+gpu_times = Times()
 
 time_list = ""
 
@@ -87,4 +88,4 @@ if __name__=='__main__':
         ax.set_yscale('log')
         ax.set_xlabel("Message Size (Bytes)")
         ax.set_ylabel("Measured Time (Seconds)")
-        plt.savefig("lassen_cpu_ping_pong_ppn40.pdf")
+        plt.savefig("lassen_cpu_vader_ping_pong_ppn40.pdf")

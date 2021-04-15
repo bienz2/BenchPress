@@ -41,3 +41,9 @@ target_link_libraries(time_mult_pong_split heterobench)
 
 add_executable(time_node_pong time_node_pong.cpp)
 target_link_libraries(time_node_pong heterobench)
+
+add_executable(time_node_pong_cpu time_node_pong_cpu.cpp)
+target_link_libraries(time_node_pong_cpu heterobench)
+
+add_executable(time_node_pong_gpu time_node_pong_gpu.cpp)
+target_link_libraries(time_node_pong_gpu heterobench)

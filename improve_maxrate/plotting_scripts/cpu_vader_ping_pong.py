@@ -88,4 +88,4 @@ if __name__=='__main__':
         ax.set_yscale('log')
         ax.set_xlabel("Message Size (Bytes)")
         ax.set_ylabel("Measured Time (Seconds)")
-        plt.savefig("lassen_cpu_vader_ping_pong_ppn40.pdf")
+        plt.savefig("../figures/lassen_cpu_vader_ping_pong_ppn40.pdf")

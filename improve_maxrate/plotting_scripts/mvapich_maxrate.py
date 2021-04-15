@@ -4,7 +4,7 @@ import glob
 
 ppn = 40
 n_gpus = 4
-files = ['../../benchmarks/lassen/04_13_21/maxrate.2422406.out']
+files = ['../../benchmarks/lassen/04_13_21/maxrate.2422406.out','../../benchmarks/lassen/04_14_21/maxrate.2427559.out']
 
 class TimeList():
     ppn_times = ""
@@ -71,7 +71,8 @@ if __name__=='__main__':
         ax.set_yscale('log')
         ax.set_xlabel("Message Size (Bytes)")
         ax.set_ylabel("Measured Time (Seconds)")
-        plt.savefig("lassen_cpu_maxrate.pdf")
+        plt.savefig("../figures/lassen_cpu_maxrate.pdf")
+        plt.show()
 
     if 1:
         # GPU Max-Rate 
@@ -88,7 +89,27 @@ if __name__=='__main__':
         ax.set_yscale('log')
         ax.set_xlabel("Message Size (Bytes)")
         ax.set_ylabel("Measured Time (Seconds)")
-        plt.savefig("lassen_gpu_maxrate.pdf")
+        #plt.savefig("../figures/lassen_gpu_maxrate.pdf")
+        plt.show()
 
+    if 1:
+        # Output CPU and GPU Max-Rate data to file for plotting against runtime results
+        gpu_x_data = [2**i for i in range(len(gpu_times.ppn_times[0]))]
+        gpu_model = np.zeros((n_gpus,len(x_data)))
+        for i in range(n_gpus): 
+            gpu_model[i,:] = gpu_times.ppn_times[i]
 
+        cpu_x_data = [2**i for i in range(len(cpu_times.ppn_times[0]))]
+        cpu_model = np.zeros((6,len(cpu_x_data)))
+        ppn = [1,5,10,20,30,40]
+        for procs in ppn: 
+            cpu_model[ppn.index(procs),:] = cpu_times.ppn_times[procs-1]
 
+        # Save model data
+        np.savez('data_files/maxrate_model_data.npz',
+                cpu_msg_sizes = np.array(cpu_x_data),
+                gpu_msg_sizes = np.array(gpu_x_data),
+                cpu_ppn = np.array(ppn),
+                cpu_maxrate = cpu_model,
+                gpu_maxrate = gpu_model
+        )

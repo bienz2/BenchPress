@@ -1,0 +1,21 @@
+#!/bin/bash
+#BSUB -J node_pong
+#BSUB -e node_pong.%J.err
+#BSUB -o node_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_node_pong
+
+echo quit | nvidia-cuda-mps-control
+
+
+

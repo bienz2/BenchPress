@@ -1,0 +1,25 @@
+#!/bin/bash
+#BSUB -J mult_pong
+#BSUB -e mult_pong.%J.err
+#BSUB -o mult_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+cd /g/g14/bienz1/BenchPress/mvapich_build/examples
+
+nvidia-cuda-mps-control -d
+
+module load valgrind
+#jsrun -a8 -c8 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 valgrind --suppressions=/g/g14/bienz1/BenchPress/benchmarks/lassen/valgrind.supp ./time_mult_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 valgrind --suppressions=/g/g14/bienz1/BenchPress/benchmarks/lassen/valgrind.supp --gen-suppressions=all ./time_ping_pong
+jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_mult_pong
+
+echo quit | nvidia-cuda-mps-control
+
+
+

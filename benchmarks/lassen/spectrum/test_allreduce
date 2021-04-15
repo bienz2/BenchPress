@@ -1,0 +1,19 @@
+#!/bin/bash
+#BSUB -J all_reduce_32
+#BSUB -e all_reduce_32.%J.err
+#BSUB -o all_reduce_32.%J.out
+#BSUB -nnodes 32
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n32 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_allreduce
+
+echo quit | nvidia-cuda-mps-control
+

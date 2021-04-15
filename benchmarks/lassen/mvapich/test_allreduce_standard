@@ -1,0 +1,16 @@
+#!/bin/bash
+#BSUB -J all_reduce_std
+#BSUB -e all_reduce_std.%J.err
+#BSUB -o all_reduce_std.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+cd /g/g14/bienz1/BenchPress/mvapich_build/examples
+
+jsrun -a40 -c40 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_collective_standard
+

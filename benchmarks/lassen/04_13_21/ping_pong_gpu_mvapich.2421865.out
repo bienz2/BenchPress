@@ -1,0 +1,122 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Profiling GPU Ping-Pongs
+GPU on rank 0 and GPU on rank 1:	7.126331e-07	7.115602e-07	7.456541e-07	6.886721e-07	7.296801e-07	1.386285e-06	7.278919e-07	7.390976e-07	7.885695e-07	8.568764e-07	1.058340e-06	1.306295e-06	2.762902e-05	1.667047e-05	1.629078e-05	1.673460e-05	1.876593e-05	2.266169e-05	3.029585e-05	4.525900e-05	
+GPU on rank 0 and GPU on rank 2:	1.083016e-06	1.062036e-06	1.071811e-06	9.871721e-07	1.000643e-06	1.026630e-06	1.052022e-06	1.306772e-06	1.464009e-06	1.819730e-06	2.171278e-06	3.072500e-06	2.905643e-05	1.574326e-05	1.729548e-05	1.832485e-05	2.140284e-05	2.766252e-05	4.047513e-05	6.572962e-05	
+GPU on rank 0 and GPU on rank 3:	1.121879e-06	1.116395e-06	1.104474e-06	1.013517e-06	1.027465e-06	1.066923e-06	1.090527e-06	1.296997e-06	1.490355e-06	1.731873e-06	2.188206e-06	2.994061e-06	2.941763e-05	1.600969e-05	1.660907e-05	1.836896e-05	2.161741e-05	2.816439e-05	4.074335e-05	6.666183e-05	
+GPU on rank 0 and GPU on rank 4:	2.122998e-06	2.120972e-06	2.147675e-06	2.148271e-06	2.153397e-06	2.188802e-06	2.470374e-06	2.527237e-06	2.604961e-06	3.175735e-06	6.578684e-06	6.968021e-06	2.376819e-05	2.479625e-05	2.646387e-05	3.054500e-05	5.433917e-05	7.326722e-05	9.999275e-05	1.418805e-04	
+GPU on rank 0 and GPU on rank 5:	7.192969e-06	2.103448e-06	2.135873e-06	2.137780e-06	2.136707e-06	2.187610e-06	2.482891e-06	2.532482e-06	2.614737e-06	3.129005e-06	6.480455e-06	6.878138e-06	2.412665e-05	2.461958e-05	2.611136e-05	3.012776e-05	5.435467e-05	7.270455e-05	1.004684e-04	1.421630e-04	
+GPU on rank 0 and GPU on rank 6:	2.168894e-06	2.184749e-06	2.989531e-06	2.233386e-06	2.233148e-06	2.278209e-06	2.585649e-06	2.632856e-06	2.849102e-06	3.172278e-06	6.651044e-06	6.936550e-06	2.378070e-05	2.485299e-05	2.649391e-05	3.033400e-05	5.425096e-05	7.252097e-05	1.000524e-04	1.417935e-04	
+GPU on rank 0 and GPU on rank 7:	2.150774e-06	2.155662e-06	2.229333e-06	2.240896e-06	3.342390e-06	2.265453e-06	2.528787e-06	2.611876e-06	2.824664e-06	3.138900e-06	6.538153e-06	6.960273e-06	2.393818e-05	2.492869e-05	2.661026e-05	3.045678e-05	5.450010e-05	7.280707e-05	1.002681e-04	1.421916e-04	
+GPU on rank 1 and GPU on rank 2:	1.046538e-06	1.037002e-06	1.034021e-06	9.751320e-07	9.777546e-07	1.033306e-06	1.076698e-06	1.152515e-06	1.391768e-06	1.679540e-06	2.082229e-06	2.935529e-06	2.928841e-05	1.607490e-05	1.683450e-05	1.858830e-05	2.164602e-05	2.812147e-05	4.085541e-05	6.672025e-05	
+GPU on rank 1 and GPU on rank 3:	1.070857e-06	1.063108e-06	1.065135e-06	9.918213e-07	9.936094e-07	1.024365e-06	1.033783e-06	1.332283e-06	1.488686e-06	1.845598e-06	2.161980e-06	3.047585e-06	2.944052e-05	1.611781e-05	1.676369e-05	1.843929e-05	2.147436e-05	2.835512e-05	4.133940e-05	6.728649e-05	
+GPU on rank 1 and GPU on rank 4:	2.128601e-06	2.078652e-06	2.139688e-06	2.117395e-06	2.119064e-06	2.164841e-06	2.431035e-06	2.494097e-06	2.581120e-06	3.129125e-06	6.335735e-06	6.855726e-06	2.354896e-05	2.573502e-05	2.630305e-05	3.014326e-05	5.420566e-05	7.247329e-05	1.005018e-04	1.419234e-04	
+GPU on rank 1 and GPU on rank 5:	2.075911e-06	2.071857e-06	2.079010e-06	2.092004e-06	2.094388e-06	2.140403e-06	2.463579e-06	2.492666e-06	2.577305e-06	3.121614e-06	6.341934e-06	6.862164e-06	2.351809e-05	2.448261e-05	2.623332e-05	3.002524e-05	5.423784e-05	7.247925e-05	1.005077e-04	1.420140e-04	
+GPU on rank 1 and GPU on rank 6:	2.192378e-06	2.184391e-06	2.246022e-06	2.246499e-06	2.257466e-06	2.292633e-06	2.574921e-06	2.615333e-06	2.778411e-06	3.212929e-06	6.506920e-06	6.808043e-06	2.384543e-05	2.479815e-05	2.651501e-05	3.019333e-05	5.406499e-05	7.241368e-05	1.001334e-04	1.447666e-04	
+GPU on rank 1 and GPU on rank 7:	2.111554e-06	2.105236e-06	2.156019e-06	2.148390e-06	2.171993e-06	2.238154e-06	2.489090e-06	2.578855e-06	2.804756e-06	3.105283e-06	8.893013e-06	6.783724e-06	2.381539e-05	2.490127e-05	2.657533e-05	3.038406e-05	5.425215e-05	7.234573e-05	1.003575e-04	1.420832e-04	
+GPU on rank 2 and GPU on rank 3:	7.517338e-07	7.501841e-07	7.594824e-07	7.635355e-07	7.550716e-07	7.765293e-07	7.833242e-07	8.052588e-07	8.292198e-07	8.760691e-07	1.036286e-06	1.305938e-06	2.732778e-05	1.487434e-05	1.547205e-05	1.667857e-05	1.884699e-05	2.265573e-05	3.018022e-05	4.537344e-05	
+GPU on rank 2 and GPU on rank 4:	2.157092e-06	2.165198e-06	2.181411e-06	2.172112e-06	2.170801e-06	2.189994e-06	2.580404e-06	2.630830e-06	2.794862e-06	3.217459e-06	6.587625e-06	6.815553e-06	2.377236e-05	2.488720e-05	2.655542e-05	3.028870e-05	5.519748e-05	7.258892e-05	9.997368e-05	1.444030e-04	
+GPU on rank 2 and GPU on rank 5:	2.135634e-06	2.133846e-06	2.194524e-06	2.193809e-06	2.213359e-06	2.237320e-06	2.584338e-06	2.635837e-06	2.779722e-06	3.190160e-06	6.559372e-06	6.750107e-06	2.374935e-05	2.483654e-05	2.661765e-05	3.015995e-05	5.425930e-05	7.245064e-05	1.004207e-04	1.421237e-04	
+GPU on rank 2 and GPU on rank 6:	2.202988e-06	2.170563e-06	2.312183e-06	2.311230e-06	2.318144e-06	2.344012e-06	2.664804e-06	2.731800e-06	2.925873e-06	3.263116e-06	6.668806e-06	7.095933e-06	2.405035e-05	2.513874e-05	2.666354e-05	3.060937e-05	5.418062e-05	7.268310e-05	1.001799e-04	1.422668e-04	
+GPU on rank 2 and GPU on rank 7:	2.276540e-06	2.157092e-06	2.201319e-06	2.230763e-06	2.246261e-06	2.288461e-06	2.565384e-06	2.659917e-06	2.802014e-06	3.204703e-06	6.375194e-06	6.934166e-06	2.401459e-05	2.518177e-05	2.674079e-05	3.040552e-05	5.417347e-05	7.254601e-05	1.000822e-04	1.421392e-04	
+GPU on rank 3 and GPU on rank 4:	2.146840e-06	2.136111e-06	2.167940e-06	2.167225e-06	2.170086e-06	2.229691e-06	2.569795e-06	2.633452e-06	2.809048e-06	3.160119e-06	6.487131e-06	6.842971e-06	2.373636e-05	2.484250e-05	2.659476e-05	3.020406e-05	5.419374e-05	7.265329e-05	9.994626e-05	1.416290e-04	
+GPU on rank 3 and GPU on rank 5:	2.120376e-06	2.118707e-06	2.162218e-06	2.184391e-06	2.189040e-06	2.284408e-06	2.516270e-06	2.599359e-06	2.815604e-06	3.135324e-06	6.472588e-06	6.776333e-06	2.370799e-05	2.478290e-05	2.655935e-05	2.997041e-05	5.417347e-05	7.254124e-05	1.003814e-04	1.419020e-04	
+GPU on rank 3 and GPU on rank 6:	2.140760e-06	2.145767e-06	2.203584e-06	2.243042e-06	2.245188e-06	2.279639e-06	2.614737e-06	2.702594e-06	2.813339e-06	3.252745e-06	6.437302e-06	6.944776e-06	2.409649e-05	2.513778e-05	2.673447e-05	3.029227e-05	5.395889e-05	7.250190e-05	9.989381e-05	1.419604e-04	
+GPU on rank 3 and GPU on rank 7:	2.104282e-06	2.108216e-06	2.132654e-06	2.245188e-06	2.133250e-06	2.209902e-06	2.494097e-06	2.580643e-06	2.667069e-06	3.172994e-06	6.265879e-06	6.897807e-06	2.400649e-05	2.501643e-05	2.670455e-05	3.017783e-05	5.399823e-05	7.237077e-05	1.000321e-04	1.582825e-04	
+
+
+app 0: ./time_ping_pong_gpu 
+rank: 0: { host: 1; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 1: { host: 1; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 2: { host: 1; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 3: { host: 1; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 4: { host: 2; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 5: { host: 2; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 6: { host: 2; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 7: { host: 2; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2421865: <ping_pong_gpu_mvapich> in cluster <lassen> Done
+
+Job <ping_pong_gpu_mvapich> was submitted from host <lassen709> by user <locksl> in cluster <lassen> at Tue Apr 13 08:16:26 2021
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <locksl> in cluster <lassen> at Tue Apr 13 08:16:29 2021
+                            <40*lassen33>
+                            <40*lassen32>
+</g/g16/locksl> was used as the home directory.
+</g/g16/locksl/bin/bench_press_scripts> was used as the working directory.
+Started at Tue Apr 13 08:16:29 2021
+Terminated at Tue Apr 13 08:16:53 2021
+Results reported at Tue Apr 13 08:16:53 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J ping_pong_gpu_mvapich
+#BSUB -e ping_pong_gpu_mvapich.%J.err
+#BSUB -o ping_pong_gpu_mvapich.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+# Default paramter values for mvapich2
+export MV2_USE_CUDA=1
+export MV2_USE_GDR=1
+
+# TESTING PARAMETER
+#export MV2_CUDA_BLOCK_SIZE=262144
+#export MV2_CUDA_BLOCK_SIZE=524288
+export MV2_CUDA_BLOCK_SIZE=786432
+
+export MV2_GPUDIRECT_LIMIT=8192
+export MV2_USE_GPUDIRECT_RECEIVE_LIMIT=131072
+export MV2_CUDA_IPC_THRESHOLD=32768
+#export MV2_CUDA_IPC_THRESHOLD=524288
+
+# Parameters for tuning block size limit for gpu to cpu memory copies with gdr
+export MV2_GDRCOPY_LIMIT=8192
+
+# Parameter setting for Multi-IB and Multi-GPU node
+#export MV2_PROCESS_TO_RAIL_MAPPING=BUNCH # not currently working with multiple resource set allocation
+
+cd /g/g16/locksl/BenchPress/mvapich_build/examples
+
+nvidia-cuda-mps-control -d
+
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong_gpu
+jsrun -a4 -c4 -g4 -r1 -n2 --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong_gpu
+
+echo quit | nvidia-cuda-mps-control
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.20 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   23 sec.
+    Turnaround time :                            27 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <ping_pong_gpu_mvapich.2421865.err> for stderr output of this job.
+

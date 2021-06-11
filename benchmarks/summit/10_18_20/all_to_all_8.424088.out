@@ -1,0 +1,41 @@
+Cuda-Aware Alltoall:
+7.324637e-05	5.523281e-05	5.437726e-05	5.591900e-05	5.817062e-05	6.311944e-05	7.910215e-05	7.737583e-05	8.011648e-05	1.157039e-04	1.638430e-04	6.055657e-04	9.640473e-04	1.617312e-03	2.832478e-03	4.490993e-03	
+
+3-Step Alltoall:
+5.999292e-05	5.989890e-05	5.579469e-05	6.078948e-05	6.054413e-05	8.836788e-05	9.425677e-05	1.026811e-04	1.039698e-04	1.278980e-04	2.073594e-04	6.365641e-04	1.074336e-03	1.762368e-03	3.213186e-03	4.215448e-03	
+
+3-Step Alltoall, Extra Message:
+2.947149e-05	2.963387e-05	3.307387e-05	6.461006e-05	6.368285e-05	7.317329e-05	7.135657e-05	1.167130e-04	1.214748e-04	3.046174e-04	2.853828e-04	4.057700e-04	6.284390e-04	1.593999e-03	3.312362e-03	6.801912e-03	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	1.080690e-04	1.107121e-04	1.115631e-04	1.135341e-04	1.149623e-04	1.230111e-04	1.848086e-04	2.227560e-04	3.042684e-04	4.648447e-04	9.926658e-04	1.848887e-03	3.584023e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch2>
+Subject: Job 424088: <all_to_all_8> in cluster <summit> Done
+
+Job <all_to_all_8> was submitted from host <login4> by user <bienz> in cluster <summit> at Sun Oct 18 15:54:59 2020
+Job was executed on host(s) <1*batch2>, in queue <batch>, as user <bienz> in cluster <summit> at Sun Oct 18 18:47:24 2020
+                            <42*f23n13>
+                            <42*f23n14>
+                            <42*f23n15>
+                            <42*f23n16>
+                            <42*f23n17>
+                            <42*f23n18>
+                            <42*f24n01>
+                            <42*f24n02>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Sun Oct 18 18:47:24 2020
+Terminated at Sun Oct 18 18:49:06 2020
+Results reported at Sun Oct 18 18:49:06 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_8.424088.err> for stderr output of this job.
+

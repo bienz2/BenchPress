@@ -1,0 +1,41 @@
+Cuda-Aware Allreduce:
+4.023348e-05	4.015726e-05	4.021982e-05	5.053382e-05	9.504376e-05	4.127323e-05	4.110458e-05	4.150653e-05	4.221484e-05	4.390225e-05	4.811563e-05	5.342015e-05	6.385575e-05	7.592560e-05	1.253104e-04	1.955600e-04	3.937582e-04	5.454908e-04	
+
+3-Step Allreduce:
+3.036657e-05	3.009155e-05	2.995079e-05	3.002222e-05	2.992331e-05	3.041055e-05	3.059450e-05	3.113626e-05	3.205386e-05	3.358174e-05	3.758549e-05	4.284518e-05	6.683293e-05	6.823646e-05	1.132222e-04	1.891926e-04	3.140339e-04	5.306818e-04	
+
+app 0: ./time_collective_standard 
+rank: 0: { host: 1; cpu: {0-3}, {4-11,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 1: { host: 1; cpu: {4-7}, {0-3,8-11,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 2: { host: 1; cpu: {8-11}, {0-7,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 3: { host: 1; cpu: {84-87}, {0-11,88-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 4: { host: 1; cpu: {88-91}, {0-11,84-87,92-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 5: { host: 1; cpu: {92-95}, {0-11,84-91} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 6: { host: 2; cpu: {0-3}, {4-11,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 7: { host: 2; cpu: {4-7}, {0-3,8-11,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 8: { host: 2; cpu: {8-11}, {0-7,84-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 9: { host: 2; cpu: {84-87}, {0-11,88-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 10: { host: 2; cpu: {88-91}, {0-11,84-87,92-95} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+rank: 11: { host: 2; cpu: {92-95}, {0-11,84-91} ; gpu: {0,1,2,3,4,5} ; mem: {0-499,309663-310162} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch4>
+Subject: Job 305652: <all_reduce_std> in cluster <summit> Done
+
+Job <all_reduce_std> was submitted from host <login5> by user <bienz> in cluster <summit> at Thu Aug 27 17:03:07 2020
+Job was executed on host(s) <1*batch4>, in queue <batch>, as user <bienz> in cluster <summit> at Thu Aug 27 17:03:26 2020
+                            <42*a09n02>
+                            <42*a09n03>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/HeteroBench/benchmarks/summit> was used as the working directory.
+Started at Thu Aug 27 17:03:26 2020
+Terminated at Thu Aug 27 17:03:50 2020
+Results reported at Thu Aug 27 17:03:50 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_std.305652.err> for stderr output of this job.

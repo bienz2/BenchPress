@@ -105,6 +105,72 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     cudaFree(data);
 }
 
+void profile_ping_pong_3step(int max_i, int n_tests)
+{
+    int rank, num_procs; 
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
+
+    int num_gpus;
+    cudaGetDeviceCount(&num_gpus);
+
+    float* gpu_data;
+    float* cpu_data;
+    int max_bytes = pow(2, max_i - 1) * sizeof(float);
+    int nt;
+    double time, max_time;
+    bool active;
+
+    MPI_Comm node_comm;
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank,
+            MPI_INFO_NULL, &node_comm);
+    int node_size, node_rank;
+    MPI_Comm_rank(node_comm, &node_rank);
+    MPI_Comm_size(node_comm, &node_size);
+    MPI_Comm_free(&node_comm);
+    int procs_per_gpu = node_size / num_gpus;
+    int gpu = node_rank / procs_per_gpu;
+    int total_num_gpus = num_procs / procs_per_gpu; 
+    if (total_num_gpus == 1) 
+    {
+        printf("Only one GPU...\n");
+        return;
+    }
+
+    cudaMallocHost((void**)&cpu_data, max_bytes);
+    cudaSetDevice(gpu);
+    cudaMalloc((void**)&gpu_data, max_bytes);
+
+    if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
+    for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
+    {
+        for (int rank1 = rank0+procs_per_gpu; rank1 < 2*node_size; rank1 += procs_per_gpu)
+        {
+            cudaStream_t proc_stream;
+            cudaStreamCreate(&proc_stream);
+
+            nt = n_tests;
+            active = (rank == rank0 || rank == rank1);
+            if (rank == 0) printf("GPU on rank %d and GPU on rank %d:\t", rank0, rank1);
+            for (int i = 0; i < max_i; i++)
+            {
+                if (i > 14) nt = n_tests / 10;
+                if (i > 20) nt = n_tests / 100;
+                time = time_ping_pong_3step(active, rank0, rank1, cpu_data, gpu_data, pow(2,i), proc_stream, nt);
+                MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+                if (rank == 0) printf("%e\t", max_time);
+            }
+            if (rank == 0) printf("\n");
+            
+            cudaStreamDestroy(proc_stream);
+        }
+    }
+    if (rank == 0) printf("\n\n");
+
+    cudaFree(gpu_data);
+    cudaFreeHost(cpu_data);
+}
+
 // TODO -- Assumes SMP ordering
 void profile_max_rate(bool split_data, int max_i, int n_tests)
 {

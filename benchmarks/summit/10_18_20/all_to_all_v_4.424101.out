@@ -1,0 +1,50 @@
+Cuda-Aware Alltoallv:
+1.233125e-04	9.549396e-05	9.181136e-05	9.252353e-05	9.192487e-05	1.016770e-04	1.037372e-04	1.016722e-04	1.108934e-04	1.126053e-04	1.710998e-04	1.794834e-04	2.768643e-04	4.654703e-04	8.313900e-04	1.698569e-03	
+
+3-Step Alltoallv:
+Nmsgs 24, Bytes 96
+7.258565e-05	7.056926e-05	6.718319e-05	7.676989e-05	7.373018e-05	7.100954e-05	7.375165e-05	8.632840e-05	8.254829e-05	9.185106e-05	1.121414e-04	1.577508e-04	2.347082e-04	4.070489e-04	7.899884e-04	1.490934e-03	
+
+3-Step Alltoallv, Extra Message:
+8.666349e-05	8.795576e-05	8.332947e-05	9.519985e-05	8.832166e-05	1.026917e-04	8.829557e-05	1.073076e-04	1.090943e-04	1.228644e-04	2.130505e-04	2.712452e-04	2.924250e-04	5.069054e-04	9.402281e-04	1.860427e-03	
+
+3-Step Alltoallv, Duplicate DevPtr:
+1.208938e-04	1.234737e-04	1.226728e-04	1.217013e-04	1.252983e-04	1.257083e-04	1.277437e-04	1.229008e-04	1.282016e-04	1.349384e-04	1.509944e-04	1.723869e-04	2.416663e-04	4.008682e-04	7.284500e-04	1.330133e-03	
+
+Cuda-Aware Alltoallv:
+1.827361e-04	1.978651e-04	1.938282e-04	2.212694e-04	1.945769e-04	1.949333e-04	1.959618e-04	1.962826e-04	1.962056e-04	1.984211e-04	1.994787e-04	2.116572e-04	2.803096e-04	3.807406e-04	6.754784e-04	1.343949e-03	
+
+3-Step Alltoallv:
+8.067761e-05	9.462860e-05	1.009572e-04	9.503956e-05	9.474195e-05	1.022017e-04	1.159634e-04	8.262506e-05	8.021768e-05	7.809433e-05	9.773814e-05	1.288284e-04	1.953751e-04	3.318640e-04	6.177078e-04	1.365270e-03	
+
+3-Step Alltoallv, Extra Message:
+3.729538e-05	3.719003e-05	3.725104e-05	4.210254e-05	3.844778e-05	5.883028e-05	6.763078e-05	6.264567e-05	5.947600e-05	6.691485e-05	8.013075e-05	1.080955e-04	1.591221e-04	2.426353e-04	4.433584e-04	9.642581e-04	
+
+3-Step Alltoallv, Duplicate DevPtr:
+6.529611e-05	6.303462e-05	6.603258e-05	6.371987e-05	6.427450e-05	6.340221e-05	6.331347e-05	6.268954e-05	6.300220e-05	6.389068e-05	6.531180e-05	6.582344e-05	9.183276e-05	1.822819e-04	3.324336e-04	6.435335e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch4>
+Subject: Job 424101: <all_to_all_v_4> in cluster <summit> Done
+
+Job <all_to_all_v_4> was submitted from host <login4> by user <bienz> in cluster <summit> at Sun Oct 18 15:56:15 2020
+Job was executed on host(s) <1*batch4>, in queue <batch>, as user <bienz> in cluster <summit> at Sun Oct 18 18:51:02 2020
+                            <42*h23n03>
+                            <42*h30n09>
+                            <42*h30n15>
+                            <42*h50n07>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Sun Oct 18 18:51:02 2020
+Terminated at Sun Oct 18 18:52:38 2020
+Results reported at Sun Oct 18 18:52:38 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_v_4.424101.err> for stderr output of this job.
+

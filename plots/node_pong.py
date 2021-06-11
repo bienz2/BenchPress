@@ -70,7 +70,7 @@ if __name__=='__main__':
         plt.set_scale('log', 'log')
         plt.set_yticks([1e-6,1e-5,1e-4],['1e-6','1e-5','1e-4'])
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_cpu_node_pong.pdf"%prof.computer)
+        plt.save_plot("%s/%s_cpu_node_pong.pdf"%(prof.folder_out, prof.computer))
 
     if 1:
         # GPU Max-Rate 
@@ -91,7 +91,7 @@ if __name__=='__main__':
         plt.set_scale('log', 'log')
         plt.set_yticks([1e-5,1e-4],['1e-5','1e-4'])
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_gpu_node_pong.pdf"%prof.computer)
+        plt.save_plot("%s/%s_gpu_node_pong.pdf"%(prof.folder_out, prof.computer))
 
 
 

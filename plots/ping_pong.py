@@ -36,8 +36,6 @@ class Times():
                 time_list[pos] = time
 
 
-
-
 cpu_times = Times()
 gpu_times = Times()
 
@@ -87,7 +85,7 @@ if __name__=='__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_cpu_ping_pong.pdf"%prof.computer)
+        plt.save_plot("%s/%s_cpu_ping_pong.pdf"%(prof.folder_out, prof.computer))
 
     if 1:
         # GPU Ping Pong 
@@ -101,7 +99,26 @@ if __name__=='__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_gpu_ping_pong.pdf"%prof.computer)
+        plt.save_plot("%s/%s_gpu_ping_pong.pdf"%(prof.folder_out, prof.computer))
 
+    if 1:
+        # Compare Ping Pong
+        plt.add_luke_options()
+        plt.set_palette(palette="deep", n_colors = 3)
+        x_data = [2**i for i in range(len(cpu_times.on_socket))]
+
+        plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
+        plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
+        plt.line_plot(cpu_times.network, x_data, label = "Network")
+
+        plt.line_plot(gpu_times.on_socket, x_data, tickmark='--')
+        plt.line_plot(gpu_times.on_node, x_data, tickmark='--')
+        plt.line_plot(gpu_times.network, x_data, tickmark='--')
+
+        plt.add_anchored_legend(ncol=3)
+        plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
+        plt.set_scale('log', 'log')
+        plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
+        plt.save_plot("%s/%s_ping_pong_compare.pdf"%(prof.folder_out, prof.computer))
 
 

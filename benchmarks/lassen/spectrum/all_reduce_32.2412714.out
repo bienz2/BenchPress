@@ -1,0 +1,107 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Cuda-Aware Allreduce:
+5.858303e-05	5.720234e-05	5.966682e-05	6.856889e-05	6.321461e-05	6.323658e-05	6.501392e-05	6.250887e-05	8.381312e-05	7.184393e-05	1.116520e-04	1.491805e-04	2.825267e-04	1.498063e-04	1.934912e-04	4.761207e-04	6.007890e-04	1.423419e-03	3.476896e-03	5.213416e-03	
+
+3-Step Allreduce:
+8.330069e-05	5.463461e-05	5.112830e-05	5.068395e-05	6.118761e-05	5.307411e-05	4.787149e-05	5.435825e-05	7.394849e-05	1.095317e-04	9.014124e-05	1.143679e-04	1.090411e-04	1.624559e-04	2.047498e-04	5.105153e-04	4.771509e-04	1.548481e-03	2.706515e-03	5.185403e-03	
+
+3-Step Allreduce, Extra Message:
+3.697569e-05	3.634036e-05	3.658811e-05	3.463141e-05	3.375750e-04	1.233822e-04	1.197691e-04	1.874127e-04	3.724151e-04	1.324210e-04	8.212584e-05	9.382267e-05	1.501970e-04	3.112922e-04	1.933344e-04	2.247265e-04	3.506707e-04	7.502034e-04	1.568002e-03	6.940363e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	-1	9.295937e-04	9.345664e-04	9.355629e-04	9.406460e-04	9.408623e-04	9.497992e-04	9.475226e-04	9.434630e-04	9.412977e-04	9.486009e-04	9.432226e-04	9.685134e-04	1.936208e-04	2.197399e-04	4.376089e-04	3.278701e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2412714: <all_reduce_32> in cluster <lassen> Done
+
+Job <all_reduce_32> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Thu Apr  8 16:05:34 2021
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <bienz1> in cluster <lassen> at Thu Apr  8 16:05:38 2021
+                            <40*lassen767>
+                            <40*lassen283>
+                            <40*lassen439>
+                            <40*lassen771>
+                            <40*lassen114>
+                            <40*lassen773>
+                            <40*lassen116>
+                            <40*lassen445>
+                            <40*lassen774>
+                            <40*lassen117>
+                            <40*lassen293>
+                            <40*lassen449>
+                            <40*lassen778>
+                            <40*lassen294>
+                            <40*lassen622>
+                            <40*lassen626>
+                            <40*lassen471>
+                            <40*lassen627>
+                            <40*lassen143>
+                            <40*lassen473>
+                            <40*lassen474>
+                            <40*lassen478>
+                            <40*lassen479>
+                            <40*lassen300>
+                            <40*lassen301>
+                            <40*lassen630>
+                            <40*lassen302>
+                            <40*lassen631>
+                            <40*lassen303>
+                            <40*lassen632>
+                            <40*lassen304>
+                            <40*lassen305>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen/spectrum> was used as the working directory.
+Started at Thu Apr  8 16:05:38 2021
+Terminated at Thu Apr  8 16:07:38 2021
+Results reported at Thu Apr  8 16:07:38 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J all_reduce_32
+#BSUB -e all_reduce_32.%J.err
+#BSUB -o all_reduce_32.%J.out
+#BSUB -nnodes 32
+#BSUB -W 00:15
+
+module load gcc
+module load cuda/10.2.89
+module load hwloc
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a40 -c40 -g4 -r1 -n32 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed ./time_allreduce
+
+echo quit | nvidia-cuda-mps-control
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.00 sec.
+    Max Memory :                                 62 MB
+    Average Memory :                             57.50 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1427 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   120 sec.
+    Turnaround time :                            124 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_32.2412714.err> for stderr output of this job.
+

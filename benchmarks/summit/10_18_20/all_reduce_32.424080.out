@@ -1,0 +1,65 @@
+Cuda-Aware Allreduce:
+5.730627e-05	5.526276e-05	5.514721e-05	5.497747e-05	5.499036e-05	6.625956e-05	7.315884e-05	8.828688e-05	7.343805e-05	8.422341e-05	9.810715e-05	1.430502e-04	1.675773e-04	1.506777e-04	1.763191e-04	3.281565e-04	1.068829e-03	1.770712e-03	3.138110e-03	5.427494e-03	
+
+3-Step Allreduce:
+5.117398e-05	5.036072e-05	5.049459e-05	5.495362e-05	6.513564e-05	7.371630e-05	6.621291e-05	1.282026e-04	7.142847e-05	8.039632e-05	7.995988e-05	9.862951e-05	1.053230e-04	1.375007e-04	2.290730e-04	2.785058e-04	1.059898e-03	1.814066e-03	2.575848e-03	5.538580e-03	
+
+3-Step Allreduce, Extra Message:
+3.404178e-05	3.309982e-05	3.655254e-05	1.842733e-04	1.050612e-04	7.399196e-05	5.970149e-05	1.097608e-04	9.988539e-05	6.670890e-05	8.018127e-05	1.808932e-04	1.609961e-04	1.486615e-04	2.601988e-04	4.367130e-04	2.281337e-04	8.338805e-04	7.982552e-04	6.306973e-03	
+
+3-Step Allreduce, Duplicate DevPtr:
+-1	-1	-1	1.354813e-04	1.383892e-04	1.410855e-04	1.246034e-04	1.278095e-04	1.220214e-04	1.370428e-04	1.476535e-04	1.303920e-04	1.303319e-04	1.498681e-04	1.757563e-04	2.180690e-04	2.607474e-04	3.746125e-04	5.503892e-04	2.658732e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch4>
+Subject: Job 424080: <all_reduce_32> in cluster <summit> Done
+
+Job <all_reduce_32> was submitted from host <login4> by user <bienz> in cluster <summit> at Sun Oct 18 15:54:04 2020
+Job was executed on host(s) <1*batch4>, in queue <batch>, as user <bienz> in cluster <summit> at Sun Oct 18 18:42:13 2020
+                            <42*f22n15>
+                            <42*f22n16>
+                            <42*f22n17>
+                            <42*f22n18>
+                            <42*f23n01>
+                            <42*f23n02>
+                            <42*f23n03>
+                            <42*f23n04>
+                            <42*f23n05>
+                            <42*f23n06>
+                            <42*f23n07>
+                            <42*f23n08>
+                            <42*f23n09>
+                            <42*f23n10>
+                            <42*f23n11>
+                            <42*f23n12>
+                            <42*f23n13>
+                            <42*f23n14>
+                            <42*f23n15>
+                            <42*f23n16>
+                            <42*f23n17>
+                            <42*f23n18>
+                            <42*f24n01>
+                            <42*f24n02>
+                            <42*f24n03>
+                            <42*f24n04>
+                            <42*f24n05>
+                            <42*f24n06>
+                            <42*f24n07>
+                            <42*f24n08>
+                            <42*f24n09>
+                            <42*f24n10>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Sun Oct 18 18:42:13 2020
+Terminated at Sun Oct 18 18:43:22 2020
+Results reported at Sun Oct 18 18:43:22 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_reduce_32.424080.err> for stderr output of this job.
+

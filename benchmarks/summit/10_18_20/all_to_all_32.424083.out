@@ -1,0 +1,65 @@
+Cuda-Aware Alltoall:
+6.518580e-05	6.652874e-05	6.953110e-05	9.201622e-05	1.367914e-04	1.954943e-04	1.980684e-04	2.876660e-04	1.992380e-04	4.255722e-04	1.729981e-03	1.463628e-03	3.406975e-03	5.663075e-03	1.037258e-02	1.935234e-02	
+
+3-Step Alltoall:
+5.932268e-05	9.304658e-05	5.933372e-05	6.736386e-05	8.597626e-05	1.099665e-04	1.596727e-04	1.697792e-04	2.117372e-04	2.578380e-04	1.289966e-03	1.451276e-03	3.085426e-03	6.468712e-03	1.055035e-02	1.924678e-02	
+
+3-Step Alltoall, Extra Message:
+3.449419e-05	3.501418e-05	3.538308e-05	1.007106e-04	1.421441e-04	1.120624e-04	1.494189e-04	3.839417e-04	5.214642e-04	1.204733e-03	1.252400e-03	1.874597e-03	3.580669e-03	6.882263e-03	1.093787e-02	2.637611e-02	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	1.387715e-04	1.441288e-04	1.473577e-04	1.566603e-04	2.334713e-04	4.030607e-04	7.690815e-04	7.753316e-04	1.428934e-03	2.791397e-03	3.502030e-03	8.649804e-03	1.333871e-02	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 424083: <all_to_all_32> in cluster <summit> Done
+
+Job <all_to_all_32> was submitted from host <login4> by user <bienz> in cluster <summit> at Sun Oct 18 15:54:15 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Sun Oct 18 18:46:21 2020
+                            <42*f21n01>
+                            <42*f21n02>
+                            <42*f21n03>
+                            <42*f21n04>
+                            <42*f21n05>
+                            <42*f21n06>
+                            <42*f21n07>
+                            <42*f21n08>
+                            <42*f21n09>
+                            <42*f21n10>
+                            <42*f21n11>
+                            <42*f21n12>
+                            <42*f21n13>
+                            <42*f21n14>
+                            <42*f21n15>
+                            <42*f21n16>
+                            <42*f21n17>
+                            <42*f21n18>
+                            <42*f22n01>
+                            <42*f22n02>
+                            <42*f22n03>
+                            <42*f22n04>
+                            <42*f22n05>
+                            <42*f22n06>
+                            <42*f22n07>
+                            <42*f22n08>
+                            <42*f22n09>
+                            <42*f22n10>
+                            <42*f22n11>
+                            <42*f22n12>
+                            <42*f22n13>
+                            <42*f22n14>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Sun Oct 18 18:46:21 2020
+Terminated at Sun Oct 18 18:50:38 2020
+Results reported at Sun Oct 18 18:50:38 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_32.424083.err> for stderr output of this job.
+

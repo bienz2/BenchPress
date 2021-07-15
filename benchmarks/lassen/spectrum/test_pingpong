@@ -9,11 +9,15 @@
 module load gcc
 module load cuda
 
+#export PAMI_ENABLE_STRIPING=1
+#export PAMI_IBV_DEVICE_NAME="mlx5_0:1,mlx5_3:1"
+
 cd /g/g14/bienz1/BenchPress/spectrum_build/examples
 
 nvidia-cuda-mps-control -d
 
-jsrun -a2 -c2 -g2 -r2 -n4 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+#jsrun --smpiargs "-PAMI" -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
 
 
 echo quit | nvidia-cuda-mps-control

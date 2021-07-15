@@ -17,7 +17,8 @@ nvidia-smi
 
 cd /g/g14/bienz1/BenchPress/spectrum_build/examples
 
-jsrun -a20 -c20 -g2 -r2 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy_mult 
+jsrun -a40 -c40 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy_mult 
+#jsrun -a20 -c20 -g2 -r2 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy_mult 
 
 
 #echo quit | nvidia-cuda-mps-control

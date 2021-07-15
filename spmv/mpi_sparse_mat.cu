@@ -260,24 +260,13 @@ void nap_communicate(TAPComm* tap_comm, double* sendbuf, double* recvbuf)
             tap_comm->local_S_par_comm->recv_data->buffer.data(), 
             tap_comm->local_S_par_comm->mpi_comm);
     communicate(tap_comm->global_par_comm,
-//    communicate_idx(tap_comm->global_par_comm, 
             tap_comm->local_S_par_comm->recv_data->buffer.data(),
-//            tap_comm->global_par_comm->send_data->buffer.data(),
             tap_comm->global_par_comm->recv_data->buffer.data(),
             tap_comm->global_par_comm->mpi_comm);
     communicate(tap_comm->local_R_par_comm,
-//    communicate_idx(tap_comm->local_R_par_comm, 
             tap_comm->global_par_comm->recv_data->buffer.data(),
-//            tap_comm->local_R_par_comm->send_data->buffer.data(),
             recvbuf,
-            //tap_comm->local_R_par_comm->recv_data->buffer.data(),
             tap_comm->local_R_par_comm->mpi_comm);
-
-    //for (int i = 0; i < local_R_recv->size_msgs; i++)
-    //{
-    //    idx = local_R_recv->indices[i];
-    //    recvbuf[idx] = local_R_recv->buffer[i];
-    //}
 }
 
 void cuda_aware_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* d_x, double* d_b,
@@ -628,38 +617,6 @@ int main(int argc, char* argv[])
     }
 
 
-/*    // dup_recvidx is of size global_recvs (per process)
-    // Gather this to get global recvs per GPU
-    // Edit local_R_recv indices (map from global recv to local_R indices)
-    // dup_recvidx points from global_recv to index in x_dist, so just gather these indices
-    size_msgs = tap_comm->global_par_comm->recv_data->size_msgs;
-    MPI_Gather(&size_msgs, 1, MPI_INT, node_gpu_sizes.data(), 1, MPI_INT,
-            0, node_gpu_comm);
-    std::vector<int> node_dup_recvidx;
-    if (gpu_rank == 0)
-    {
-        size_msgs = 0;
-        node_gpu_displs[0] = 0;
-        for (int i = 0; i < procs_per_gpu; i++)
-        {
-            size_msgs += node_gpu_sizes[i];
-            node_gpu_displs[i+1] = node_gpu_displs[i] + node_gpu_sizes[i];
-        }
-        node_dup_sendidx.resize(size_msgs);
-    }
-    MPI_Gatherv(dup_recvidx.data(), dup_recvidx.size(), MPI_INT,
-            node_dup_sendidx.data(), node_gpu_sizes.data(), node_gpu_displs.data(),
-            MPI_INT, 0, node_gpu_comm);
-
-    // Now, gpu_rank 0 holds all indices that need to be copied to x_dist
-    // After global_recv, just forward all data to gpu_rank 0
-    // then gpu_rank 0 copies all values with d_dup_recvidx
-  */  
-
-
-
-
-
     int max_n;
     MPI_Reduce(&(tap_comm->global_par_comm->send_data->num_msgs), &max_n, 1, MPI_INT, MPI_MAX, 0, MPI_COMM_WORLD);
     if (rank == 0) printf("Max TAP N %d\n", max_n);
@@ -669,6 +626,15 @@ int main(int argc, char* argv[])
     if (rank == 0) printf("Global NNZ %lu, NNZ/GPU %lu\n", global_nnz, 
             global_nnz / (num_gpus*num_nodes));
     
+    int max_n;
+    MPI_Allreduce(&(A->comm->send_data->num_msgs), &max_n, 1, MPI_INT,
+            MPI_MAX, MPI_COMM_WORLD);
+    if (rank == 0) printf("Max N: %d\n", max_n);
+
+    MPI_Allreduce(&(A->comm->send_data->size_msgs), &max_n, 1, MPI_INT,
+            MPI_MAX, MPI_COMM_WORLD);
+    if (rank == 0) printf("Max S: %d\n", max_n);
+
     double *d_x, *d_x_dist, *d_b;
     cudaIpcMemHandle_t x_handle, x_dist_handle;
     if (gpu_rank == 0)

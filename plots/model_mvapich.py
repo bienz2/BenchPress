@@ -1,10 +1,12 @@
 import prof
 import numpy as np
 
-eager_i = 6
+eager_i = 15
 eager = 4*2**eager_i
-rend_i = 12
+rend_i = 11
 rend = 4* 2 ** rend_i
+gpu_rend_i = 10
+gpu_rend = 4*2**gpu_rend_i
 
 class Model():
     alpha = 0
@@ -12,6 +14,8 @@ class Model():
     sizes = ""
     
     def __init__(self, times, start = 0):
+        if (len(times) == 0):
+            return
         self.sizes = [4*2**(i+start) for i in range(len(times))]
         mat = list()
         t = list()
@@ -86,11 +90,23 @@ class ModeModel():
     eager = ""
     rend = ""
     sizes = ""
+    protocol = ""
 
-    def __init__(self, times):
-        self.short = Model([times[i] for i in range(eager_i)])
-        self.eager = Model([times[i] for i in range(eager_i, rend_i)], eager_i)
-        self.rend = Model([times[i] for i in range(rend_i, len(times))], rend_i)
+    def __init__(self, times, protocol = 0):
+        self.protocol = protocol
+        if protocol == 0:
+            self.short = Model([])
+            self.eager = Model([times[i] for i in range(rend_i)])
+            self.rend = Model([times[i] for i in range(rend_i, len(times))], rend_i)
+        elif protocol == 1:
+            self.short = Model([])
+            self.eager = Model([times[i] for i in range(eager_i)])
+            self.rend = Model([times[i] for i in range(eager_i, len(times))], eager_i)
+        else:
+            self.short = Model([])
+            self.eager = Model([times[i] for i in range(gpu_rend_i)])
+            self.rend = Model([times[i] for i in range(gpu_rend_i, len(times))], gpu_rend_i)
+
         self.sizes = [4*2**i for i in range(len(times))]
 
     def model_times(self):
@@ -106,9 +122,12 @@ class ModeModel():
         plt.line_plot(times, self.sizes, tickmark = "--")
 
     def get_model(self, size):
-        if size < eager:
-            return self.short.alpha, self.short.beta
-        elif size < rend:
+        max_s = rend
+        if self.protocol == 1:
+            max_s = eager
+        elif self.protocol == 2:
+            max_s = gpu_rend
+        if size < max_s:
             return self.eager.alpha, self.eager.beta
         else:
             return self.rend.alpha, self.rend.beta
@@ -121,11 +140,12 @@ class PongModel():
 
     def __init__(self, times, gpu = False):
         model = ModeModel
+        self.on_socket = model(times.on_socket, 1)
+        self.on_node = model(times.on_node, 1)
         if gpu:
-            model = Model
-        self.on_socket = model(times.on_socket)
-        self.on_node = model(times.on_node)
-        self.network = model(times.network)
+            self.network = model(times.network, 2)
+        else:
+            self.network = model(times.network, 0)
         self.sizes = [4*2**i for i in range(len(times.on_socket))]
 
     def plot_model(self, times, name):
@@ -164,9 +184,22 @@ if 1:
     print("CPU: Short:", cpu_model.on_socket.short.alpha, cpu_model.on_socket.short.beta)
 
 if 1:
-    print("GPU: ", gpu_model.network.alpha, gpu_model.network.beta)
-    print("GPU: ", gpu_model.on_node.alpha, gpu_model.on_node.beta)
-    print("GPU: ", gpu_model.on_socket.alpha, gpu_model.on_socket.beta)
+    print("Network:")
+    print("GPU: Rend:", gpu_model.network.rend.alpha, gpu_model.network.rend.beta)
+    print("GPU: Eager:", gpu_model.network.eager.alpha, gpu_model.network.eager.beta)
+    print("GPU: Short:", gpu_model.network.short.alpha, gpu_model.network.short.beta)
+
+if 1:
+    print("Node:")
+    print("GPU: Rend:", gpu_model.on_node.rend.alpha, gpu_model.on_node.rend.beta)
+    print("GPU: Eager:", gpu_model.on_node.eager.alpha, gpu_model.on_node.eager.beta)
+    print("GPU: Short:", gpu_model.on_node.short.alpha, gpu_model.on_node.short.beta)
+
+if 1:
+    print("Socket:")
+    print("GPU: Rend:", gpu_model.on_socket.rend.alpha, gpu_model.on_socket.rend.beta)
+    print("GPU: Eager:", gpu_model.on_socket.eager.alpha, gpu_model.on_socket.eager.beta)
+    print("GPU: Short:", gpu_model.on_socket.short.alpha, gpu_model.on_socket.short.beta)
 
 
 
@@ -180,10 +213,6 @@ class NodeModel():
         self.max_ppn = len(ppn_times)
         mat = list()
         t = list()
-        if (self.max_ppn <= 4):
-            self.omega = 0
-            return
-
         for i in range(4, self.max_ppn):
             ppn = i+1
             for j in range(len(ppn_times[i])):
@@ -243,10 +272,7 @@ class NodeModel():
         plt.save_plot("%s/%s_node_model.pdf"%(prof.folder_out, prof.computer))
             
 node_model = NodeModel(node_pong.cpu_times.ppn_times, cpu_model)
-gpu_node_model = NodeModel(node_pong.gpu_times.ppn_times, gpu_model)
 print("CPU NODE:", node_model.omega)
-print("GPU NODE:", gpu_node_model.omega)
-
 
 ## Multiple Ping Pongs
 import mult_pong_split
@@ -287,9 +313,10 @@ class MultModel():
                     size = (int) (self.sizes[j] / (i+1))
                     j_list.append(j)
                     alpha, beta = gpu_model.network.get_model(size)
+                    print(size, alpha, beta)
                     model = alpha * (i+1) + beta * self.sizes[j];
                     if 0:
-                        model += self.theta * i;
+                        model += self.theta*i
                     ydata.append(model)
             xdata = [self.sizes[j] for j in j_list]
             plt.line_plot([mult_pong_split.gpu_times.ppn_times[i][j] for j in j_list], xdata, label = "%d Msgs"%(i+1))
@@ -302,19 +329,8 @@ class MultModel():
         print("Plotting %s/%s_mult_model.pdf"%(prof.folder_out, prof.computer))
         plt.save_plot("%s/%s_mult_model.pdf"%(prof.folder_out, prof.computer))
 
-    def get_model(self, n_msgs):
-        model_t = list()
-        for size in sizes:
-            alpha, beta = gpu_model.network.get_model(size)
-            model_t.append(alpha * n_msgs + beta * size * n_msgs + self.theta * (n_msgs-1))
-        return model_t
-        
-
-
 gpu_mult_model = MultModel(mult_pong_split.gpu_times.ppn_times, gpu_model)
 print("GPU THETA:", gpu_mult_model.theta)
-
-
 
 
 if __name__=='__main__':
@@ -447,9 +463,6 @@ if __name__=='__main__':
     import mult_pong
     plt.add_luke_options()
     plt.set_palette(palette="deep", n_colors=2)
-    print(mult_pong.gpu_times.ppn_times[0])
-    print(gpu_model.sizes)
-    print(ping_pong.gpu_times.network)
     plt.line_plot(ping_pong.gpu_times.network, gpu_model.sizes)
     plt.line_plot(mult_pong.gpu_times.ppn_times[0], gpu_model.sizes)
 

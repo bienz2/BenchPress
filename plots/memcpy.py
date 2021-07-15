@@ -98,7 +98,7 @@ if __name__ == '__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_memcpy.pdf"%prof.computer)
+        plt.save_plot("%s/%s_memcpy.pdf"%(prof.folder_out, prof.computer))
 
     if 0:
         # Memcpy Device To Device
@@ -111,5 +111,5 @@ if __name__ == '__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
-        plt.save_plot("%s_d2d_memcpy.pdf"%prof.computer)
+        plt.save_plot("%s/%s_d2d_memcpy.pdf"%(prof.folder_out, prof.computer))
 

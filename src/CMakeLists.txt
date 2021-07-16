@@ -5,7 +5,7 @@ find_package(CUDAToolkit REQUIRED)
 add_subdirectory(collective)
 add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
-add_subdirectory(spmv)
+#add_subdirectory(spmv)
 
 add_library(heterobench heterobench.hpp 
     ${collective_SOURCES} ${collective_HEADERS}
@@ -30,5 +30,5 @@ if(ENABLE_UNIT_TESTS)
     add_subdirectory(memcpy/tests)
     add_subdirectory(ping_pong/tests)
     add_subdirectory(collective/tests)
-    add_subdirectory(spmv/tests)
+    #add_subdirectory(spmv/tests)
 endif()

@@ -30,6 +30,12 @@ target_link_libraries(time_ping_pong_cpu heterobench)
 add_executable(time_ping_pong_gpu time_ping_pong_gpu.cpp)
 target_link_libraries(time_ping_pong_gpu heterobench)
 
+add_executable(time_hv_ping_pong_cpu time_hv_ping_pong_cpu.cpp)
+target_link_libraries(time_hv_ping_pong_cpu heterobench)
+
+add_executable(time_hv_ping_pong_gpu time_hv_ping_pong_gpu.cpp)
+target_link_libraries(time_hv_ping_pong_gpu heterobench)
+
 add_executable(time_maxrate time_maxrate.cpp)
 target_link_libraries(time_maxrate heterobench)
 

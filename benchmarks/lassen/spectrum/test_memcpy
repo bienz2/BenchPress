@@ -13,6 +13,6 @@ cd /g/g14/bienz1/BenchPress/spectrum_build/examples
 
 nvidia-cuda-mps-control -d
 
-jsrun -a2 -c2 -g2 -r2 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy  
+jsrun -a4 -c4 -g4 -r1 -n1 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_memcpy  
 
 echo quit | nvidia-cuda-mps-control

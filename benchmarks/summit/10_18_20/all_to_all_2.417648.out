@@ -1,0 +1,35 @@
+Cuda-Aware Alltoall:
+7.601438e-05	4.848312e-05	1.041201e-04	4.797545e-05	4.706994e-05	4.824240e-05	4.942236e-05	5.216462e-05	5.381842e-05	5.911828e-05	6.888645e-05	1.249374e-04	1.863523e-04	2.542477e-04	4.156756e-04	7.759903e-04	
+
+3-Step Alltoall:
+3.680787e-05	3.681240e-05	3.702357e-05	4.508196e-05	3.782481e-05	4.430911e-05	4.573239e-05	4.330343e-05	4.489527e-05	4.981143e-05	6.406318e-05	1.121341e-04	1.823198e-04	2.640952e-04	3.964558e-04	7.681155e-04	
+
+3-Step Alltoall, Extra Message:
+2.904095e-05	3.586242e-05	2.934564e-05	4.750762e-05	4.766027e-05	5.345471e-05	4.485594e-05	5.934118e-05	5.050869e-05	7.365418e-05	9.627507e-05	1.253091e-04	1.382269e-04	2.241410e-04	4.067728e-04	6.821975e-04	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	9.201920e-05	9.431105e-05	9.674617e-05	9.616265e-05	9.285068e-05	9.407659e-05	9.497233e-05	1.003573e-04	9.745484e-05	9.664797e-05	1.542709e-04	2.300990e-04	4.218479e-04	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch5>
+Subject: Job 417648: <all_to_all_2> in cluster <summit> Done
+
+Job <all_to_all_2> was submitted from host <login1> by user <bienz> in cluster <summit> at Thu Oct 15 23:17:12 2020
+Job was executed on host(s) <1*batch5>, in queue <batch>, as user <bienz> in cluster <summit> at Thu Oct 15 23:17:32 2020
+                            <42*f05n07>
+                            <42*f05n08>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Thu Oct 15 23:17:32 2020
+Terminated at Thu Oct 15 23:18:27 2020
+Results reported at Thu Oct 15 23:18:27 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_2.417648.err> for stderr output of this job.
+

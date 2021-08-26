@@ -70,7 +70,8 @@ if __name__=='__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_cpu_mult_pong.pdf"%(prof.computer))
+        print("Plotting %s/%s_cpu_mult_pong.pdf"%(prof.folder_out, prof.computer))
+        plt.save_plot("%s/%s_cpu_mult_pong.pdf"%(prof.folder_out, prof.computer))
 
     if 1:
         # CPU Mult Slowdown 
@@ -84,7 +85,7 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=3)
         plt.set_scale('log', 'linear')
         plt.add_labels("Message Size (Bytes)", "Times Slowdown")
-        plt.save_plot("%s_cpu_mult_slowdown.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_cpu_mult_slowdown.pdf"%(prof.folder_out, prof.computer))
 
 
 
@@ -105,7 +106,7 @@ if __name__=='__main__':
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
         plt.add_labels("Message Size (Bytes)", "Time (Seconds)")
-        plt.save_plot("%s_gpu_mult_pong.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_gpu_mult_pong.pdf"%(prof.folder_out, prof.computer))
 
     if 1:
         # GPU Diff X
@@ -118,7 +119,7 @@ if __name__=='__main__':
         plt.add_anchored_legend(ncol=prof.n_gpus/2)
         plt.set_scale('log', 'linear')
         plt.add_labels("Message Size (Bytes)", "Times Slowdown")
-        plt.save_plot("%s_gpu_mult_slowdown.pdf"%(prof.computer))
+        plt.save_plot("%s/%s_gpu_mult_slowdown.pdf"%(prof.folder_out, prof.computer))
 
 
 

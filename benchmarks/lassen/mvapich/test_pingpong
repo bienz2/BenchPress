@@ -10,11 +10,18 @@ module load gcc
 module load cuda
 module load mvapich2
 
+#export PAMI_ENABLE_STRIPING=1
+#export PAMI_IBV_DEVICE_NAME="mlx5_0:1,mlx5_3:1"
+#export MV2_IBA_HCA="mlx5_0:mlx5_1:mlx5_0:mlx5_1"
+#export MV2_SHOW_HCA_BINDING=1
+
 cd /g/g14/bienz1/BenchPress/mvapich_build/examples
 
 nvidia-cuda-mps-control -d
 
+#jsrun --smpiargs "-PAMI"  -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
 jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+
 
 
 echo quit | nvidia-cuda-mps-control

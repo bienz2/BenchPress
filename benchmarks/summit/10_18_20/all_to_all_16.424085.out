@@ -1,0 +1,49 @@
+Cuda-Aware Alltoall:
+7.531095e-05	5.891938e-05	6.132349e-05	6.419001e-05	6.853701e-05	9.617250e-05	1.401086e-04	1.376502e-04	1.368160e-04	2.727444e-04	3.039335e-04	1.392776e-03	2.505188e-03	3.383700e-03	6.956997e-03	9.481878e-03	
+
+3-Step Alltoall:
+8.731631e-05	7.903323e-05	7.015390e-05	8.603127e-05	9.664410e-05	1.450969e-04	1.708666e-04	2.223483e-04	2.722894e-04	3.126374e-04	4.463145e-04	2.177862e-03	2.372806e-03	4.786226e-03	6.170813e-03	8.918494e-03	
+
+3-Step Alltoall, Extra Message:
+2.952045e-05	3.301441e-05	3.031769e-05	8.839511e-05	1.787885e-04	8.886457e-05	1.052465e-04	1.371428e-04	3.004241e-04	4.980276e-04	5.038046e-04	7.233731e-04	1.360230e-03	3.274120e-03	5.905600e-03	1.189428e-02	
+
+3-Step Alltoall, Duplicate DevPtr:
+-1	-1	-1	1.198496e-04	1.250127e-04	1.268662e-04	1.302934e-04	1.537222e-04	2.115456e-04	3.532064e-04	4.529588e-04	6.305314e-04	1.038139e-03	2.625966e-03	4.952179e-03	8.648389e-03	
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch2>
+Subject: Job 424085: <all_to_all_16> in cluster <summit> Done
+
+Job <all_to_all_16> was submitted from host <login4> by user <bienz> in cluster <summit> at Sun Oct 18 15:54:35 2020
+Job was executed on host(s) <1*batch2>, in queue <batch>, as user <bienz> in cluster <summit> at Sun Oct 18 18:47:24 2020
+                            <42*f22n15>
+                            <42*f22n16>
+                            <42*f22n17>
+                            <42*f22n18>
+                            <42*f23n01>
+                            <42*f23n02>
+                            <42*f23n03>
+                            <42*f23n04>
+                            <42*f23n05>
+                            <42*f23n06>
+                            <42*f23n07>
+                            <42*f23n08>
+                            <42*f23n09>
+                            <42*f23n10>
+                            <42*f23n11>
+                            <42*f23n12>
+</ccs/home/bienz> was used as the home directory.
+</ccs/home/bienz/BenchPress/benchmarks/summit> was used as the working directory.
+Started at Sun Oct 18 18:47:24 2020
+Terminated at Sun Oct 18 18:50:13 2020
+Results reported at Sun Oct 18 18:50:13 2020
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <all_to_all_16.424085.err> for stderr output of this job.
+

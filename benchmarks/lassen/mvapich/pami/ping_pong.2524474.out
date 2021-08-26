@@ -1,0 +1,73 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2524474: <ping_pong> in cluster <lassen> Done
+
+Job <ping_pong> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Thu May 13 13:58:46 2021
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Thu May 13 13:58:49 2021
+                            <40*lassen36>
+                            <40*lassen34>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen/mvapich> was used as the working directory.
+Started at Thu May 13 13:58:49 2021
+Terminated at Thu May 13 13:58:55 2021
+Results reported at Thu May 13 13:58:55 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J ping_pong
+#BSUB -e ping_pong.%J.err
+#BSUB -o ping_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+export PAMI_ENABLE_STRIPING=1
+export PAMI_IBV_DEVICE_NAME="mlx5_0:1,mlx5_3:1"
+#export MV2_IBA_HCA="mlx5_0:mlx5_1:mlx5_0:mlx5_1"
+#export MV2_SHOW_HCA_BINDING=1
+
+cd /g/g14/bienz1/BenchPress/mvapich_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --mpi-bind=off --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+
+
+echo quit | nvidia-cuda-mps-control
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.20 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   5 sec.
+    Turnaround time :                            9 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <ping_pong.2524474.err> for stderr output of this job.
+

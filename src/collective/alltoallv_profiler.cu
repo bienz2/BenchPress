@@ -40,7 +40,7 @@ void alltoallv_profile_cuda_aware(int max_i, bool imsg)
     if (gpu_rank == 0) // Only one proc per GPU
     {
         if (rank == 0) printf("Cuda-Aware Alltoallv:\n");
-        n_tests = 1000;
+        n_tests = 100;
         for (int i = 0; i < max_i; i++)
         {
            if (i > 14) n_tests = 100;
@@ -111,7 +111,7 @@ void alltoallv_profile_3step(int max_i, bool imsg)
     if (gpu_rank == 0)
     {
         if (rank == 0) printf("3-Step Alltoallv:\n");
-        n_tests = 1000;
+        n_tests = 100;
         for (int i = 0; i < max_i; i++)
         {
             if (i > 14) n_tests = 100;
@@ -185,7 +185,7 @@ void alltoallv_profile_3step_extra_msg(int max_i, bool imsg)
 
     // Time 3-Step, Extra Msg
     if (rank == 0) printf("3-Step Alltoallv, Extra Message:\n");
-    n_tests = 1000;
+    n_tests = 100;
 
     for (int i = 0; i < max_i; i++)
     {
@@ -260,7 +260,7 @@ void alltoallv_profile_3step_dup_devptr(int max_i, bool imsg)
 
     // Time 3-Step, Duplicate DevPtr
     if (rank == 0) printf("3-Step Alltoallv, Duplicate DevPtr:\n");
-    n_tests = 1000;
+    n_tests = 100;
     for (int i = 0; i < max_i; i++)
     {
         if (i > 14) n_tests = 100;

@@ -274,10 +274,10 @@ double time_high_volume_ping_pong_3step(bool active, int rank0, int rank1, float
         {
             if (rank == rank0)
             {
+                cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
+                cudaStreamSynchronize(stream);
                 for (int j = 0 ; j < n_msgs; j++)
                 {
-                    cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-                    cudaStreamSynchronize(stream);
                     MPI_Isend(cpu_data, size, MPI_FLOAT, rank1, ping_tags[j], MPI_COMM_WORLD, &request[j]);
                 }
                 MPI_Waitall(n_msgs, request, status);
@@ -285,9 +285,9 @@ double time_high_volume_ping_pong_3step(bool active, int rank0, int rank1, float
                 for (int j = 0 ; j < n_msgs; j++)
                 {
                     MPI_Irecv(cpu_data, size, MPI_FLOAT, rank1, pong_tags[j], MPI_COMM_WORLD, &request[j]);
-                    cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-                    cudaStreamSynchronize(stream);
                 }
+                cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
+                cudaStreamSynchronize(stream);
                 MPI_Waitall(n_msgs, request, status);
             }
             else if (rank == rank1)
@@ -295,15 +295,15 @@ double time_high_volume_ping_pong_3step(bool active, int rank0, int rank1, float
                 for (int j = 0 ; j < n_msgs; j++)
                 {
                     MPI_Irecv(cpu_data, size, MPI_FLOAT, rank0, ping_tags[j], MPI_COMM_WORLD, &request[j]);
-                    cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-                    cudaStreamSynchronize(stream);
                 }
+                cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
+                cudaStreamSynchronize(stream);
                 MPI_Waitall(n_msgs, request, status);
 
+                cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
+                cudaStreamSynchronize(stream);
                 for (int j = 0 ; j < n_msgs; j++)
                 {
-                    cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-                    cudaStreamSynchronize(stream);
                     MPI_Isend(cpu_data, size, MPI_FLOAT, rank0, pong_tags[j], MPI_COMM_WORLD, &request[j]);
                 }
                 MPI_Waitall(n_msgs, request, status);

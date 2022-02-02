@@ -1,0 +1,114 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Timing GPU Max-Rate Ping Pongs
+Size 1	2.085209e-06	
+Size 2	2.056122e-06	2.173543e-06	
+Size 4	2.205729e-06	3.728032e-06	2.166867e-06	2.263308e-06	
+Size 8	2.054453e-06	2.161384e-06	2.140522e-06	5.619645e-06	
+Size 16	2.055764e-06	2.174973e-06	2.240300e-06	2.325296e-06	
+Size 32	2.185464e-06	2.196670e-06	2.230287e-06	2.321243e-06	
+Size 64	3.072619e-06	2.914190e-06	2.256632e-06	2.332211e-06	
+Size 128	2.518892e-06	3.270149e-06	2.515554e-06	2.351046e-06	
+Size 256	2.533197e-06	2.556205e-06	2.637744e-06	2.721429e-06	
+Size 512	3.050327e-06	2.692223e-06	2.694726e-06	2.749801e-06	
+Size 1024	6.328702e-06	3.238201e-06	3.002644e-06	2.995014e-06	
+Size 2048	6.794453e-06	6.681442e-06	3.601313e-06	3.305554e-06	
+Size 4096	7.314920e-06	7.360220e-06	8.159041e-06	7.077456e-06	
+Size 8192	8.459568e-06	7.904172e-06	1.259840e-05	7.635593e-06	
+Size 16384	1.058710e-05	9.385467e-06	1.449144e-05	8.625627e-06	
+Size 32768	1.438498e-05	1.180053e-05	2.925515e-05	1.028061e-05	
+Size 65536	2.204895e-05	1.721621e-05	5.891085e-05	1.269817e-05	
+Size 131072	3.358960e-05	2.950072e-05	1.007962e-04	2.114177e-05	
+Size 262144	8.113265e-05	4.441619e-05	1.757753e-04	4.541755e-05	
+Size 524288	1.242113e-04	1.208329e-04	2.825499e-04	8.222461e-05	
+Size 1048576	2.450275e-04	1.880372e-04	2.957499e-04	1.777565e-04	
+Size 2097152	4.422188e-04	4.119158e-04	3.419995e-04	3.101349e-04	
+Size 4194304	8.458257e-04	8.244991e-04	6.902814e-04	6.936789e-04	
+Size 8388608	2.400196e-03	1.522756e-03	1.337862e-03	1.364052e-03	
+
+
+app 0: ./time_node_pong_gpu 
+rank: 0: { host: 1; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 1: { host: 1; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 2: { host: 1; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 3: { host: 1; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 4: { host: 2; cpu: {0-3}, {4-7,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 5: { host: 2; cpu: {4-7}, {0-3,80-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 6: { host: 2; cpu: {80-83}, {0-7,84-87} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+rank: 7: { host: 2; cpu: {84-87}, {0-7,80-83} ; gpu: {0,1,2,3} ; mem: {0-16301,163036-179337} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2508754: <node_pong_gpu> in cluster <lassen> Done
+
+Job <node_pong_gpu> was submitted from host <lassen709> by user <locksl> in cluster <lassen> at Thu May  6 13:06:46 2021
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <locksl> in cluster <lassen> at Thu May  6 13:06:48 2021
+                            <40*lassen36>
+                            <40*lassen34>
+</g/g16/locksl> was used as the home directory.
+</g/g16/locksl/bin/bench_press_scripts> was used as the working directory.
+Started at Thu May  6 13:06:48 2021
+Terminated at Thu May  6 13:07:01 2021
+Results reported at Thu May  6 13:07:01 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J node_pong_gpu
+#BSUB -e node_pong_gpu.%J.err
+#BSUB -o node_pong_gpu.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+module load mvapich2
+
+export MV2_USE_CUDA=1
+export MV2_USE_GDR=1
+
+# TESTING PARAMETER
+#export MV2_GPUDIRECT_LIMIT=4096
+#export MV2_GPUDIRECT_LIMIT=8192
+#export MV2_GPUDIRECT_LIMIT=16384
+#export MV2_GPUDIRECT_LIMIT=32768
+export MV2_GPUDIRECT_LIMIT=655376
+
+cd /g/g16/locksl/BenchPress/mvapich_build/examples
+
+nvidia-cuda-mps-control -d
+
+jsrun -a4 -c4 -g4 -r1 -n2 --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_node_pong_gpu
+
+echo quit | nvidia-cuda-mps-control
+
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.26 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   13 sec.
+    Turnaround time :                            15 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <node_pong_gpu.2508754.err> for stderr output of this job.
+

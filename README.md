@@ -7,18 +7,18 @@ This program provides benchmarking tools for data movement on heterogenenous arc
 
 # Compiling
 This codebase uses cmake.  To compile the code : 
-'''
+```
 mkdir build
 cd build
 cmake ..
-'''
+```
 
 # Testing Environment
 Benchpress contains a testing environment, using googletest.  The tests are automatically compiled with cmake.  To verify that all code runs correctly on your system : 
-'''
+```
 cd build
 make test
-'''
+```
 
 # Examples
 The 'examples' folder contains code that is ready for you to run.  Each of these files will test the performance of different aspects of your system.  For more information, checkout examples/README.md.

@@ -38,3 +38,6 @@ mvapich_build/
 # Python Cache files
 .DS_Store
 __pycache__/
+
+*.swp
+*.icloud

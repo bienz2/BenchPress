@@ -1,0 +1,778 @@
+8 Processes Per Node, 2 Per GPU:
+GPU-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.470787e-04
+Copy To CPU : 7.034311e-05
+Node Aware : 8.053086e-05
+Dup Devptr Node Aware : 3.955252e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.181188e-04
+Copy To CPU : 9.039817e-05
+Node Aware : 8.555424e-05
+Dup Devptr Node Aware : 3.955045e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.176855e-04
+Copy To CPU : 8.978827e-05
+Node Aware : 7.435915e-05
+Dup Devptr Node Aware : 3.869995e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.135116e-04
+Copy To CPU : 9.451522e-05
+Node Aware : 7.086411e-05
+Dup Devptr Node Aware : 3.630561e-04
+Socket-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.189093e-04
+Copy To CPU : 7.838944e-05
+Node Aware : 1.130051e-04
+Dup Devptr Node Aware : 3.749792e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.146179e-04
+Copy To CPU : 6.893533e-05
+Node Aware : 1.029268e-04
+Dup Devptr Node Aware : 3.689416e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.172386e-04
+Copy To CPU : 6.981021e-05
+Node Aware : 1.009935e-04
+Dup Devptr Node Aware : 3.728341e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.237224e-04
+Copy To CPU : 8.909354e-05
+Node Aware : 7.965447e-05
+Dup Devptr Node Aware : 3.631988e-04
+Node-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.104375e-04
+Copy To CPU : 8.612103e-05
+Node Aware : 9.728950e-05
+Dup Devptr Node Aware : 3.773796e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.163891e-04
+Copy To CPU : 1.016035e-04
+Node Aware : 8.044676e-05
+Dup Devptr Node Aware : 3.779261e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 8
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.201854e-04
+Copy To CPU : 9.924303e-05
+Node Aware : 8.533778e-05
+Dup Devptr Node Aware : 3.669083e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 7
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.139425e-04
+Copy To CPU : 8.999088e-05
+Node Aware : 7.955903e-05
+Dup Devptr Node Aware : 3.649865e-04
+12 Processes Per Node, 3 Per GPU:
+GPU-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.219864e-04
+Copy To CPU : 6.829368e-05
+Node Aware : 8.107523e-05
+Dup Devptr Node Aware : 5.216575e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.347807e-04
+Copy To CPU : 7.045693e-05
+Node Aware : 8.547858e-05
+Dup Devptr Node Aware : 5.612560e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.172370e-04
+Copy To CPU : 6.701275e-05
+Node Aware : 7.778674e-05
+Dup Devptr Node Aware : 5.197180e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.134744e-04
+Copy To CPU : 6.411869e-05
+Node Aware : 8.141286e-05
+Dup Devptr Node Aware : 5.154705e-04
+Socket-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.368322e-04
+Copy To CPU : 7.166615e-05
+Node Aware : 8.659035e-05
+Dup Devptr Node Aware : 5.342849e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.288902e-04
+Copy To CPU : 7.715505e-05
+Node Aware : 7.989264e-05
+Dup Devptr Node Aware : 5.351906e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.284563e-04
+Copy To CPU : 7.594434e-05
+Node Aware : 7.301830e-05
+Dup Devptr Node Aware : 5.170990e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.485199e-04
+Copy To CPU : 6.386323e-05
+Node Aware : 7.642843e-05
+Dup Devptr Node Aware : 5.270161e-04
+Node-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.116017e-04
+Copy To CPU : 6.858754e-05
+Node Aware : 8.089960e-05
+Dup Devptr Node Aware : 5.166126e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.505054e-04
+Copy To CPU : 6.643358e-05
+Node Aware : 8.419534e-05
+Dup Devptr Node Aware : 5.282219e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 5
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.299573e-04
+Copy To CPU : 7.361188e-05
+Node Aware : 9.405008e-05
+Dup Devptr Node Aware : 5.682378e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 5
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.402405e-04
+Copy To CPU : 6.454375e-05
+Node Aware : 7.850489e-05
+Dup Devptr Node Aware : 5.184581e-04
+16 Processes Per Node, 4 Per GPU:
+GPU-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.302317e-04
+Copy To CPU : 6.821897e-05
+Node Aware : 7.476248e-05
+Dup Devptr Node Aware : 6.885453e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.160802e-04
+Copy To CPU : 6.733233e-05
+Node Aware : 8.402916e-05
+Dup Devptr Node Aware : 7.011966e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.255046e-04
+Copy To CPU : 6.755649e-05
+Node Aware : 7.543269e-05
+Dup Devptr Node Aware : 6.960309e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.122538e-04
+Copy To CPU : 6.728440e-05
+Node Aware : 7.557100e-05
+Dup Devptr Node Aware : 6.828286e-04
+Socket-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.188344e-04
+Copy To CPU : 6.836253e-05
+Node Aware : 8.181521e-05
+Dup Devptr Node Aware : 6.903656e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.342686e-04
+Copy To CPU : 6.660052e-05
+Node Aware : 7.579891e-05
+Dup Devptr Node Aware : 6.951565e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.180886e-04
+Copy To CPU : 6.730799e-05
+Node Aware : 7.797848e-05
+Dup Devptr Node Aware : 7.336315e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.127424e-04
+Copy To CPU : 6.429868e-05
+Node Aware : 6.959786e-05
+Dup Devptr Node Aware : 6.859106e-04
+Node-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.198375e-04
+Copy To CPU : 7.119010e-05
+Node Aware : 7.468933e-05
+Dup Devptr Node Aware : 6.914634e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.157102e-04
+Copy To CPU : 6.685757e-05
+Node Aware : 7.527447e-05
+Dup Devptr Node Aware : 6.929199e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 4
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.263326e-04
+Copy To CPU : 6.726323e-05
+Node Aware : 7.420813e-05
+Dup Devptr Node Aware : 6.968293e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 4
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.128464e-04
+Copy To CPU : 6.405795e-05
+Node Aware : 7.502742e-05
+Dup Devptr Node Aware : 6.911817e-04
+20 Processes Per Node, 5 Per GPU:
+GPU-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.118744e-04
+Copy To CPU : 6.856854e-05
+Node Aware : 7.753729e-05
+Dup Devptr Node Aware : 8.603249e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.177284e-04
+Copy To CPU : 6.791961e-05
+Node Aware : 7.277024e-05
+Dup Devptr Node Aware : 8.887570e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.189030e-04
+Copy To CPU : 6.774883e-05
+Node Aware : 7.788393e-05
+Dup Devptr Node Aware : 8.568059e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.144731e-04
+Copy To CPU : 6.481825e-05
+Node Aware : 7.009491e-05
+Dup Devptr Node Aware : 8.539386e-04
+Socket-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.121524e-04
+Copy To CPU : 6.866801e-05
+Node Aware : 7.770902e-05
+Dup Devptr Node Aware : 8.624553e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.173670e-04
+Copy To CPU : 6.730760e-05
+Node Aware : 7.464629e-05
+Dup Devptr Node Aware : 8.607813e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.187246e-04
+Copy To CPU : 6.775568e-05
+Node Aware : 7.306043e-05
+Dup Devptr Node Aware : 8.635535e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.141471e-04
+Copy To CPU : 6.396394e-05
+Node Aware : 8.603416e-05
+Dup Devptr Node Aware : 8.831481e-04
+Node-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.117630e-04
+Copy To CPU : 6.838564e-05
+Node Aware : 7.886712e-05
+Dup Devptr Node Aware : 8.585942e-04
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.166129e-04
+Copy To CPU : 6.651926e-05
+Node Aware : 7.902827e-05
+Dup Devptr Node Aware : 8.703382e-04
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 3
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.184737e-04
+Copy To CPU : 6.816587e-05
+Node Aware : 7.244283e-05
+Dup Devptr Node Aware : 8.651835e-04
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 3
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.129578e-04
+Copy To CPU : 6.412383e-05
+Node Aware : 7.302897e-05
+Dup Devptr Node Aware : 8.534064e-04
+40 Processes Per Node, 10 Per GPU:
+GPU-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.130311e-04
+Copy To CPU : 7.679309e-05
+Node Aware : 1.249747e-04
+Dup Devptr Node Aware : 1.791213e-03
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.184836e-04
+Copy To CPU : 6.850082e-05
+Node Aware : 1.268119e-04
+Dup Devptr Node Aware : 1.747244e-03
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.315689e-04
+Copy To CPU : 6.916490e-05
+Node Aware : 1.099065e-04
+Dup Devptr Node Aware : 1.725002e-03
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.326729e-04
+Copy To CPU : 6.557699e-05
+Node Aware : 8.419785e-05
+Dup Devptr Node Aware : 1.888537e-03
+Socket-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.134447e-04
+Copy To CPU : 6.935974e-05
+Node Aware : 1.219732e-04
+Dup Devptr Node Aware : 1.987294e-03
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.330471e-04
+Copy To CPU : 6.774492e-05
+Node Aware : 8.831005e-05
+Dup Devptr Node Aware : 1.727074e-03
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.219108e-04
+Copy To CPU : 7.016562e-05
+Node Aware : 8.947453e-05
+Dup Devptr Node Aware : 1.758513e-03
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.157629e-04
+Copy To CPU : 6.591195e-05
+Node Aware : 1.030144e-04
+Dup Devptr Node Aware : 1.757481e-03
+Node-Level Aggregation
+Level 10
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 25380, NNZ/GPU 1586
+Max N: 13
+Max S: 390
+Cuda Aware : 1.206146e-04
+Copy To CPU : 7.510703e-05
+Node Aware : 1.144509e-04
+Dup Devptr Node Aware : 1.770100e-03
+Level 11
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 7868, NNZ/GPU 491
+Max N: 15
+Max S: 211
+Cuda Aware : 1.267389e-04
+Copy To CPU : 7.148696e-05
+Node Aware : 1.068445e-04
+Dup Devptr Node Aware : 1.756333e-03
+Level 12
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 15
+Max TAP N 2
+Global NNZ 1998, NNZ/GPU 124
+Max N: 15
+Max S: 73
+Cuda Aware : 1.203893e-04
+Copy To CPU : 6.871202e-05
+Node Aware : 1.120656e-04
+Dup Devptr Node Aware : 1.728276e-03
+Level 13
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Max N 13
+Max TAP N 2
+Global NNZ 334, NNZ/GPU 20
+Max N: 13
+Max S: 26
+Cuda Aware : 1.163910e-04
+Copy To CPU : 7.121321e-05
+Node Aware : 8.641436e-05
+Dup Devptr Node Aware : 1.793721e-03
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 3283848: <laplacian_4> in cluster <lassen> Done
+
+Job <laplacian_4> was submitted from host <lassen710> by user <bienz1> in cluster <lassen> at Sun Feb 20 22:07:17 2022
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <bienz1> in cluster <lassen> at Sun Feb 20 22:07:19 2022
+                            <40*lassen256>
+                            <40*lassen586>
+                            <40*lassen258>
+                            <40*lassen259>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/spmv/tests> was used as the working directory.
+Started at Sun Feb 20 22:07:19 2022
+Terminated at Sun Feb 20 22:16:38 2022
+Results reported at Sun Feb 20 22:16:38 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J laplacian_4
+#BSUB -e laplacian_4.%J.err
+#BSUB -o laplacian_4.%J.out
+#BSUB -nnodes 4
+#BSUB -W 00:30
+
+module load gcc
+module load cmake/3.18.1
+module load cuda
+
+cd /g/g14/bienz1/BenchPress/spmv
+
+export NNODES=4
+export NPROCS=8
+echo "8 Processes Per Node, 2 Per GPU:"
+
+echo "GPU-Level Aggregation"
+sh agg_gpu.sh
+
+echo "Socket-Level Aggregation"
+sh agg_socket.sh
+
+echo "Node-Level Aggregation"
+sh agg_node.sh
+
+
+export NPROCS=12
+echo "12 Processes Per Node, 3 Per GPU:"
+
+echo "GPU-Level Aggregation"
+sh agg_gpu.sh
+
+echo "Socket-Level Aggregation"
+sh agg_socket.sh
+
+echo "Node-Level Aggregation"
+sh agg_node.sh
+
+
+
+export NPROCS=16
+echo "16 Processes Per Node, 4 Per GPU:"
+
+echo "GPU-Level Aggregation"
+sh agg_gpu.sh
+
+echo "Socket-Level Aggregation"
+sh agg_socket.sh
+
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.44 sec.
+    Max Memory :                                 88 MB
+    Average Memory :                             65.78 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1426 MB
+    Max Processes :                              7
+    Max Threads :                                27
+    Run time :                                   559 sec.
+    Turnaround time :                            561 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <laplacian_4.3283848.err> for stderr output of this job.
+

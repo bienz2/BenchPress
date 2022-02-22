@@ -108,11 +108,10 @@ void gpu_spmv(GPUMat* d_A, double* d_x, double* d_b, double beta, cudaStream_t s
     cusparseHandle_t cusparse_handle;
     cusparseCreate(&cusparse_handle);
     cusparseSetStream(cusparse_handle, stream);
-    cusparseStatus_t status;
 
     double alpha = 1.0;
 
-    status = cusparseDcsrmv(cusparse_handle, CUSPARSE_OPERATION_NON_TRANSPOSE,
+    cusparseDcsrmv(cusparse_handle, CUSPARSE_OPERATION_NON_TRANSPOSE,
             d_A->n_rows, d_A->n_cols, d_A->nnz, &alpha, descr_A, d_A->vals,
             d_A->idx1, d_A->idx2, d_x, &beta, d_b);
 }
@@ -253,9 +252,6 @@ void communicate_idx(ParComm* A_comm, T* sendbuf, T* idxbuf, T* recvbuf, MPI_Com
 
 void nap_communicate(TAPComm* tap_comm, double* sendbuf, double* recvbuf)
 {
-    int idx;
-    NonContigData* local_R_recv = (NonContigData*) tap_comm->local_R_par_comm->recv_data;
-
     communicate(tap_comm->local_S_par_comm, sendbuf,
             tap_comm->local_S_par_comm->recv_data->buffer.data(), 
             tap_comm->local_S_par_comm->mpi_comm);
@@ -283,11 +279,12 @@ void cuda_aware_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* d_x, double* d_b,
     init_comm(A_comm, sendbuf, d_x_dist, comm);
 
     // SpMV with Local Data
-    gpu_spmv(d_A_on, d_x, d_b, 0);
+    gpu_spmv(d_A_on, d_x, d_b, 0, stream);
 
     finalize_comm(A_comm);
 
     gpu_spmv(d_A_off, d_x_dist, d_b, 1);
+    cudaStreamSynchronize(stream);
 }
 
 void copy_to_cpu_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* x,
@@ -306,18 +303,20 @@ void copy_to_cpu_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* x,
                 cudaMemcpyDeviceToHost, stream);
     }
 
-    gpu_spmv(d_A_on, d_x, d_b, 0);
     // Initialize Communication
     if (size_msgs)
         cudaStreamSynchronize(stream);
     init_comm(A_comm, cpubuf, x_dist, comm);
+
+    gpu_spmv(d_A_on, d_x, d_b, 0);
+
     finalize_comm(A_comm);
 
     // Copy data to GPU in correct positions
     cudaMemcpyAsync(d_x_dist, x_dist, size_msgs*sizeof(double), 
             cudaMemcpyHostToDevice, stream);
-    //cudaStreamSynchronize(stream);
     gpu_spmv(d_A_off, d_x_dist, d_b, 1, stream);
+    cudaStreamSynchronize(stream);
 }
 
 
@@ -342,11 +341,24 @@ void copy_nap_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* d_x,
     }
 
     // SpMV with Local Data
-    gpu_spmv(d_A_on, d_x, d_b, 0);
     if (size_msgs)
         cudaStreamSynchronize(stream);
 
-    nap_communicate(tap_comm, nap_sendbuf, nap_recvbuf);
+    communicate(tap_comm->local_S_par_comm, nap_sendbuf,
+            tap_comm->local_S_par_comm->recv_data->buffer.data(),
+            tap_comm->local_S_par_comm->mpi_comm);
+    init_comm(tap_comm->global_par_comm,
+            tap_comm->local_S_par_comm->recv_data->buffer.data(),
+            tap_comm->global_par_comm->recv_data->buffer.data(),
+            tap_comm->global_par_comm->mpi_comm);
+
+    gpu_spmv(d_A_on, d_x, d_b, 0);
+
+    finalize_comm(tap_comm->global_par_comm);
+    communicate(tap_comm->local_R_par_comm,
+            tap_comm->global_par_comm->recv_data->buffer.data(),
+            nap_recvbuf,
+            tap_comm->local_R_par_comm->mpi_comm);
 
     size_msgs = tap_comm->local_R_par_comm->recv_data->size_msgs;
     if (size_msgs)
@@ -356,8 +368,8 @@ void copy_nap_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* d_x,
         TAPRecvBufferKernel<<<ceil(size_msgs/256.0), 256, 0, stream>>>
                 (d_nap_recvbuf, d_x_dist, d_nap_recvidx, size_msgs);
     }
-    //cudaStreamSynchronize(stream);
-    gpu_spmv(d_A_off, d_x_dist, d_b, 1);
+    gpu_spmv(d_A_off, d_x_dist, d_b, 1, stream);
+    cudaStreamSynchronize(stream);
 }
 
 
@@ -403,14 +415,14 @@ void dup_nap_spmv(GPUMat* d_A_on, GPUMat* d_A_off, double* d_x,
                 cudaMemcpyHostToDevice, stream);
         TAPRecvBufferKernel<<<ceil(size_msgs/256.0), 256, 0, stream>>>
                 (d_dup_recvbuf, d_x_dist, d_dup_recvidx, size_msgs);
-        cudaStreamSynchronize(stream);
     }
 
-    MPI_Barrier(node_gpu_comm);
+    //MPI_Barrier(node_gpu_comm);
     if (gpu_rank == 0) 
     {    
-        gpu_spmv(d_A_off, d_x_dist, d_b, 1);
+        gpu_spmv(d_A_off, d_x_dist, d_b, 1, stream);
     }
+    cudaStreamSynchronize(stream);
 }
 
 
@@ -434,6 +446,14 @@ int main(int argc, char* argv[])
 
     int num_gpus;
     cudaGetDeviceCount(&num_gpus);
+
+    if (argc <= 2) 
+    {
+        if (rank == 0) printf("Pass Locality Size and Matrix as Parameters\n");
+        MPI_Finalize();
+        return 0;
+    }
+    int agg_size = atoi(argv[2]);
  
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL, &node_comm);
@@ -462,9 +482,11 @@ int main(int argc, char* argv[])
     int local_num_cols = 0;
     long nnz = 0;
     long global_nnz;
+    Topology* topo = NULL;
     if (gpu_rank == 0)
     {
-        A = readParMatrix(argv[1], -1, -1, -1, -1, gpu_comm);
+        topo = new Topology(gpu_comm);
+        A = readParMatrix(argv[1], -1, -1, -1, -1, gpu_comm, topo);
         global_num_rows = A->global_num_rows;
         global_num_cols = A->global_num_cols;
         local_num_rows = A->local_num_rows;
@@ -485,6 +507,18 @@ int main(int argc, char* argv[])
         A = new ParCSRMatrix();
     }
 
+    int gbl_rows = A->global_num_rows;
+    MPI_Bcast(&gbl_rows, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    int n_gpus = 0;
+    if (gpu_rank == 0) MPI_Comm_size(gpu_comm, &n_gpus);
+    MPI_Bcast(&n_gpus, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    if (gbl_rows < n_gpus) 
+    {
+        if (rank == 0) printf("Num Rows < Num GPUs\n");
+        MPI_Finalize();
+        return 0;
+    }
+
     MPI_Allreduce(MPI_IN_PLACE, &global_num_rows, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
     MPI_Allreduce(MPI_IN_PLACE, &global_num_cols, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
     int first_local_row = 0;
@@ -492,7 +526,7 @@ int main(int argc, char* argv[])
     MPI_Exscan(&local_num_rows, &first_local_row, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
     MPI_Exscan(&local_num_cols, &first_local_col, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
 
-    Topology* topology = new Topology();
+    Topology* topology = new Topology(agg_size, 1, MPI_COMM_WORLD);
     MPI_Comm_free(&(topology->local_comm));
     MPI_Comm_split(node_comm, gpu, rank, &(topology->local_comm));
     MPI_Comm_size(topology->local_comm, &(topology->PPN));
@@ -528,10 +562,6 @@ int main(int argc, char* argv[])
         cudaMalloc((void**)&d_dup_sendbuf, size_msgs*sizeof(double));
         cudaMallocHost((void**)&dup_sendbuf, size_msgs*sizeof(double));
     }
-
-
-
-
 
 
     // Allgather dup_sendidx on gpu_comm to have gpu_rank 0 hold indices 
@@ -588,6 +618,7 @@ int main(int argc, char* argv[])
         tap_comm->local_S_par_comm->recv_data->indptr[1] = 
                 tap_comm->global_par_comm->send_data->size_msgs;
     }
+    MPI_Barrier(MPI_COMM_WORLD);
     
 
     NonContigData* local_R_recv = (NonContigData*)tap_comm->local_R_par_comm->recv_data;
@@ -616,24 +647,27 @@ int main(int argc, char* argv[])
         cudaMallocHost((void**)&dup_recvbuf, dup_recvidx.size()*sizeof(double));
     }
 
+    MPI_Barrier(MPI_COMM_WORLD);
 
     int max_n;
     MPI_Reduce(&(tap_comm->global_par_comm->send_data->num_msgs), &max_n, 1, MPI_INT, MPI_MAX, 0, MPI_COMM_WORLD);
     if (rank == 0) printf("Max TAP N %d\n", max_n);
 
-
     MPI_Allreduce(&nnz, &global_nnz, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
     if (rank == 0) printf("Global NNZ %lu, NNZ/GPU %lu\n", global_nnz, 
             global_nnz / (num_gpus*num_nodes));
     
-    int max_n;
-    MPI_Allreduce(&(A->comm->send_data->num_msgs), &max_n, 1, MPI_INT,
-            MPI_MAX, MPI_COMM_WORLD);
-    if (rank == 0) printf("Max N: %d\n", max_n);
+    if (gpu_rank == 0)
+    {
+        MPI_Allreduce(&(A->comm->send_data->num_msgs), &max_n, 1, MPI_INT,
+                MPI_MAX, gpu_comm);
+        if (rank == 0) printf("Max N: %d\n", max_n);
 
-    MPI_Allreduce(&(A->comm->send_data->size_msgs), &max_n, 1, MPI_INT,
-            MPI_MAX, MPI_COMM_WORLD);
-    if (rank == 0) printf("Max S: %d\n", max_n);
+        MPI_Allreduce(&(A->comm->send_data->size_msgs), &max_n, 1, MPI_INT,
+                MPI_MAX, gpu_comm);
+        if (rank == 0) printf("Max S: %d\n", max_n);
+    }
+
 
     double *d_x, *d_x_dist, *d_b;
     cudaIpcMemHandle_t x_handle, x_dist_handle;
@@ -775,7 +809,7 @@ int main(int argc, char* argv[])
         if (rank == 0) printf("Copy To CPU : %e\n", t0);
 
         cudaDeviceSynchronize();
-        MPI_Barrier(gpu_comm);
+        MPI_Barrier(MPI_COMM_WORLD);
         t0 = MPI_Wtime();
         for (int i = 0; i < n_tests; i++)
         {
@@ -811,7 +845,7 @@ int main(int argc, char* argv[])
 
 
         cudaDeviceSynchronize();
-        MPI_Barrier(gpu_comm);
+        MPI_Barrier(MPI_COMM_WORLD);
         t0 = MPI_Wtime();
         for (int i = 0; i < n_tests; i++)
         {
@@ -823,6 +857,7 @@ int main(int argc, char* argv[])
         tfinal = (MPI_Wtime() - t0) / n_tests;
         MPI_Reduce(&tfinal, &t0, 1, MPI_DOUBLE, MPI_MAX, 0, gpu_comm);
         if (rank == 0) printf("Dup Devptr Node Aware : %e\n", t0);
+        MPI_Barrier(MPI_COMM_WORLD);
 
         if (A->comm->send_data->size_msgs)
         {
@@ -868,7 +903,9 @@ int main(int argc, char* argv[])
     }
     else
     {
+
         extra_comm(tap_comm);
+        MPI_Barrier(MPI_COMM_WORLD);
         for (int i = 0; i < n_tests; i++)
         {
             extra_comm(tap_comm);
@@ -885,6 +922,7 @@ int main(int argc, char* argv[])
             d_dup_recvidx, d_dup_recvbuf, dup_recvbuf,
             tap_comm, stream, node_gpu_comm);
 
+        MPI_Barrier(MPI_COMM_WORLD);
         for (int i = 0; i < n_tests; i++)
         {
             dup_nap_spmv(NULL, NULL, d_x, d_x_dist, NULL,
@@ -892,13 +930,13 @@ int main(int argc, char* argv[])
                 d_dup_recvidx, d_dup_recvbuf, dup_recvbuf,
                 tap_comm, stream, node_gpu_comm);
         }
+        MPI_Barrier(MPI_COMM_WORLD);
 
         cudaIpcCloseMemHandle(d_x);
         cudaIpcCloseMemHandle(d_x_dist);
         MPI_Barrier(node_gpu_comm);
     }
-    
-    
+       
     if (tap_comm->local_S_par_comm->recv_data->size_msgs)
     {
         cudaFree(d_dup_sendidx);

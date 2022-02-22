@@ -1,0 +1,21 @@
+#!/bin/bash
+#BSUB -J print_lap
+#BSUB -e print_lap.%J.err
+#BSUB -o print_lap.%J.out
+#BSUB -nnodes 1
+#BSUB -W 00:15
+#BSUB -P CSC422
+#BSUB -alloc_flags "gpumps gpudefault smt1"
+
+module load gcc
+module load cmake/3.18.1
+module load cuda
+
+cd /g/g14/bienz1/BenchPress/spmv/raptor/build/examples
+
+echo "jsrun -a16 -c16 -g0 -r1 -n1 ./print_hierarchy"
+
+#jsrun -a16 -c16 -g0 -r1 -n1 ./print_hierarchy
+
+
+

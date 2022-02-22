@@ -1,6 +1,22 @@
 #include "alltoallv_profiler.h"
 #include "alltoallv_timer.h"
 
+// THIS METHOD CURRENTLY TESTS ALLTOALLV OPERATIONS WITH DATA ALL OF THE SAME SIZE
+
+/*******************************************************************
+ *** Method : alltoallv_profile_cuda_aware(...)
+ ***
+ ***    max_i : int
+ ***        Will test sizes 2^{0} to 2^{max_i}
+ ***    imsg : bool
+ ***        If false, will call MPI\_Alltoallv(...)
+ ***        If true, will call send_recv(...) in alltoallv_timer.h
+ ***
+ ***    This method profiles the cost of performing an MPI\_Alltoallv operation
+ ***    with CUDA-Aware MPI.  This means the MPI\_Alltoallv method is performed
+ ***    upon GPU memory.  The underlying MPI implementation determines how the 
+ ***    data is transferred (e.g. GPUDirect?)
+*******************************************************************/ 
 void alltoallv_profile_cuda_aware(int max_i, bool imsg)
 {
     int rank, num_procs;
@@ -68,6 +84,22 @@ void alltoallv_profile_cuda_aware(int max_i, bool imsg)
     }
 }
 
+
+
+/*******************************************************************
+ *** Method : alltoallv_profile_3step(...)
+ ***
+ ***    max_i : int
+ ***        Will test sizes 2^{0} to 2^{max_i}
+ ***    imsg : bool
+ ***        If false, will call MPI\_Alltoallv(...)
+ ***        If true, will call send_recv(...) in alltoallv_timer.h
+ ***
+ ***    This method profiles the cost of performing an MPI\_Alltoallv operation
+ ***    with the copy-to-CPU approach.  All data is first copied from each GPU
+ ***    to a single CPU core.  The MPI\_Alltoallv operation is then performed
+ ***    on this data, in CPU memory.
+*******************************************************************/ 
 void alltoallv_profile_3step(int max_i, bool imsg)
 {
     int rank, num_procs;
@@ -143,6 +175,26 @@ void alltoallv_profile_3step(int max_i, bool imsg)
     }
 }
 
+
+/*******************************************************************
+ *** Method : alltoallv_profile_3step_extra_msg(...)
+ ***
+ ***    max_i : int
+ ***        Will test sizes 2^{0} to 2^{max_i}
+ ***    imsg : bool
+ ***        If false, will call MPI\_Alltoallv(...)
+ ***        If true, will call send_recv(...) in alltoallv_timer.h
+ ***
+ ***    This method profiles the cost of performing an MPI\_Alltoallv operation
+ ***    with the copy-to-multiple-CPUs approach, using an extra message.
+ ***    All data is first copied from each GPU to a single CPU core.  This CPU 
+ ***    core then redistributes data among all available CPU cores per GPU, so that
+ ***    each CPU core holds a fraction of the messages.  For instance, on Lassen 
+ ***    there are 4 GPUs and 40 CPU cores per node.  The data is copied from each 
+ ***    GPU to a single CPU core, which then redistributes to all other 9 avaialable
+ ***    CPU cores per GPU so that each CPU core holds 1/10th of the messages.
+ ***    The MPI\_Alltoallv operation is then performed on this data, in CPU memory.
+*******************************************************************/ 
 void alltoallv_profile_3step_extra_msg(int max_i, bool imsg)
 {
     int rank, num_procs;
@@ -218,6 +270,25 @@ void alltoallv_profile_3step_extra_msg(int max_i, bool imsg)
     }
 }
 
+
+/*******************************************************************
+ *** Method : alltoallv_profile_3step_dup_devptr(...)
+ ***
+ ***    max_i : int
+ ***        Will test sizes 2^{0} to 2^{max_i}
+ ***    imsg : bool
+ ***        If false, will call MPI\_Alltoallv(...)
+ ***        If true, will call send_recv(...) in alltoallv_timer.h
+ ***
+ ***    This method profiles the cost of performing an MPI\_Alltoallv operation
+ ***    with the copy-to-multiple-CPUs approach, using a duplicate device pointer.
+ ***    All available CPU cores per GPU (10 on Lassen) can access the pointer to 
+ ***    the data on which the MPI\_Alltoallv must be performed.  Each CPU core
+ ***    copies a portion of the data (1/10th of the messages, on Lassen) directly.
+ ***    This means each CPU core calls cudaMemcpyAsync on a different offset 
+ ***    for the same pointer to GPU memory.  The MPI\_Alltoallv operation is then
+ ***    performed on this data, in CPU memory.
+*******************************************************************/ 
 void alltoallv_profile_3step_dup_devptr(int max_i, bool imsg)
 {
     int rank, num_procs;

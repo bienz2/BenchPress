@@ -1,5 +1,36 @@
 #include "alltoallv_timer.h"
 
+
+/*******************************************************************
+ *** Method : send_recv(...)
+ ***
+ ***    size : int
+ ***        The size of each MPI\_Alltoallv method
+ ***    n_msgs : int
+ ***        The number of messages (number of processes active in Alltoallv)
+ ***    send_procs : int*
+ ***        The processes to which this rank will send
+ ***    recv_procs : int*
+ ***        The processes from which this rank will recv
+ ***    send_req : MPI_Request*
+ ***        MPI_Requests for each of the sends
+ ***    recv_req : MPI_Request*
+ ***        MPI_Requests for each of the recvs
+ ***    send_data : float*
+ ***        Data to be sent
+ ***    recv_data : float*
+ ***        Array in which data will be received
+ ***    comm : MPI_Comm
+ ***        MPI_Communicator for alltoallv
+ ***    tag : int (default 83205)
+ ***        Tag of messages
+ ***
+ ***    This method performs an MPI\_Alltoallv with the information 
+ ***    passed in the arguments.  A chunk of 'size' floats is sent from
+ ***    'send_data' to each of the processes in 'send_procs', and a chunk
+ ***    of 'size' floats is received into 'recv_data' from each of the
+ ***    processes in 'recv_procs'
+*******************************************************************/ 
 void send_recv(int size, int n_msgs, int* send_procs, int* recv_procs,
         MPI_Request* send_req, MPI_Request* recv_req, float* send_data, 
         float* recv_data, MPI_Comm& comm, int tag = 83205)
@@ -16,6 +47,25 @@ void send_recv(int size, int n_msgs, int* send_procs, int* recv_procs,
     MPI_Waitall(n_msgs, recv_req, MPI_STATUSES_IGNORE);
 }
 
+/*******************************************************************
+ *** Method : time_alltoallv(...)
+ ***
+ ***    size : int
+ ***        The size of each MPI\_Alltoallv method
+ ***    gpu_send_data : float*
+ ***        Data to be sent in alltoallv, in GPU memory
+ ***    gpu_recv_data : float*
+ ***        Array in which data is to be received, in GPU memory
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which alltoallv is performed
+ ***    n_tests : int
+ ***        The number of iterations of alltoallv (for timer precision)
+ ***
+ ***    This method times the cost of a single alltoallv operation, 
+ ***    using a CUDA-Aware call to MPI\_Alltoallv(...).  An MPI\_Alltoallv
+ ***    operation is called on 'gpu_send_data', and data is received
+ ***    into 'gpu_recv_data'
+*******************************************************************/ 
 double time_alltoallv(int size, float* gpu_send_data, float* gpu_recv_data, MPI_Comm& group_comm,
         int n_tests)
 {
@@ -62,6 +112,25 @@ double time_alltoallv(int size, float* gpu_send_data, float* gpu_recv_data, MPI_
 }
 
 
+/*******************************************************************
+ *** Method : time_alltoallv_imsg(...)
+ ***
+ ***    size : int
+ ***        The size of each send_recv method
+ ***    gpu_send_data : float*
+ ***        Data to be sent with MPI\_Isends, in GPU memory
+ ***    gpu_recv_data : float*
+ ***        Array in which data is to be received, in GPU memory
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which send_recv is performed
+ ***    n_tests : int
+ ***        The number of iterations of send_recv (for timer precision)
+ ***
+ ***    This method times the cost of a single send_recv(...) operation, 
+ ***    using a CUDA-Aware call to each MPI\_Isend, MPI\_Irecv, and MPI\_Waitall.
+ ***    The send_recv() operation is called on 'gpu_send_data, and data is 
+ ***    received into 'gpu_recv_data'
+*******************************************************************/ 
 double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data, MPI_Comm& group_comm,
         int n_tests)
 {
@@ -107,6 +176,29 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
     return tfinal;
 }
 
+
+/*******************************************************************
+ *** Method : time_alltoallv_3step(...)
+ ***
+ ***    size : int
+ ***        The size of each MPI\_Alltoallv
+ ***    cpu_send_data : float*
+ ***        Data to be sent with MPI\_Alltoallv, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which MPI\_Alltoallv is performed
+ ***    n_tests : int
+ ***        The number of iterations of MPI\_Alltoallv (for timer precision)
+ ***
+ ***    This method times the cost of copying data to a single CPU and 
+ ***    performing an MPI\_Alltoallv operation on this data, in CPU memory.
+*******************************************************************/ 
 double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data,
         float* gpu_data, cudaStream_t& stream, MPI_Comm& group_comm, int n_tests)
 {
@@ -129,7 +221,7 @@ double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data
     double t0, tfinal;
     int total_size = size * num_procs;
     int bytes = total_size * sizeof(float);
-if (size == 1 && rank == 0) printf("Nmsgs %d, Bytes %d\n", num_procs, bytes);
+    if (size == 1 && rank == 0) printf("Nmsgs %d, Bytes %d\n", num_procs, bytes);
 
     // Warm Up
     cudaDeviceSynchronize();
@@ -167,6 +259,28 @@ if (size == 1 && rank == 0) printf("Nmsgs %d, Bytes %d\n", num_procs, bytes);
 }
 
 
+/*******************************************************************
+ *** Method : time_alltoallv_3step_imsg(...)
+ ***
+ ***    size : int
+ ***        The size of each send_recv method
+ ***    cpu_send_data : float*
+ ***        Data to be sent with each MPI\_Isend, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which send_recv is performed
+ ***    n_tests : int
+ ***        The number of iterations of send_recv (for timer precision)
+ ***
+ ***    This method times the cost of copying data to a single CPU and 
+ ***    performing a send_recv operation on this data, in CPU memory.
+*******************************************************************/ 
 double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
         float* gpu_data, cudaStream_t& stream, MPI_Comm& group_comm, int n_tests)
 {
@@ -225,6 +339,36 @@ double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv
     return tfinal;
 }
 
+
+
+/*******************************************************************
+ *** Method : time_alltoallv_3step_msg(...)
+ ***
+ ***    size : int
+ ***        The size of each MPI\_Alltoallv
+ ***    cpu_send_data : float*
+ ***        Data to be sent with MPI\_Alltoallv, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    ppg : int
+ ***        Number of processes per GPU
+ ***    node_rank : int
+ ***        Local rank on node 
+ ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which MPI\_Alltoallv is performed
+ ***    n_tests : int
+ ***        The number of iterations of MPI\_Alltoallv (for timer precision)
+ ***
+ ***    This method times the cost of copying data to a single CPU,
+ ***    redistributing the data to all available CPU cores, and 
+ ***    performing an MPI\_Alltoallv operation on this data, in CPU memory.
+*******************************************************************/ 
 double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_data,
        float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
@@ -392,6 +536,35 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
     return tfinal;
 }
 
+
+/*******************************************************************
+ *** Method : time_alltoallv_3step_msg_imsg(...)
+ ***
+ ***    size : int
+ ***        The size of each send_recv operation
+ ***    cpu_send_data : float*
+ ***        Data to be sent with each MPI\_Isend, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    ppg : int
+ ***        Number of processes per GPU
+ ***    node_rank : int
+ ***        Local rank on node 
+ ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which send_recv is performed
+ ***    n_tests : int
+ ***        The number of iterations of send_recv (for timer precision)
+ ***
+ ***    This method times the cost of copying data to a single CPU,
+ ***    redistributing the data to all available CPU cores, and 
+ ***    performing a send_recv operation on this data, in CPU memory.
+*******************************************************************/ 
 double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
        float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
@@ -551,6 +724,37 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
 }
 
 
+/*******************************************************************
+ *** Method : time_alltoallv_3step_dup(...)
+ ***
+ ***    size : int
+ ***        The size of each MPI\_Alltoallv
+ ***    cpu_send_data : float*
+ ***        Data to be sent with MPI\_Alltoallv, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    ppg : int
+ ***        Number of processes per GPU
+ ***    node_rank : int
+ ***        Local rank on node 
+ ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which MPI\_Alltoallv is performed
+ ***    n_tests : int
+ ***        The number of iterations of MPI\_Alltoallv (for timer precision)
+ ***
+ ***    This method times the cost of copying a portion of the data 
+ ***    directly to each available CPU core and performing an MPI\_Alltoallv
+ ***    operation on this data, in CPU memory.  This does not include the cost
+ ***    of sending the device pointer to other processes, as that has a one 
+ ***    time cost at setup.   Each CPU core calls cudaMemcpyAsync on its
+ ***    individual cudaStream.
+*******************************************************************/ 
 double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_data,
        float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
@@ -635,6 +839,38 @@ double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_
 }
 
 
+
+/*******************************************************************
+ *** Method : time_alltoallv_3step_dup_imsg(...)
+ ***
+ ***    size : int
+ ***        The size of each send_recv operation
+ ***    cpu_send_data : float*
+ ***        Data to be sent with each  MPI\_Isend, in CPU memory
+ ***    cpu_recv_data : float*
+ ***        Array in which data is to be received, in CPU memory
+ ***    gpu_data : float*
+ ***        Data will original data on GPU, where received data will
+ ***        be placed. (TODO : Currently overwrites GPU data)
+ ***    ppg : int
+ ***        Number of processes per GPU
+ ***    node_rank : int
+ ***        Local rank on node 
+ ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
+ ***    stream : cudaStream_t&
+ ***        Cuda Stream on which data is copied.  
+ ***    group_comm : MPI_Comm
+ ***        MPI_Communicator on which send_recv is performed
+ ***    n_tests : int
+ ***        The number of iterations of send_recv (for timer precision)
+ ***
+ ***    This method times the cost of copying a portion of the data 
+ ***    directly to each available CPU core and performing a send_recv
+ ***    operation on this data, in CPU memory.  This does not include the cost
+ ***    of sending the device pointer to other processes, as that has a one 
+ ***    time cost at setup.   Each CPU core calls cudaMemcpyAsync on its
+ ***    individual cudaStream.
+*******************************************************************/ 
 double time_alltoallv_3step_dup_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
        float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)

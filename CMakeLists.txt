@@ -9,11 +9,25 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 cmake_policy(SET CMP0104 OLD)
 
+option(SRUN "Running MPI Tests With srun" OFF)
+option(APRUN "Running MPI Tests With aprun" OFF)
+
+add_feature_info(srun SRUN "Run MPI tests with srun")
+add_feature_info(aprun APRUN "Run MPI tests with aprun")
+
 include(options)
 include(testing)
 include(source)
 
 set(MPIRUN "mpirun" CACHE STRING "MPIRUN command")
+
+if (SRUN)
+    set(MPIRUN "srun")
+endif (SRUN)
+
+if (APRUN)
+    set(MPIRUN "aprun")
+endif (APRUN)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CUDA_FLAGS "-ccbin=mpicxx -arch=sm_70")

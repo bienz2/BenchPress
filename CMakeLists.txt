@@ -9,6 +9,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 cmake_policy(SET CMP0104 OLD)
 
+include(FeatureSummary)
+
 option(SRUN "Running MPI Tests With srun" OFF)
 option(APRUN "Running MPI Tests With aprun" OFF)
 option(CUDA_AWARE "Test Performance of CUDA-Aware MPI" ON)

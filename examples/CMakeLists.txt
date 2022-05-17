@@ -56,3 +56,6 @@ target_link_libraries(time_node_pong_cpu heterobench)
 
 add_executable(time_node_pong_gpu time_node_pong_gpu.cpp)
 target_link_libraries(time_node_pong_gpu heterobench)
+
+add_executable(output_run_parameters output_run_parameters.cpp)
+target_link_libraries(output_run_parameters heterobench)

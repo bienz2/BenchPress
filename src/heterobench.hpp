@@ -8,6 +8,7 @@
 #include "collective/allreduce_profiler.h"
 #include "collective/alltoall_profiler.h"
 #include "collective/alltoallv_profiler.h"
+#include "stats/stats.h"
 
 #endif
 

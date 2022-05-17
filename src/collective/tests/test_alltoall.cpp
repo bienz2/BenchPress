@@ -22,7 +22,10 @@ TEST(CollectiveTest, TestsInCollective)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
+#ifdef CUDA_AWARE
     alltoall_profile_cuda_aware(2);
+#endif
+
     alltoall_profile_3step(2);
     alltoall_profile_3step_extra_msg(2);
     alltoall_profile_3step_dup_devptr(2);

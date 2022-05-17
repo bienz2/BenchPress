@@ -11,9 +11,11 @@ cmake_policy(SET CMP0104 OLD)
 
 option(SRUN "Running MPI Tests With srun" OFF)
 option(APRUN "Running MPI Tests With aprun" OFF)
+option(CUDA_AWARE "Test Performance of CUDA-Aware MPI" ON)
 
 add_feature_info(srun SRUN "Run MPI tests with srun")
 add_feature_info(aprun APRUN "Run MPI tests with aprun")
+add_feature_info(cuda_aware CUDA_AWARE "Run CUDA-Aware tests")
 
 include(options)
 include(testing)
@@ -28,6 +30,10 @@ endif (SRUN)
 if (APRUN)
     set(MPIRUN "aprun")
 endif (APRUN)
+
+if (CUDA_AWARE)
+    add_definitions(-DCUDA_AWARE)
+endif (CUDA_AWARE)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CUDA_FLAGS "-ccbin=mpicxx -arch=sm_70")

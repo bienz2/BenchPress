@@ -47,6 +47,7 @@ void profile_ping_pong(int max_i, int n_tests)
     cudaFreeHost(data);
 }
 
+#ifdef CUDA_AWARE
 void profile_ping_pong_gpu(int max_i, int n_tests)
 {
     int rank, num_procs; 
@@ -104,6 +105,7 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
 
     cudaFree(data);
 }
+#endif
 
 void profile_ping_pong_3step(int max_i, int n_tests)
 {
@@ -218,6 +220,7 @@ void profile_high_volume_ping_pong(int max_i, int n_tests, int n_msgs)
     cudaFreeHost(data);
 }
 
+#ifdef CUDA_AWARE
 void profile_high_volume_ping_pong_gpu(int max_i, int n_tests, int n_msgs)
 {
     int rank, num_procs; 
@@ -275,6 +278,8 @@ void profile_high_volume_ping_pong_gpu(int max_i, int n_tests, int n_msgs)
 
     cudaFree(data);
 }
+#endif
+
 
 void profile_high_volume_ping_pong_3step(int max_i, int n_tests, int n_msgs)
 {
@@ -416,6 +421,7 @@ void profile_max_rate(bool split_data, int max_i, int n_tests)
 
 // TODO -- Assumes SMP Ordering 
 //         AND procs on both sockets
+#ifdef CUDA_AWARE
 void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
 {
     int rank, num_procs;
@@ -495,6 +501,8 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     if (node_rank % procs_per_gpu == 0)
         cudaFree(data);
 }
+#endif 
+
 
 
 void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
@@ -588,6 +596,7 @@ void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
 }
 
 // ASSUMES SMP ORDERING
+#ifdef CUDA_AWARE
 void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
 {
     int rank, num_procs;
@@ -690,3 +699,4 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
     }
     cudaFree(data);
 }
+#endif

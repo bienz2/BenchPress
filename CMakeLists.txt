@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.17 FATAL_ERROR)
 project(heterobench LANGUAGES CUDA CXX VERSION 0.1.0)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+set(PYTHONPATH "${PYTHONPATH}:${CMAKE_CURRENT_SOURCE_DIR}/plots/benchpress")
+message("Add ${CMAKE_CURRENT_SOURCE_DIR}/plots/benchpress to PYTHONPATH in bash file")
+
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 set(heterobench_INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)

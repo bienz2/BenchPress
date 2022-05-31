@@ -1,16 +1,19 @@
+import os, inspect, benchpress
+benchpress_dir = os.path.dirname(inspect.getfile(benchpress))
+
 computer = "summit"
 n_gpus = 6
-folder = "../../../benchmarks/%s"%computer
-folder_out = "../../../figures/summit"
+folder = "%s/benchmarks/%s"%(benchpress_dir, computer)
+folder_out = "%s/figures/summit"%(benchpress_dir)
 
 if 0:
     computer = "lassen"
     n_gpus = 4
-    folder = "../benchmarks/%s/spectrum"%computer
-    folder_out = "../figures/lassen/spectrum"
+    folder = "%s/benchmarks/%s/spectrum"%(benchpress_dir, computer)
+    folder_out = "%s/figures/lassen/spectrum"%(benchpress_dir)
     if 0:
-        folder = "../benchmarks/%s/mvapich"%computer
-        folder_out = "../figures/lassen/mvapich"
+        folder = "%s/benchmarks/%s/mvapich"%(benchpress_dir, computer)
+        folder_out = "%s/figures/lassen/mvapich"%(benchpress_dir)
 
 max_ppn = 40
 cuda_aware = 0

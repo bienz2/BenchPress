@@ -16,4 +16,4 @@ if 0:
         folder_out = "%s/figures/lassen/mvapich"%(benchpress_dir)
 
 max_ppn = 40
-cuda_aware = 0
+cuda_aware = 1

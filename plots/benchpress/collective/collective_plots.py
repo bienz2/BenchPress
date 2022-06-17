@@ -4,7 +4,7 @@ import pyfancyplot.plot as plt
 
 def plot_collective(method_name, n_nodes, display_plot=False):
     data = collective.parse(method_name, n_nodes)
-    x_data = [2**i for i in range(len(data[0]))]
+    x_data = [2**i for i in range(len(data[1]))]
     plt.add_luke_options()
     plt.set_palette(palette="deep", n_colors=4)
     if prof.cuda_aware:
@@ -31,7 +31,7 @@ def plot_collective(method_name, n_nodes, display_plot=False):
 
 def plot_collective_speedup(method_name, n_nodes, display_plot=False):
     data = collective.parse(method_name, n_nodes)
-    x_data = [8*2**i for i in range(len(data[1]))]
+    x_data = [8*2**i for i in range(len(data[2]))]
     plt.add_luke_options()
     plt.set_palette(palette="deep", n_colors=4)
     plt.line_plot([1]*len(x_data), x_data)

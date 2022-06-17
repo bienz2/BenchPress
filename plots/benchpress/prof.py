@@ -1,5 +1,8 @@
 import os, inspect, benchpress
-benchpress_dir = os.path.dirname(inspect.getfile(benchpress))
+from pathlib import Path
+
+benchpress_dir = os.path.dirname(inspect.getfile(benchpress)) + "../../"
+benchpress_dir = Path(benchpress_dir).parents[2]
 
 computer = "summit"
 n_gpus = 6
@@ -17,3 +20,4 @@ if 0:
 
 max_ppn = 40
 cuda_aware = 1
+

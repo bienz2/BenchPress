@@ -6,7 +6,7 @@ def plot_cpu_ping_pong(display_plot=False):
     cpu_times = ping_pong.cpu_times
     plt.add_luke_options()
     plt.set_palette(palette="deep", n_colors = 3)
-    x_data = [2**i for i in range(len(cpu_times.on_socket))]
+    x_data = [2**i for i in range(len(cpu_times.on_node))]
     plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
     plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
     plt.line_plot(cpu_times.network, x_data, label = "Network")
@@ -24,7 +24,7 @@ def plot_gpu_ping_pong(display_plot=False):
         gpu_times = ping_pong.gpu_times
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors = 3)
-        x_data = [2**i for i in range(len(gpu_times.on_socket))]
+        x_data = [2**i for i in range(len(gpu_times.on_node))]
         plt.line_plot(gpu_times.on_socket, x_data, label = "On-Socket")
         plt.line_plot(gpu_times.on_node, x_data, label = "On-Node")
         plt.line_plot(gpu_times.network, x_data, label = "Network")
@@ -45,7 +45,7 @@ def plot_ping_pong_comparison(display_plot=False):
 
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors = 3)
-        x_data = [2**i for i in range(len(cpu_times.on_socket))]
+        x_data = [2**i for i in range(len(cpu_times.on_node))]
 
         plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
         plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
@@ -74,6 +74,8 @@ def plot_cpu_node_pong(display_plot=False):
     x_data = [2**i for i in range(len(cpu_times.ppn_times[0]))]
     ppn_list = [0, 4, 9, 19, 29, 39]
     for p in ppn_list:
+        if p >= prof.max_ppn:
+            break
         yd = list()
         xd = list()
         for i in range(len(cpu_times.ppn_times[p])):

@@ -43,27 +43,23 @@ endif (CUDA_AWARE)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CUDA_FLAGS "-ccbin=mpicxx -arch=sm_70")
 
-set(GOOGLETEST_ROOT external/googletest CACHE STRING "Google Test source root")
-
-include_directories(
-    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}
-    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/include
-    )
-
-set(GOOGLETEST_SOURCES
-    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest-all.cc
-    ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest_main.cc
-    )
-
-
-foreach(_source ${GOOGLETEST_SOURCES})
-    set_source_files_properties(${_source} PROPERTIES GENERATED 1)
-    #MESSAGE( STATUS "_source: "                 ${_source} )
-endforeach()
+##################### 
+## GOOGLETEST      ##
+#####################
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  # Specify the commit you depend on and update it regularly.
+  GIT_TAG 5376968f6948923e2411081fd9372e71a59d8e77
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+enable_testing()
+#####################
 
 
-add_library(googletest STATIC ${GOOGLETEST_SOURCES})
-#///////////////////////////// end information of google test //////////////////////////////
 
 add_subdirectory(src)
 

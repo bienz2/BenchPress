@@ -8,8 +8,16 @@ set(ping_pong_HEADERS
     PARENT_SCOPE
     )
 
-set(ping_pong_SOURCES
-    ping_pong/ping_pong_timer.cu
-    ping_pong/ping_pong_profiler.cu
-    PARENT_SCOPE
-    )
+if (USE_HIP)
+    set(ping_pong_SOURCES
+        ping_pong/ping_pong_timer_hip.cpp
+        ping_pong/ping_pong_profiler_hip.cpp
+        PARENT_SCOPE
+        )
+else()
+    set(ping_pong_SOURCES
+        ping_pong/ping_pong_timer.cu
+        ping_pong/ping_pong_profiler.cu
+        PARENT_SCOPE
+        )
+endif()

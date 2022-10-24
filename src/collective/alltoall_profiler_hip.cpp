@@ -1,17 +1,18 @@
-#include "allreduce_profiler.h"
-#include "allreduce_timer.h"
+#include "alltoall_profiler.h"
+#include "alltoall_timer.h"
 
 #ifdef GPU_AWARE
-void allreduce_profile_gpu_aware(int max_i)
+void alltoall_profile_gpu_aware(int max_i)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    hipGetDeviceCount(&num_gpus);
 
-    int max_bytes = pow(2, max_i - 1) * sizeof(double);
+    int max_size = pow(2, max_i-1);
+    int max_bytes = max_size * num_procs * sizeof(double);
     int n_tests, size;
     float* gpu_data;
     double time, max_time;
@@ -28,34 +29,34 @@ void allreduce_profile_gpu_aware(int max_i)
     int gpu = node_rank / ppg;
     int gpu_rank = node_rank % ppg;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
+    hipSetDevice(gpu);
+    hipMalloc((void**)&gpu_data, max_bytes);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
 
-    // Time Cuda-Aware Allreduce
+    // Time Cuda-Aware Alltoall
     if (gpu_rank == 0) // Only one proc per GPU
     {
-        if (rank == 0) printf("Cuda-Aware Allreduce:\n");
+        if (rank == 0) printf("Cuda-Aware Alltoall:\n");
         n_tests = 1000;
         for (int i = 0; i < max_i; i++)
         {
            if (i > 14) n_tests = 100;
            if (i > 20) n_tests = 10;
            size = pow(2, i);
-           time = time_allreduce(size, gpu_data, gpu_comm, n_tests);
+           time = time_alltoall(size, gpu_data, gpu_comm, n_tests);
            MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, gpu_comm);
            if (rank == 0) printf("%e\t", max_time);
         }
         if (rank == 0) printf("\n\n");
     }
 
-    cudaFree(gpu_data);
+    hipFree(gpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    hipError err = hipGetLastError();
+    if ( hipSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
@@ -63,20 +64,21 @@ void allreduce_profile_gpu_aware(int max_i)
 }
 #endif
 
-void allreduce_profile_3step(int max_i)
+void alltoall_profile_3step(int max_i)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    hipGetDeviceCount(&num_gpus);
 
-    int max_bytes = pow(2, max_i - 1) * sizeof(double);
+    int max_size = pow(2, max_i-1);
+    int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
     double time, max_time;
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    hipMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -91,59 +93,59 @@ void allreduce_profile_3step(int max_i)
     int gpu_rank = node_rank % ppg;
     int n_tests, size;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    hipSetDevice(gpu);
+    hipMalloc((void**)&gpu_data, max_bytes);
+    hipStream_t stream;
+    hipStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
 
-    
-    // Time 3-Step Allreduce
+    // Time 3-Step Alltoall
     if (gpu_rank == 0)
     {
-        if (rank == 0) printf("3-Step Allreduce:\n");
+        if (rank == 0) printf("3-Step Alltoall:\n");
         n_tests = 1000;
         for (int i = 0; i < max_i; i++)
         {
             if (i > 14) n_tests = 100;
             if (i > 20) n_tests = 10;
             size = pow(2, i);
-            time = time_allreduce_3step(size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
+            time = time_alltoall_3step(size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
             MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, gpu_comm);
             if (rank == 0) printf("%e\t", max_time);
         }
         if (rank == 0) printf("\n\n");
     }
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    hipFree(gpu_data);
+    hipStreamDestroy(stream);
+    hipFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    hipError err = hipGetLastError();
+    if ( hipSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
     }
 }
 
-void allreduce_profile_3step_extra_msg(int max_i)
+void alltoall_profile_3step_extra_msg(int max_i)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    hipGetDeviceCount(&num_gpus);
 
-    int max_bytes = pow(2, max_i - 1) * sizeof(double);
+    int max_size = pow(2, max_i-1);
+    int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    hipMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -159,16 +161,16 @@ void allreduce_profile_3step_extra_msg(int max_i)
     int n_tests, size;
     double time, max_time;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    hipSetDevice(gpu);
+    hipMalloc((void**)&gpu_data, max_bytes);
+    hipStream_t stream;
+    hipStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
 
     // Time 3-Step, Extra Msg
-    if (rank == 0) printf("3-Step Allreduce, Extra Message:\n");
+    if (rank == 0) printf("3-Step Alltoall, Extra Message:\n");
     n_tests = 1000;
 
     for (int i = 0; i < max_i; i++)
@@ -176,7 +178,7 @@ void allreduce_profile_3step_extra_msg(int max_i)
         if (i > 14) n_tests = 100;
         if (i > 20) n_tests = 10;
         size = pow(2, i);
-        time = time_allreduce_3step_msg(size, cpu_data, gpu_data, ppg, node_rank, stream,
+        time = time_alltoall_3step_msg(size, cpu_data, gpu_data, ppg, node_rank, stream,
                gpu_comm, n_tests);
         MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
         if (rank == 0) printf("%e\t", max_time);
@@ -184,33 +186,34 @@ void allreduce_profile_3step_extra_msg(int max_i)
     if (rank == 0) printf("\n\n");
 
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    hipFree(gpu_data);
+    hipStreamDestroy(stream);
+    hipFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    hipError err = hipGetLastError();
+    if ( hipSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
     }
 }
 
-void allreduce_profile_3step_dup_devptr(int max_i)
+void alltoall_profile_3step_dup_devptr(int max_i)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    hipGetDeviceCount(&num_gpus);
 
-    int max_bytes = pow(2, max_i - 1) * sizeof(double);
+    int max_size = pow(2, max_i-1);
+    int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    hipMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -226,16 +229,16 @@ void allreduce_profile_3step_dup_devptr(int max_i)
     int n_tests, size, msg_size;
     double time, max_time;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    hipSetDevice(gpu);
+    hipMalloc((void**)&gpu_data, max_bytes);
+    hipStream_t stream;
+    hipStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
 
     // Time 3-Step, Duplicate DevPtr
-    if (rank == 0) printf("3-Step Allreduce, Duplicate DevPtr:\n");
+    if (rank == 0) printf("3-Step Alltoall, Duplicate DevPtr:\n");
     n_tests = 1000;
     for (int i = 0; i < max_i; i++)
     {
@@ -248,19 +251,19 @@ void allreduce_profile_3step_dup_devptr(int max_i)
            if (rank == 0) printf("-1\t");
            continue;
         }
-        time = time_allreduce_3step(msg_size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
+        time = time_alltoall_3step(msg_size, cpu_data, gpu_data, stream, gpu_comm, n_tests);
         MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
         if (rank == 0) printf("%e\t", max_time);
     }
     if (rank == 0) printf("\n\n");
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    hipFree(gpu_data);
+    hipStreamDestroy(stream);
+    hipFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    hipError err = hipGetLastError();
+    if ( hipSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );

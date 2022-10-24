@@ -1,6 +1,8 @@
 include_directories(.)
 
-find_package(CUDAToolkit REQUIRED)
+if (NOT USE_HIP)
+    find_package(CUDAToolkit REQUIRED)
+endif(NOT USE_HIP)
 
 add_subdirectory(collective)
 add_subdirectory(memcpy)
@@ -15,8 +17,9 @@ add_library(heterobench heterobench.hpp
     ${stats_SOURCES} ${stats_HEADERS}
 )
 
-target_link_libraries(heterobench ${MPI_LIBRARIES} CUDA::cudart ${EXTERNAL_LIBS})
-#set_property(TARGET heterobench PROPERTY CUDA_ARCHITECTURES 70)
+if (NOT USE_HIP)
+    target_link_libraries(heterobench ${MPI_LIBRARIES} CUDA::cudart ${EXTERNAL_LIBS})
+endif(NOT USE_HIP)
 
 install(TARGETS heterobench DESTINATION "lib")
 install(FILES heterobench.hpp DESTINATION "include/BenchPress")

@@ -8,8 +8,16 @@ set(memcpy_HEADERS
     PARENT_SCOPE
     )
 
-set(memcpy_SOURCES
-    memcpy/memcpy_timer.cu
-    memcpy/memcpy_profiler.cu
-    PARENT_SCOPE
-    )
+if (USE_HIP)
+    set(memcpy_SOURCES
+        memcpy/memcpy_timer_hip.cpp
+        memcpy/memcpy_profiler_hip.cpp
+        PARENT_SCOPE
+        )
+else()
+    set(memcpy_SOURCES
+        memcpy/memcpy_timer.cu
+        memcpy/memcpy_profiler.cu
+        PARENT_SCOPE
+        )
+endif()

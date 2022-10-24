@@ -7,7 +7,14 @@ set(stats_HEADERS
     PARENT_SCOPE
     )
 
-set(stats_SOURCES
-    stats/stats.cu
-    PARENT_SCOPE
-    )
+if (USE_HIP)
+    set(stats_SOURCES
+        stats/stats_hip.cpp
+        PARENT_SCOPE
+        )
+else()
+    set(stats_SOURCES
+        stats/stats.cu
+        PARENT_SCOPE
+        )
+endif()

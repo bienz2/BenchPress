@@ -22,8 +22,8 @@ TEST(CollectiveTest, TestsInCollective)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-#ifdef CUDA_AWARE
-    alltoallv_profile_cuda_aware(2);
+#ifdef GPU_AWARE
+    alltoallv_profile_gpu_aware(2);
 #endif
 
     alltoallv_profile_3step(2);

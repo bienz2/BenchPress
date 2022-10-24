@@ -1,8 +1,8 @@
 #include "alltoall_profiler.h"
 #include "alltoall_timer.h"
 
-#ifdef CUDA_AWARE
-void alltoall_profile_cuda_aware(int max_i)
+#ifdef GPU_AWARE
+void alltoall_profile_gpu_aware(int max_i)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);

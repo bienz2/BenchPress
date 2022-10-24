@@ -6,8 +6,8 @@
 #ifndef ALLTOALLV_PROFILER_HPP
 #define ALLTOALLV_PROFILER_HPP
 
-#ifdef CUDA_AWARE
-void alltoallv_profile_cuda_aware(int max_i = 24, bool imsg = false);
+#ifdef GPU_AWARE
+void alltoallv_profile_gpu_aware(int max_i = 24, bool imsg = false);
 #endif
 
 void alltoallv_profile_3step(int max_i = 24, bool imsg = false);

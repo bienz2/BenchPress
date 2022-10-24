@@ -30,7 +30,14 @@ Example runscripts for each example on Lassen are available in the folder 'bench
 
 
 # Benchmarks
-Each of the existing benchmarks is explained below.  For each benchmark, you will need to run code from the 'examples' folder.  Then, you will be able to plot measurements and models with scripts in the 'plots' folder.
+Each of the existing benchmarks is explained in benchmarks/README.md.  For each benchmark, you will do the following, where \<computer\_name\> is a name for the computer being benchmarked:
+- Create a folder benchmarks/\<computer\_name\> 
+- Run benchmarks, which are in the 'examples' folder
+- Save benchmarks results to the appropriate files in the previously created folder
+- Edit file plots/benchpress/prof.py appropriately
+- Run associated plotting scripts in plots/benchpress
+- Figures will be saved in figures/\<computer\_name\> need to run code from the 'examples' folder.  Then, you will be able to plot measurements and models with scripts in the 'plots' folder.
+Further details for each step are in the README.md in the 'benchmarks' and 'plots' folders
 
 ## Memcpy Benchmark
 The memcpy benchmark measures the cost of the cudaMemcpyAsync operation.  This benchmark compares the cost of the following transfers:

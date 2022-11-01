@@ -1,6 +1,7 @@
 #include "alltoall_profiler.h"
 #include "alltoall_timer.h"
 
+#ifdef CUDA_AWARE
 void alltoall_profile_cuda_aware(int max_i)
 {
     int rank, num_procs;
@@ -61,6 +62,7 @@ void alltoall_profile_cuda_aware(int max_i)
         exit( -1 );
     }
 }
+#endif
 
 void alltoall_profile_3step(int max_i)
 {

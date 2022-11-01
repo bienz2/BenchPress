@@ -1,6 +1,7 @@
 #include "allreduce_profiler.h"
 #include "allreduce_timer.h"
 
+#ifdef CUDA_AWARE
 void allreduce_profile_cuda_aware(int max_i)
 {
     int rank, num_procs;
@@ -60,6 +61,7 @@ void allreduce_profile_cuda_aware(int max_i)
         exit( -1 );
     }
 }
+#endif
 
 void allreduce_profile_3step(int max_i)
 {

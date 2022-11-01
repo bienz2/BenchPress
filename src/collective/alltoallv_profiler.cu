@@ -17,6 +17,7 @@
  ***    upon GPU memory.  The underlying MPI implementation determines how the 
  ***    data is transferred (e.g. GPUDirect?)
 *******************************************************************/ 
+#ifdef CUDA_AWARE
 void alltoallv_profile_cuda_aware(int max_i, bool imsg)
 {
     int rank, num_procs;
@@ -83,7 +84,7 @@ void alltoallv_profile_cuda_aware(int max_i, bool imsg)
         exit( -1 );
     }
 }
-
+#endif
 
 
 /*******************************************************************

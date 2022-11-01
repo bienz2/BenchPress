@@ -23,7 +23,9 @@ int main(int argc, char *argv[])
     if (argc > 2) n_iter = atoi(argv[2]);
     if (argc > 3) n_msgs = atoi(argv[3]);
 
+#ifdef CUDA_AWARE
     profile_high_volume_ping_pong_gpu(max_i, n_iter, n_msgs);
+#endif
 
     MPI_Finalize();
 

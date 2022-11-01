@@ -21,7 +21,9 @@ int main(int argc, char *argv[])
     if (argc > 1) max_i = atoi(argv[1]);
     if (argc > 2) n_iter = atoi(argv[2]);
 
+#ifdef CUDA_AWARE
     profile_max_rate_gpu(true, max_i, n_iter);
+#endif
 
     MPI_Finalize();
 

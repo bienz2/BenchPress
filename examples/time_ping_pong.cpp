@@ -23,7 +23,9 @@ int main(int argc, char *argv[])
 
     profile_ping_pong(max_i, n_iter);
 
+#ifdef CUDA_AWARE
     profile_ping_pong_gpu(max_i, n_iter);
+#endif
 
     MPI_Finalize();
 

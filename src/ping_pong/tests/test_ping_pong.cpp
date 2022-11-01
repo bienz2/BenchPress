@@ -24,15 +24,20 @@ TEST(CollectiveTest, TestsInCollective)
 
     profile_ping_pong(2, 10);
 
+#ifdef CUDA_AWARE
     profile_ping_pong_gpu(2, 10);
+#endif
 
     profile_max_rate(false, 2, 10);
 
+#ifdef CUDA_AWARE
     profile_max_rate_gpu(false, 2, 10);
+#endif
 
     profile_ping_pong_mult(2, 10);
 
+#ifdef CUDA_AWARE
     profile_ping_pong_mult_gpu(2, 10);
-
+#endif
 
 } // end of  TEST(ParStrengthTest, TestsInTests) //

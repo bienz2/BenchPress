@@ -1,0 +1,93 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+Profiling Standard CPU Ping-Pongs:
+CPU 0 and CPU 1:	3.603715e-07	3.601830e-07	3.695560e-07	3.714365e-07	3.766600e-07	3.813930e-07	4.379185e-07	4.761860e-07	5.420140e-07	6.664600e-07	8.480655e-07	1.048100e-06	3.848782e-06	4.285885e-06	5.154548e-06	7.461720e-06	1.263218e-05	2.081917e-05	
+CPU 0 and CPU 2:	1.305647e-06	1.317051e-06	1.271597e-06	1.310731e-06	1.314661e-06	1.477966e-06	1.946561e-06	2.204881e-06	2.580676e-06	3.387325e-06	4.690999e-06	7.392585e-06	6.925811e-06	9.063624e-06	1.235123e-05	1.791216e-05	2.698490e-05	4.543382e-05	
+CPU 0 and CPU 3:	1.308669e-06	1.294959e-06	1.277996e-06	1.314212e-06	1.317415e-06	1.499694e-06	1.965441e-06	2.137530e-06	2.356108e-06	3.136722e-06	4.085808e-06	6.181771e-06	6.957595e-06	9.529658e-06	1.258867e-05	1.781851e-05	2.680446e-05	4.536626e-05	
+CPU 1 and CPU 2:	1.312632e-06	1.319368e-06	1.271059e-06	1.311906e-06	1.325287e-06	1.489873e-06	1.956160e-06	2.195800e-06	2.573171e-06	3.370665e-06	4.688388e-06	7.404594e-06	6.949714e-06	9.008502e-06	1.245520e-05	1.799212e-05	2.693062e-05	4.537993e-05	
+CPU 1 and CPU 3:	1.299188e-06	1.284552e-06	1.263501e-06	1.313383e-06	1.311295e-06	1.458881e-06	1.934790e-06	2.177566e-06	2.532730e-06	3.438320e-06	4.721060e-06	7.426221e-06	6.976685e-06	9.561290e-06	1.271698e-05	1.771996e-05	2.698606e-05	4.537795e-05	
+
+
+Profiling GPU Ping-Pongs
+GPU on rank 0 and GPU on rank 1:	1.807894e-05	1.800897e-05	1.809220e-05	1.800529e-05	1.800818e-05	1.798719e-05	1.802788e-05	1.798179e-05	1.797692e-05	1.797249e-05	1.800697e-05	1.801545e-05	1.798566e-05	1.805024e-05	1.844614e-05	1.962975e-05	2.167083e-05	2.558962e-05	
+GPU on rank 0 and GPU on rank 2:	6.125830e-06	6.022335e-06	6.009050e-06	6.042540e-06	6.020282e-06	6.035699e-06	6.116651e-06	6.174798e-06	6.245494e-06	6.461377e-06	6.786090e-06	7.370101e-06	8.468472e-06	1.019106e-05	1.369654e-05	1.815108e-05	2.802860e-05	4.766628e-05	
+GPU on rank 0 and GPU on rank 3:	6.061900e-06	5.994642e-06	5.989794e-06	5.975035e-06	5.980779e-06	5.979688e-06	5.995749e-06	6.091027e-06	6.341600e-06	6.425199e-06	6.813644e-06	7.325768e-06	8.275780e-06	1.002645e-05	1.344194e-05	1.781774e-05	2.689996e-05	4.548131e-05	
+GPU on rank 1 and GPU on rank 2:	6.119545e-06	5.981034e-06	5.974485e-06	5.988405e-06	6.012882e-06	6.021202e-06	6.121130e-06	6.171316e-06	6.234430e-06	6.452060e-06	6.770928e-06	7.382368e-06	8.410384e-06	1.020672e-05	1.369427e-05	1.804829e-05	2.797361e-05	4.763265e-05	
+GPU on rank 1 and GPU on rank 3:	6.017129e-06	5.980225e-06	5.922356e-06	5.931670e-06	5.922181e-06	5.943395e-06	5.950107e-06	6.031780e-06	6.154993e-06	6.331497e-06	6.723004e-06	7.222296e-06	8.228848e-06	9.962273e-06	1.337824e-05	1.771259e-05	2.682083e-05	4.545943e-05	
+
+
+app 0: ./time_ping_pong 
+rank: 0: { host: 1; cpu: {0-3}, {4-7} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 1: { host: 1; cpu: {4-7}, {0-3} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 2: { host: 2; cpu: {0-3}, {4-7} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 3: { host: 2; cpu: {4-7}, {0-3} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 3395969: <ping_pong> in cluster <lassen> Done
+
+Job <ping_pong> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Tue Mar 29 12:23:05 2022
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Mar 29 12:23:09 2022
+                            <40*lassen26>
+                            <40*lassen25>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen/spectrum> was used as the working directory.
+Started at Tue Mar 29 12:23:09 2022
+Terminated at Tue Mar 29 12:23:22 2022
+Results reported at Tue Mar 29 12:23:22 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J ping_pong
+#BSUB -e ping_pong.%J.err
+#BSUB -o ping_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+
+#export PAMI_ENABLE_STRIPING=1
+#export PAMI_IBV_DEVICE_NAME="mlx5_0:1,mlx5_3:1"
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+#jsrun --smpiargs "-PAMI" -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+jsrun -a2 -c2 -g2 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+
+
+echo quit | nvidia-cuda-mps-control
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.15 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   12 sec.
+    Turnaround time :                            17 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <ping_pong.3395969.err> for stderr output of this job.
+

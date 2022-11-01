@@ -18,7 +18,7 @@ nvidia-cuda-mps-control -d
 
 #jsrun --smpiargs "-PAMI" -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
 #jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
-jsrun -a2 -c2 -g2 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+jsrun -a2 -c2 -g2 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./output_run_parameters
 
 
 echo quit | nvidia-cuda-mps-control

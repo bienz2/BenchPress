@@ -1,0 +1,83 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+This program has been run with the following parameters:
+Number of Processes : 4
+Number of Nodes : 2
+Number of Processes Per Node : 2
+Number of GPUs Per Node : 2
+Number of Processes Available Per GPU : 1
+app 0: ./output_run_parameters 
+rank: 0: { host: 1; cpu: {0-3}, {4-7} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 1: { host: 1; cpu: {4-7}, {0-3} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 2: { host: 2; cpu: {0-3}, {4-7} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+rank: 3: { host: 2; cpu: {4-7}, {0-3} ; gpu: {0,1} ; mem: {0-16301} } : app 0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 3395964: <ping_pong> in cluster <lassen> Done
+
+Job <ping_pong> was submitted from host <lassen708> by user <bienz1> in cluster <lassen> at Tue Mar 29 12:20:50 2022
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <bienz1> in cluster <lassen> at Tue Mar 29 12:20:55 2022
+                            <40*lassen34>
+                            <40*lassen32>
+</g/g14/bienz1> was used as the home directory.
+</g/g14/bienz1/BenchPress/benchmarks/lassen/spectrum> was used as the working directory.
+Started at Tue Mar 29 12:20:55 2022
+Terminated at Tue Mar 29 12:21:05 2022
+Results reported at Tue Mar 29 12:21:05 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J ping_pong
+#BSUB -e ping_pong.%J.err
+#BSUB -o ping_pong.%J.out
+#BSUB -nnodes 2
+#BSUB -q pdebug
+#BSUB -W 00:15
+
+module load gcc
+module load cuda
+
+#export PAMI_ENABLE_STRIPING=1
+#export PAMI_IBV_DEVICE_NAME="mlx5_0:1,mlx5_3:1"
+
+cd /g/g14/bienz1/BenchPress/spectrum_build/examples
+
+nvidia-cuda-mps-control -d
+
+#jsrun --smpiargs "-PAMI" -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+#jsrun -a4 -c4 -g4 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./time_ping_pong
+jsrun -a2 -c2 -g2 -r1 -n2 -M "-gpu" --latency_priority=gpu-cpu --launch_distribution=packed --print_placement=1 ./output_run_parameters
+
+
+echo quit | nvidia-cuda-mps-control
+
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.21 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   10 sec.
+    Turnaround time :                            15 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <ping_pong.3395964.err> for stderr output of this job.
+

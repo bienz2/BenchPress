@@ -59,7 +59,7 @@ double time_ping_pong(bool active, int rank0, int rank1, float* data,
 }
 
 double time_ping_pong_3step(bool active, int rank0, int rank1, float* cpu_data, 
-        float* gpu_data, int size, hipStream_t stream, int n_tests)
+        float* gpu_data, int size, gpuStream_t stream, int n_tests)
 {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -71,8 +71,8 @@ double time_ping_pong_3step(bool active, int rank0, int rank1, float* cpu_data,
     int bytes = size * sizeof(float);
 
     // Warm Up
-    hipDeviceSynchronize();
-    hipStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(MPI_COMM_WORLD);
     if (active)
     {
@@ -81,20 +81,20 @@ double time_ping_pong_3step(bool active, int rank0, int rank1, float* cpu_data,
         {
             if (rank == rank0)
             {
-                hipMemcpyAsync(cpu_data, gpu_data, bytes, hipMemcpyDeviceToHost, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+                gpuStreamSynchronize(stream);
                 MPI_Send(cpu_data, size, MPI_FLOAT, rank1, ping_tag, MPI_COMM_WORLD);
                 MPI_Recv(cpu_data, size, MPI_FLOAT, rank1, pong_tag, MPI_COMM_WORLD, &status);
-                hipMemcpyAsync(gpu_data, cpu_data, bytes, hipMemcpyHostToDevice, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+                gpuStreamSynchronize(stream);
             }
             else if (rank == rank1)
             {
                 MPI_Recv(cpu_data, size, MPI_FLOAT, rank0, ping_tag, MPI_COMM_WORLD, &status);
-                hipMemcpyAsync(gpu_data, cpu_data, bytes, hipMemcpyHostToDevice, stream);
-                hipStreamSynchronize(stream);
-                hipMemcpyAsync(cpu_data, gpu_data, bytes, hipMemcpyDeviceToHost, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+                gpuStreamSynchronize(stream);
+                gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+                gpuStreamSynchronize(stream);
                 MPI_Send(cpu_data, size, MPI_FLOAT, rank0, pong_tag, MPI_COMM_WORLD);
             }
         }
@@ -110,20 +110,20 @@ double time_ping_pong_3step(bool active, int rank0, int rank1, float* cpu_data,
         {
             if (rank == rank0)
             {
-                hipMemcpyAsync(cpu_data, gpu_data, bytes, hipMemcpyDeviceToHost, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+                gpuStreamSynchronize(stream);
                 MPI_Send(cpu_data, size, MPI_FLOAT, rank1, ping_tag, MPI_COMM_WORLD);
                 MPI_Recv(cpu_data, size, MPI_FLOAT, rank1, pong_tag, MPI_COMM_WORLD, &status);
-                hipMemcpyAsync(gpu_data, cpu_data, bytes, hipMemcpyHostToDevice, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+                gpuStreamSynchronize(stream);
             }
             else if (rank == rank1)
             {
                 MPI_Recv(cpu_data, size, MPI_FLOAT, rank0, ping_tag, MPI_COMM_WORLD, &status);
-                hipMemcpyAsync(gpu_data, cpu_data, bytes, hipMemcpyHostToDevice, stream);
-                hipStreamSynchronize(stream);
-                hipMemcpyAsync(cpu_data, gpu_data, bytes, hipMemcpyDeviceToHost, stream);
-                hipStreamSynchronize(stream);
+                gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+                gpuStreamSynchronize(stream);
+                gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+                gpuStreamSynchronize(stream);
                 MPI_Send(cpu_data, size, MPI_FLOAT, rank0, pong_tag, MPI_COMM_WORLD);
             }
         }

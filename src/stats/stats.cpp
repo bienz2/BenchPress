@@ -8,7 +8,7 @@ void print_program_stats()
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int ppn, num_nodes, procs_per_gpu;
     MPI_Comm node_comm;

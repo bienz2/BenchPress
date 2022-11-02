@@ -1,21 +1,21 @@
 #include "memcpy_profiler.h"
 #include "memcpy_timer.h"
 
-void profile_memcpy(cudaMemcpyKind copy_kind, int max_i, int n_tests)
+void profile_memcpy(gpuMemcpyKind copy_kind, int max_i, int n_tests)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_bytes = pow(2,max_i-1) * sizeof(float);
     int bytes, nt;
     double time, max_time;
     float* cpu_data;
     float* gpu_data;
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank,
@@ -33,10 +33,10 @@ void profile_memcpy(cudaMemcpyKind copy_kind, int max_i, int n_tests)
         MPI_Barrier(MPI_COMM_WORLD);
         for (int gpu = 0; gpu < num_gpus; gpu++)
         {
-            cudaSetDevice(gpu);
-            cudaMalloc((void**)&gpu_data, max_bytes);
-            cudaStream_t proc_stream;
-            cudaStreamCreate(&proc_stream);
+            gpuSetDevice(gpu);
+            gpuMalloc((void**)&gpu_data, max_bytes);
+            gpuStream_t proc_stream;
+            gpuStreamCreate(&proc_stream);
 
             nt = n_tests;
             if (rank == 0) printf("CPU %d, GPU %d:\t", proc, gpu);
@@ -53,13 +53,13 @@ void profile_memcpy(cudaMemcpyKind copy_kind, int max_i, int n_tests)
             }
             if (rank == 0) printf("\n");
 
-            cudaFree(gpu_data);
-            cudaStreamDestroy(proc_stream);
+            gpuFree(gpu_data);
+            gpuStreamDestroy(proc_stream);
         }
     }
     
     if (rank == 0) printf("\n\n");
-    cudaFreeHost(cpu_data);
+    gpuFreeHost(cpu_data);
 }
 
 void profile_host_to_device(int max_i, int n_tests)
@@ -69,7 +69,7 @@ void profile_host_to_device(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     if (rank == 0) printf("Memcpy Host To Device:\n");
-    profile_memcpy(cudaMemcpyHostToDevice, max_i, n_tests);
+    profile_memcpy(gpuMemcpyHostToDevice, max_i, n_tests);
 }
 void profile_device_to_host(int max_i, int n_tests)
 {
@@ -78,7 +78,7 @@ void profile_device_to_host(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     if (rank == 0) printf("Memcpy Device To Host:\n");
-    profile_memcpy(cudaMemcpyDeviceToHost, max_i, n_tests);
+    profile_memcpy(gpuMemcpyDeviceToHost, max_i, n_tests);
 }
 
 void profile_device_to_device(int max_i, int n_tests)
@@ -88,7 +88,7 @@ void profile_device_to_device(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     if (rank == 0) printf("Memcpy Device To Device:\n");
 
@@ -113,14 +113,14 @@ void profile_device_to_device(int max_i, int n_tests)
         MPI_Barrier(MPI_COMM_WORLD);
         for (int gpu0 = 0; gpu0 < num_gpus; gpu0++)
         {
-            cudaSetDevice(gpu0);
-            cudaMalloc((void**)&gpu0_data, max_bytes);
-            cudaStream_t proc_stream;
-            cudaStreamCreate(&proc_stream);
+            gpuSetDevice(gpu0);
+            gpuMalloc((void**)&gpu0_data, max_bytes);
+            gpuStream_t proc_stream;
+            gpuStreamCreate(&proc_stream);
             for (int gpu1 = gpu0 + 1; gpu1 < num_gpus; gpu1++)
             {
-                cudaSetDevice(gpu1);
-                cudaMalloc((void**)&gpu1_data, max_bytes);
+                gpuSetDevice(gpu1);
+                gpuMalloc((void**)&gpu1_data, max_bytes);
 
                 nt = n_tests;
                 if (rank == 0) printf("CPU %d, GPU %d <-> GPU %d:\t", proc, gpu0, gpu1);
@@ -137,31 +137,31 @@ void profile_device_to_device(int max_i, int n_tests)
                     if (rank == 0) printf("%e\t", max_time);
                 }
                 if (rank == 0) printf("\n");
-                cudaFree(gpu1_data);
+                gpuFree(gpu1_data);
             }
-            cudaFree(gpu0_data);
-            cudaStreamDestroy(proc_stream);
+            gpuFree(gpu0_data);
+            gpuStreamDestroy(proc_stream);
         }
     }
     if (rank == 0) printf("\n\n");
 }
 
 
-void profile_memcpy_mult(cudaMemcpyKind copy_kind, int max_i, int n_tests)
+void profile_memcpy_mult(gpuMemcpyKind copy_kind, int max_i, int n_tests)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_bytes = pow(2,max_i-1) * sizeof(float);
     int bytes, nt;
     double time, max_time;
     float* cpu_data;
     float* gpu_data;
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank,
@@ -174,10 +174,10 @@ void profile_memcpy_mult(cudaMemcpyKind copy_kind, int max_i, int n_tests)
     int gpu = node_rank / procs_per_gpu;
     int gpu_rank = node_rank % procs_per_gpu;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t proc_stream;
-    cudaStreamCreate(&proc_stream);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
+    gpuStream_t proc_stream;
+    gpuStreamCreate(&proc_stream);
     
     // Time HostToDevice Memcpy Async
     for (int np = 0; np < procs_per_gpu; np++)
@@ -200,11 +200,11 @@ void profile_memcpy_mult(cudaMemcpyKind copy_kind, int max_i, int n_tests)
         if (rank == 0) printf("\n");
     }
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(proc_stream);
+    gpuFree(gpu_data);
+    gpuStreamDestroy(proc_stream);
     
     if (rank == 0) printf("\n\n");
-    cudaFreeHost(cpu_data);
+    gpuFreeHost(cpu_data);
 }
 
 void profile_host_to_device_mult(int max_i, int n_tests)
@@ -214,7 +214,7 @@ void profile_host_to_device_mult(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     if (rank == 0) printf("Memcpy Host To Device Mult:\n");
-    profile_memcpy_mult(cudaMemcpyHostToDevice, max_i, n_tests);
+    profile_memcpy_mult(gpuMemcpyHostToDevice, max_i, n_tests);
 }
 void profile_device_to_host_mult(int max_i, int n_tests)
 {
@@ -223,7 +223,7 @@ void profile_device_to_host_mult(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     if (rank == 0) printf("Memcpy Device To Host Mult:\n");
-    profile_memcpy_mult(cudaMemcpyDeviceToHost, max_i, n_tests);
+    profile_memcpy_mult(gpuMemcpyDeviceToHost, max_i, n_tests);
 }
 
 

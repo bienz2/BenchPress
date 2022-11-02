@@ -3,18 +3,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
  
 # Create a variable called core_SOURCES containing all .cpp files:
 set(stats_HEADERS
-    stats/stats.h
+    stats/stats.hpp
     PARENT_SCOPE
     )
 
-if (USE_HIP)
-    set(stats_SOURCES
-        stats/stats_hip.cpp
-        PARENT_SCOPE
-        )
-else()
-    set(stats_SOURCES
-        stats/stats.cu
-        PARENT_SCOPE
-        )
-endif()
+set(stats_SOURCES
+    stats/stats.cpp
+    PARENT_SCOPE
+    )

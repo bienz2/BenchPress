@@ -21,7 +21,7 @@ void profile_ping_pong(int max_i, int n_tests)
     double time, max_time;
     bool active;
     
-    hipMallocHost((void**)&data, max_bytes);
+    gpuMallocHost((void**)&data, max_bytes);
 
     if (rank == 0) printf("Profiling Standard CPU Ping-Pongs:\n");
     for (int rank0 = 0; rank0 < node_size; rank0++)
@@ -44,7 +44,7 @@ void profile_ping_pong(int max_i, int n_tests)
     }
     if (rank == 0) printf("\n\n");
  
-    hipFreeHost(data);
+    gpuFreeHost(data);
 }
 
 #ifdef GPU_AWARE
@@ -55,7 +55,7 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* data;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
@@ -79,8 +79,8 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
         return;
     }
 
-    hipSetDevice(gpu);
-    hipMalloc((void**)&data, max_bytes);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&data, max_bytes);
 
     if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
@@ -103,7 +103,7 @@ void profile_ping_pong_gpu(int max_i, int n_tests)
     }
     if (rank == 0) printf("\n\n");
 
-    hipFree(data);
+    gpuFree(data);
 }
 #endif
 
@@ -114,7 +114,7 @@ void profile_ping_pong_3step(int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* gpu_data;
     float* cpu_data;
@@ -139,17 +139,17 @@ void profile_ping_pong_3step(int max_i, int n_tests)
         return;
     }
 
-    hipMallocHost((void**)&cpu_data, max_bytes);
-    hipSetDevice(gpu);
-    hipMalloc((void**)&gpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
 
     if (rank == 0) printf("Profiling GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
     {
         for (int rank1 = rank0+procs_per_gpu; rank1 < 2*node_size; rank1 += procs_per_gpu)
         {
-            hipStream_t proc_stream;
-            hipStreamCreate(&proc_stream);
+            gpuStream_t proc_stream;
+            gpuStreamCreate(&proc_stream);
 
             nt = n_tests;
             active = (rank == rank0 || rank == rank1);
@@ -164,13 +164,13 @@ void profile_ping_pong_3step(int max_i, int n_tests)
             }
             if (rank == 0) printf("\n");
             
-            hipStreamDestroy(proc_stream);
+            gpuStreamDestroy(proc_stream);
         }
     }
     if (rank == 0) printf("\n\n");
 
-    hipFree(gpu_data);
-    hipFreeHost(cpu_data);
+    gpuFree(gpu_data);
+    gpuFreeHost(cpu_data);
 }
 
 void profile_high_volume_ping_pong(int max_i, int n_tests, int n_msgs)
@@ -193,8 +193,8 @@ void profile_high_volume_ping_pong(int max_i, int n_tests, int n_msgs)
     double time, max_time;
     bool active;
     
-    hipMallocHost((void**)&data, max_bytes);
-    printf("after hip malloc host\n");
+    gpuMallocHost((void**)&data, max_bytes);
+    printf("after gpu malloc host\n");
 
     if (rank == 0) printf("Profiling High Volume CPU Ping-Pongs:\n");
     for (int rank0 = 0; rank0 < node_size; rank0++)
@@ -217,7 +217,7 @@ void profile_high_volume_ping_pong(int max_i, int n_tests, int n_msgs)
     }
     if (rank == 0) printf("\n\n");
  
-    hipFreeHost(data);
+    gpuFreeHost(data);
 }
 
 #ifdef GPU_AWARE
@@ -228,7 +228,7 @@ void profile_high_volume_ping_pong_gpu(int max_i, int n_tests, int n_msgs)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* data;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
@@ -252,8 +252,8 @@ void profile_high_volume_ping_pong_gpu(int max_i, int n_tests, int n_msgs)
         return;
     }
 
-    hipSetDevice(gpu);
-    hipMalloc((void**)&data, max_bytes);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&data, max_bytes);
 
     if (rank == 0) printf("Profiling High Volume GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
@@ -276,7 +276,7 @@ void profile_high_volume_ping_pong_gpu(int max_i, int n_tests, int n_msgs)
     }
     if (rank == 0) printf("\n\n");
 
-    hipFree(data);
+    gpuFree(data);
 }
 #endif
 
@@ -288,7 +288,7 @@ void profile_high_volume_ping_pong_3step(int max_i, int n_tests, int n_msgs)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* gpu_data;
     float* cpu_data;
@@ -313,17 +313,17 @@ void profile_high_volume_ping_pong_3step(int max_i, int n_tests, int n_msgs)
         return;
     }
 
-    hipMallocHost((void**)&cpu_data, max_bytes);
-    hipSetDevice(gpu);
-    hipMalloc((void**)&gpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
 
     if (rank == 0) printf("Profiling High Volume GPU Ping-Pongs\n");
     for (int rank0 = 0; rank0 < node_size; rank0 += procs_per_gpu)
     {
         for (int rank1 = rank0+procs_per_gpu; rank1 < 2*node_size; rank1 += procs_per_gpu)
         {
-            hipStream_t proc_stream;
-            hipStreamCreate(&proc_stream);
+            gpuStream_t proc_stream;
+            gpuStreamCreate(&proc_stream);
 
             nt = n_tests;
             active = (rank == rank0 || rank == rank1);
@@ -339,13 +339,13 @@ void profile_high_volume_ping_pong_3step(int max_i, int n_tests, int n_msgs)
             }
             if (rank == 0) printf("\n");
             
-            hipStreamDestroy(proc_stream);
+            gpuStreamDestroy(proc_stream);
         }
     }
     if (rank == 0) printf("\n\n");
 
-    hipFree(gpu_data);
-    hipFreeHost(cpu_data);
+    gpuFree(gpu_data);
+    gpuFreeHost(cpu_data);
 }
 
 // TODO -- Assumes SMP ordering
@@ -377,7 +377,7 @@ void profile_max_rate(bool split_data, int max_i, int n_tests)
         return;
     }
 
-    hipMallocHost((void**)&data, max_bytes);
+    gpuMallocHost((void**)&data, max_bytes);
 
     int master, partner;
     if ((rank / ppn) % 2 == 0)
@@ -415,7 +415,7 @@ void profile_max_rate(bool split_data, int max_i, int n_tests)
     }
     if (rank == 0) printf("\n\n");
 
-    hipFreeHost(data);
+    gpuFreeHost(data);
 }
 
 
@@ -429,7 +429,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
  
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* data;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
@@ -459,8 +459,8 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     if (node_rank % procs_per_gpu == 0)
     {
         gpu = node_rank / procs_per_gpu;
-        hipSetDevice(gpu);
-        hipMalloc((void**)&data, max_bytes);
+        gpuSetDevice(gpu);
+        gpuMalloc((void**)&data, max_bytes);
     }
 
     int master, partner;
@@ -499,7 +499,7 @@ void profile_max_rate_gpu(bool split_data, int max_i, int n_tests)
     if (rank == 0) printf("\n\n");
 
     if (node_rank % procs_per_gpu == 0)
-        hipFree(data);
+        gpuFree(data);
 }
 #endif 
 
@@ -534,7 +534,7 @@ void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
         return;
     }
 
-    hipMallocHost((void**)&data, max_bytes);
+    gpuMallocHost((void**)&data, max_bytes);
 
     // Rank 0 is master
     if (rank == 0) 
@@ -592,7 +592,7 @@ void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
         delete[] procs;
     }
 
-    hipFreeHost(data);
+    gpuFreeHost(data);
 }
 
 // ASSUMES SMP ORDERING
@@ -604,7 +604,7 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    hipGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     float* data = NULL;
     int max_bytes = pow(2, max_i - 1) * sizeof(float);
@@ -632,14 +632,14 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
         return;
     }
 
-    hipMalloc((void**)&data, max_bytes);
+    gpuMalloc((void**)&data, max_bytes);
 
     // Rank 0 is master rank for GPU 0
     int max_n_msgs = num_gpus * (num_nodes-1);
     if (rank == 0) 
     {
         gpu = 0;
-        hipSetDevice(gpu);
+        gpuSetDevice(gpu);
         master = true;
         n_msgs = max_n_msgs;
         procs = new int[n_msgs];
@@ -649,7 +649,7 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
     else if (node_rank % procs_per_gpu == 0 && rank >= ppn)
     {
         gpu = node_rank / procs_per_gpu;
-        hipSetDevice(gpu);
+        gpuSetDevice(gpu);
         n_msgs = 1;
         procs = new int[n_msgs];
         procs[0] = 0;
@@ -697,6 +697,6 @@ void profile_ping_pong_mult_gpu(int max_i, int n_tests, bool split_data)
     {
         delete[] procs;
     }
-    hipFree(data);
+    gpuFree(data);
 }
 #endif

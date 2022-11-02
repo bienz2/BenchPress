@@ -4,12 +4,13 @@ if (NOT USE_HIP)
     find_package(CUDAToolkit REQUIRED)
 endif(NOT USE_HIP)
 
+add_subdirectory(utils)
 add_subdirectory(collective)
 add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
 add_subdirectory(stats)
 
-add_library(heterobench heterobench.hpp 
+add_library(heterobench heterobench.hpp ${utils_HEADERS}
     ${collective_SOURCES} ${collective_HEADERS}
     ${memcpy_SOURCES} ${memcpy_HEADERS}
     ${ping_pong_SOURCES} ${ping_pong_HEADERS}
@@ -23,6 +24,7 @@ endif(NOT USE_HIP)
 
 install(TARGETS heterobench DESTINATION "lib")
 install(FILES heterobench.hpp DESTINATION "include/BenchPress")
+install(FILES ${utils_HEADERS} DESTINATION "include/BenchPress/utils")
 install(FILES ${collective_HEADERS} DESTINATION "include/BenchPress/collective") 
 install(FILES ${memcpy_HEADERS} DESTINATION "include/BenchPress/memcpy")
 install(FILES ${ping_pong_HEADERS} DESTINATION "include/BenchPress/ping_pong")

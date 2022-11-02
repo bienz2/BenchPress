@@ -1,61 +1,52 @@
-include_directories(${heterobench_INCDIR})
+include_directories(${benchpress_INCDIR})
 
 add_executable(time_memcpy time_memcpy.cpp)
-target_link_libraries(time_memcpy heterobench)
+target_link_libraries(time_memcpy benchpress)
 
 add_executable(time_memcpy_mult time_memcpy_mult.cpp)
-target_link_libraries(time_memcpy_mult heterobench)
+target_link_libraries(time_memcpy_mult benchpress)
 
 add_executable(time_allreduce time_allreduce.cpp)
-target_link_libraries(time_allreduce heterobench)
+target_link_libraries(time_allreduce benchpress)
 
 add_executable(time_alltoall time_alltoall.cpp)
-target_link_libraries(time_alltoall heterobench)
+target_link_libraries(time_alltoall benchpress)
 
 add_executable(time_alltoallv time_alltoallv.cpp)
-target_link_libraries(time_alltoallv heterobench)
+target_link_libraries(time_alltoallv benchpress)
 
 add_executable(time_allreduce_standard time_allreduce_standard.cpp)
-target_link_libraries(time_allreduce_standard heterobench)
+target_link_libraries(time_allreduce_standard benchpress)
 
 add_executable(time_ping_pong time_ping_pong.cpp)
-target_link_libraries(time_ping_pong heterobench)
+target_link_libraries(time_ping_pong benchpress)
 
 add_executable(time_ping_pong_3step time_ping_pong_3step.cpp)
-target_link_libraries(time_ping_pong_3step heterobench)
+target_link_libraries(time_ping_pong_3step benchpress)
 
 add_executable(time_ping_pong_cpu time_ping_pong_cpu.cpp)
-target_link_libraries(time_ping_pong_cpu heterobench)
+target_link_libraries(time_ping_pong_cpu benchpress)
 
 add_executable(time_ping_pong_gpu time_ping_pong_gpu.cpp)
-target_link_libraries(time_ping_pong_gpu heterobench)
-
-add_executable(time_hv_ping_pong_cpu time_hv_ping_pong_cpu.cpp)
-target_link_libraries(time_hv_ping_pong_cpu heterobench)
-
-add_executable(time_hv_ping_pong_gpu time_hv_ping_pong_gpu.cpp)
-target_link_libraries(time_hv_ping_pong_gpu heterobench)
-
-add_executable(time_hv_ping_pong_3step time_hv_ping_pong_3step.cpp)
-target_link_libraries(time_hv_ping_pong_3step heterobench)
+target_link_libraries(time_ping_pong_gpu benchpress)
 
 add_executable(time_maxrate time_maxrate.cpp)
-target_link_libraries(time_maxrate heterobench)
+target_link_libraries(time_maxrate benchpress)
 
 add_executable(time_mult_pong time_mult_pong.cpp)
-target_link_libraries(time_mult_pong heterobench)
+target_link_libraries(time_mult_pong benchpress)
 
 add_executable(time_mult_pong_split time_mult_pong_split.cpp)
-target_link_libraries(time_mult_pong_split heterobench)
+target_link_libraries(time_mult_pong_split benchpress)
 
 add_executable(time_node_pong time_node_pong.cpp)
-target_link_libraries(time_node_pong heterobench)
+target_link_libraries(time_node_pong benchpress)
 
 add_executable(time_node_pong_cpu time_node_pong_cpu.cpp)
-target_link_libraries(time_node_pong_cpu heterobench)
+target_link_libraries(time_node_pong_cpu benchpress)
 
 add_executable(time_node_pong_gpu time_node_pong_gpu.cpp)
-target_link_libraries(time_node_pong_gpu heterobench)
+target_link_libraries(time_node_pong_gpu benchpress)
 
 add_executable(output_run_parameters output_run_parameters.cpp)
-target_link_libraries(output_run_parameters heterobench)
+target_link_libraries(output_run_parameters benchpress)

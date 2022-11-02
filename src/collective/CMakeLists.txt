@@ -12,7 +12,7 @@ set(collective_HEADERS
     PARENT_SCOPE
     )
 
-set(collective_SOURCES)
+set(collective_SOURCES
     collective/allreduce_timer.cpp
     collective/alltoall_timer.cpp
     collective/alltoallv_timer.cpp

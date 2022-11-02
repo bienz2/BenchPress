@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // Include raptor
-#include "heterobench.hpp"
+#include "benchpress.hpp"
 
 // This is a basic use case.
 int main(int argc, char *argv[])

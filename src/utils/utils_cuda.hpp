@@ -1,3 +1,6 @@
+#ifndef UTILS_CUDA_HPP
+#define UTILS_CUDA_HPP
+
 // Devices
 #define gpuGetDeviceCount cudaGetDeviceCount
 #define gpuSetDevice cudaSetDevice
@@ -10,6 +13,7 @@
 
 // Error Handling
 #define gpuError cudaError
+#define gpuSuccess cudaSuccess
 #define gpuGetLastError cudaGetLastError
 
 // Memcpy
@@ -26,3 +30,6 @@
 // Synchronization
 #define gpuDeviceSynchronize cudaDeviceSynchronize
 #define gpuStreamSynchronize cudaStreamSynchronize
+
+
+#endif

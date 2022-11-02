@@ -1,4 +1,4 @@
-#include "alltoallv_timer.h"
+#include "alltoallv_timer.hpp"
 
 
 /*******************************************************************
@@ -87,7 +87,7 @@ double time_alltoallv(int size, float* gpu_send_data, float* gpu_recv_data, MPI_
     }
 
     // Warm Up
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -98,7 +98,7 @@ double time_alltoallv(int size, float* gpu_send_data, float* gpu_recv_data, MPI_
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -150,7 +150,7 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
     std::vector<MPI_Request> recv_req(num_procs);
 
     // Warm Up
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -162,7 +162,7 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -189,7 +189,7 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
  ***    gpu_data : float*
  ***        Data will original data on GPU, where received data will
  ***        be placed. (TODO : Currently overwrites GPU data)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which MPI\_Alltoallv is performed
@@ -200,7 +200,7 @@ double time_alltoallv_imsg(int size, float* gpu_send_data, float* gpu_recv_data,
  ***    performing an MPI\_Alltoallv operation on this data, in CPU memory.
 *******************************************************************/ 
 double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data,
-        float* gpu_data, cudaStream_t& stream, MPI_Comm& group_comm, int n_tests)
+        float* gpu_data, gpuStream_t& stream, MPI_Comm& group_comm, int n_tests)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -224,34 +224,34 @@ double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data
     if (size == 1 && rank == 0) printf("Nmsgs %d, Bytes %d\n", num_procs, bytes);
 
     // Warm Up
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoallv(cpu_send_data, send_sizes.data(), send_displs.data(), MPI_FLOAT,
                 cpu_recv_data, recv_sizes.data(), recv_displs.data(), MPI_FLOAT, group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoallv(cpu_send_data, send_sizes.data(), send_displs.data(), MPI_FLOAT,
                 cpu_recv_data, recv_sizes.data(), recv_displs.data(), MPI_FLOAT, group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
@@ -271,7 +271,7 @@ double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data
  ***    gpu_data : float*
  ***        Data will original data on GPU, where received data will
  ***        be placed. (TODO : Currently overwrites GPU data)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which send_recv is performed
@@ -282,7 +282,7 @@ double time_alltoallv_3step(int size, float* cpu_send_data, float* cpu_recv_data
  ***    performing a send_recv operation on this data, in CPU memory.
 *******************************************************************/ 
 double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
-        float* gpu_data, cudaStream_t& stream, MPI_Comm& group_comm, int n_tests)
+        float* gpu_data, gpuStream_t& stream, MPI_Comm& group_comm, int n_tests)
 {
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -303,36 +303,36 @@ double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv
     int bytes = total_size * sizeof(float);
 
     // Warm Up
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         send_recv(size, num_procs, send_procs.data(), recv_procs.data(), 
             send_req.data(), recv_req.data(), cpu_send_data, cpu_recv_data,
             group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         send_recv(size, num_procs, send_procs.data(), recv_procs.data(), 
             send_req.data(), recv_req.data(), cpu_send_data, cpu_recv_data,
             group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
@@ -358,7 +358,7 @@ double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv
  ***    node_rank : int
  ***        Local rank on node 
  ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which MPI\_Alltoallv is performed
@@ -370,7 +370,7 @@ double time_alltoallv_3step_imsg(int size, float* cpu_send_data, float* cpu_recv
  ***    performing an MPI\_Alltoallv operation on this data, in CPU memory.
 *******************************************************************/ 
 double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_data,
-       float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
+       float* gpu_data, int ppg, int node_rank, gpuStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
 {
     int rank, num_procs;
@@ -424,16 +424,16 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
     int nm, ctr, msg_size;
     
     // Warm Up 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
 
             ctr = n_msgs*size;
             for (int i = 1; i < ppg; i++)
@@ -467,8 +467,8 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
                        pong_tag, MPI_COMM_WORLD, &status);
                 ctr += msg_size;
             }
-            cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {
@@ -479,16 +479,16 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
     tfinal = (MPI_Wtime() - t0) / n_tests;
     
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
 
             ctr = n_msgs*size;
             for (int i = 1; i < ppg; i++)
@@ -522,8 +522,8 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
                        pong_tag, MPI_COMM_WORLD, &status);
                 ctr += msg_size;
             }
-            cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {
@@ -554,7 +554,7 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
  ***    node_rank : int
  ***        Local rank on node 
  ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which send_recv is performed
@@ -566,7 +566,7 @@ double time_alltoallv_3step_msg(int size, float* cpu_send_data, float* cpu_recv_
  ***    performing a send_recv operation on this data, in CPU memory.
 *******************************************************************/ 
 double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
-       float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
+       float* gpu_data, int ppg, int node_rank, gpuStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
 {
     int rank, num_procs;
@@ -609,16 +609,16 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
     int nm, ctr, msg_size;
     
     // Warm Up 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
 
             ctr = n_msgs*size;
             for (int i = 1; i < ppg; i++)
@@ -653,8 +653,8 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
                        pong_tag, MPI_COMM_WORLD, &status);
                 ctr += msg_size;
             }
-            cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {
@@ -665,16 +665,16 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
     tfinal = (MPI_Wtime() - t0) / n_tests;
     
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
 
             ctr = n_msgs*size;
             for (int i = 1; i < ppg; i++)
@@ -709,8 +709,8 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
                        pong_tag, MPI_COMM_WORLD, &status);
                 ctr += msg_size;
             }
-            cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {
@@ -741,7 +741,7 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
  ***    node_rank : int
  ***        Local rank on node 
  ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which MPI\_Alltoallv is performed
@@ -752,11 +752,11 @@ double time_alltoallv_3step_msg_imsg(int size, float* cpu_send_data, float* cpu_
  ***    directly to each available CPU core and performing an MPI\_Alltoallv
  ***    operation on this data, in CPU memory.  This does not include the cost
  ***    of sending the device pointer to other processes, as that has a one 
- ***    time cost at setup.   Each CPU core calls cudaMemcpyAsync on its
- ***    individual cudaStream.
+ ***    time cost at setup.   Each CPU core calls gpuMemcpyAsync on its
+ ***    individual gpuStream.
 *******************************************************************/ 
 double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_data,
-       float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
+       float* gpu_data, int ppg, int node_rank, gpuStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
 {
     int rank, num_procs;
@@ -804,34 +804,34 @@ double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_
     }
     
     // Warm Up 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoallv(cpu_send_data, send_sizes.data(), send_displs.data(), MPI_FLOAT,
                 cpu_recv_data, recv_sizes.data(), recv_displs.data(), MPI_FLOAT, group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
     
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoallv(cpu_send_data, send_sizes.data(), send_displs.data(), MPI_FLOAT,
                 cpu_recv_data, recv_sizes.data(), recv_displs.data(), MPI_FLOAT, group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
@@ -857,7 +857,7 @@ double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_
  ***    node_rank : int
  ***        Local rank on node 
  ***        (e.g. if rank is 50, PPN is 40, then node_rank is 10)
- ***    stream : cudaStream_t&
+ ***    stream : gpuStream_t&
  ***        Cuda Stream on which data is copied.  
  ***    group_comm : MPI_Comm
  ***        MPI_Communicator on which send_recv is performed
@@ -868,11 +868,11 @@ double time_alltoallv_3step_dup(int size, float* cpu_send_data, float* cpu_recv_
  ***    directly to each available CPU core and performing a send_recv
  ***    operation on this data, in CPU memory.  This does not include the cost
  ***    of sending the device pointer to other processes, as that has a one 
- ***    time cost at setup.   Each CPU core calls cudaMemcpyAsync on its
- ***    individual cudaStream.
+ ***    time cost at setup.   Each CPU core calls gpuMemcpyAsync on its
+ ***    individual gpuStream.
 *******************************************************************/ 
 double time_alltoallv_3step_dup_imsg(int size, float* cpu_send_data, float* cpu_recv_data,
-       float* gpu_data, int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
+       float* gpu_data, int ppg, int node_rank, gpuStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
 {
     int rank, num_procs;
@@ -909,36 +909,36 @@ double time_alltoallv_3step_dup_imsg(int size, float* cpu_send_data, float* cpu_
     }
     
     // Warm Up 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         send_recv(size, n_msgs, send_procs.data(), recv_procs.data(), 
             send_req.data(), recv_req.data(), cpu_send_data, cpu_recv_data,
             group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
     
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_send_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_send_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         send_recv(size, n_msgs, send_procs.data(), recv_procs.data(), 
             send_req.data(), recv_req.data(), cpu_send_data, cpu_recv_data,
             group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_recv_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_recv_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 

@@ -5,7 +5,9 @@
 // while EXPECT_* variants continue with the run.
 
 #include "gtest/gtest.h"
-#include "ping_pong/ping_pong_profiler.h"
+#include "ping_pong/ping_pong_profiler.hpp"
+#include "utils/utils.hpp"
+
 
 int main(int argc, char** argv)
 {

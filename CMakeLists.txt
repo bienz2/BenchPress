@@ -15,9 +15,9 @@ add_feature_info(gpu_aware GPU_AWARE "Run CUDA-Aware tests")
 add_feature_info(use_hip USE_HIP "Compile using HIP")
 
 if (USE_HIP)
-    project(heterobench LANGUAGES HIP CXX VERSION 0.1.0)
+    project(benchpress LANGUAGES HIP CXX VERSION 0.1.0)
 else()
-    project(heterobench LANGUAGES CUDA CXX VERSION 0.1.0)
+    project(benchpress LANGUAGES CUDA CXX VERSION 0.1.0)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -26,7 +26,7 @@ message("Add ${CMAKE_CURRENT_SOURCE_DIR}/plots/benchpress to PYTHONPATH in bash 
 
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-set(heterobench_INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(benchpress_INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 cmake_policy(SET CMP0104 OLD)
@@ -56,9 +56,11 @@ endif (GPU_AWARE)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
-if (NOT USE_HIP)
-    set(CMAKE_CUDA_FLAGS "-ccbin=mpicxx -arch=sm_70")
-endif (NOT USE_HIP)
+if (USE_HIP)
+    add_definitions(-DHIP)
+else()
+    set(CMAKE_CUDA_FLAGS "-ccbin=${MPICXX} -arch=sm_70")
+endif (USE_HIP)
 
 ##################### 
 ## GOOGLETEST      ##
@@ -80,10 +82,8 @@ enable_testing()
 
 add_subdirectory(src)
 
-if (USE_HIP)
-
-else()
-target_compile_options(heterobench PRIVATE
+if (NOT USE_HIP)
+target_compile_options(benchpress PRIVATE
     $<$<COMPILE_LANGUAGE:CUDA>: # Flags for CUDA Objects
     -lineinfo
     -Xcompiler -Wall
@@ -92,8 +92,8 @@ target_compile_options(heterobench PRIVATE
     -fno-omit-frame-pointer
     >
     )
-    set_property(TARGET heterobench PROPERTY CUDA_SEPARABLE_COMPILATION ON)
-endif(USE_HIP)
+    set_property(TARGET benchpress PROPERTY CUDA_SEPARABLE_COMPILATION ON)
+endif(NOT USE_HIP)
 
 
 if (BUILD_EXAMPLES)

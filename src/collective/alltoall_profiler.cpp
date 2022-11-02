@@ -1,5 +1,5 @@
-#include "alltoall_profiler.h"
-#include "alltoall_timer.h"
+#include "alltoall_profiler.hpp"
+#include "alltoall_timer.hpp"
 
 #ifdef GPU_AWARE
 void alltoall_profile_gpu_aware(int max_i)
@@ -9,7 +9,7 @@ void alltoall_profile_gpu_aware(int max_i)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
@@ -29,8 +29,8 @@ void alltoall_profile_gpu_aware(int max_i)
     int gpu = node_rank / ppg;
     int gpu_rank = node_rank % ppg;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
@@ -52,11 +52,11 @@ void alltoall_profile_gpu_aware(int max_i)
         if (rank == 0) printf("\n\n");
     }
 
-    cudaFree(gpu_data);
+    gpuFree(gpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    gpuError err = gpuGetLastError();
+    if ( gpuSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
@@ -71,14 +71,14 @@ void alltoall_profile_3step(int max_i)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
     double time, max_time;
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -93,10 +93,10 @@ void alltoall_profile_3step(int max_i)
     int gpu_rank = node_rank % ppg;
     int n_tests, size;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
+    gpuStream_t stream;
+    gpuStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
@@ -118,13 +118,13 @@ void alltoall_profile_3step(int max_i)
         if (rank == 0) printf("\n\n");
     }
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    gpuFree(gpu_data);
+    gpuStreamDestroy(stream);
+    gpuFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    gpuError err = gpuGetLastError();
+    if ( gpuSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
@@ -138,14 +138,14 @@ void alltoall_profile_3step_extra_msg(int max_i)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -161,10 +161,10 @@ void alltoall_profile_3step_extra_msg(int max_i)
     int n_tests, size;
     double time, max_time;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
+    gpuStream_t stream;
+    gpuStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
@@ -186,13 +186,13 @@ void alltoall_profile_3step_extra_msg(int max_i)
     if (rank == 0) printf("\n\n");
 
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    gpuFree(gpu_data);
+    gpuStreamDestroy(stream);
+    gpuFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    gpuError err = gpuGetLastError();
+    if ( gpuSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );
@@ -206,14 +206,14 @@ void alltoall_profile_3step_dup_devptr(int max_i)
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
     int num_gpus;
-    cudaGetDeviceCount(&num_gpus);
+    gpuGetDeviceCount(&num_gpus);
 
     int max_size = pow(2, max_i-1);
     int max_bytes = max_size * num_procs * sizeof(double);
     float* cpu_data;
     float* gpu_data;
 
-    cudaMallocHost((void**)&cpu_data, max_bytes);
+    gpuMallocHost((void**)&cpu_data, max_bytes);
 
     MPI_Comm node_comm;
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, rank, MPI_INFO_NULL,
@@ -229,10 +229,10 @@ void alltoall_profile_3step_dup_devptr(int max_i)
     int n_tests, size, msg_size;
     double time, max_time;
 
-    cudaSetDevice(gpu);
-    cudaMalloc((void**)&gpu_data, max_bytes);
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
+    gpuSetDevice(gpu);
+    gpuMalloc((void**)&gpu_data, max_bytes);
+    gpuStream_t stream;
+    gpuStreamCreate(&stream);
 
     MPI_Comm gpu_comm;
     MPI_Comm_split(MPI_COMM_WORLD, gpu_rank, rank, &gpu_comm);
@@ -257,13 +257,13 @@ void alltoall_profile_3step_dup_devptr(int max_i)
     }
     if (rank == 0) printf("\n\n");
 
-    cudaFree(gpu_data);
-    cudaStreamDestroy(stream);
-    cudaFreeHost(cpu_data);
+    gpuFree(gpu_data);
+    gpuStreamDestroy(stream);
+    gpuFreeHost(cpu_data);
     MPI_Comm_free(&gpu_comm);
 
-    cudaError err = cudaGetLastError();
-    if ( cudaSuccess != err )
+    gpuError err = gpuGetLastError();
+    if ( gpuSuccess != err )
     {
         printf("ERROR!\n");
         exit( -1 );

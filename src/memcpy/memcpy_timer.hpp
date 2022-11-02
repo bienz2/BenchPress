@@ -3,6 +3,8 @@
 #include <cmath>
 #include <vector>
 
+#include "utils/utils.hpp"
+
 #ifndef MEMCPY_TIMER_HPP
 #define MEMCPY_TIMER_HPP
 

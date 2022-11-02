@@ -1,4 +1,4 @@
-#include "alltoall_timer.h"
+#include "alltoall_timer.hpp"
 
 double time_alltoall(int size, float* gpu_data, MPI_Comm& group_comm,
         int n_tests)
@@ -9,7 +9,7 @@ double time_alltoall(int size, float* gpu_data, MPI_Comm& group_comm,
     double t0, tfinal;
 
     // Warm Up
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -20,7 +20,7 @@ double time_alltoall(int size, float* gpu_data, MPI_Comm& group_comm,
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
+    gpuDeviceSynchronize();
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
@@ -34,7 +34,7 @@ double time_alltoall(int size, float* gpu_data, MPI_Comm& group_comm,
 }
 
 double time_alltoall_3step(int size, float* cpu_data, float* gpu_data,
-        cudaStream_t& stream, MPI_Comm& group_comm, int n_tests)
+        gpuStream_t& stream, MPI_Comm& group_comm, int n_tests)
 {
     int num_procs;
     MPI_Comm_size(group_comm, &num_procs);
@@ -44,34 +44,34 @@ double time_alltoall_3step(int size, float* cpu_data, float* gpu_data,
     int bytes = total_size * sizeof(float);
 
     // Warm Up
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoall(MPI_IN_PLACE, size, MPI_FLOAT, cpu_data, size, MPI_FLOAT,
                 group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
-        cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+        gpuStreamSynchronize(stream);
         MPI_Alltoall(MPI_IN_PLACE, size, MPI_FLOAT, cpu_data, size, MPI_FLOAT,
                 group_comm);
-        cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-        cudaStreamSynchronize(stream);
+        gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+        gpuStreamSynchronize(stream);
     }
     tfinal = (MPI_Wtime() - t0) / n_tests;
 
@@ -79,7 +79,7 @@ double time_alltoall_3step(int size, float* cpu_data, float* gpu_data,
 }
 
 double time_alltoall_3step_msg(int size, float* cpu_data, float* gpu_data,
-       int ppg, int node_rank, cudaStream_t& stream, MPI_Comm& group_comm, 
+       int ppg, int node_rank, gpuStream_t& stream, MPI_Comm& group_comm, 
        int n_tests)
 {
     int rank, num_procs;
@@ -98,16 +98,16 @@ double time_alltoall_3step_msg(int size, float* cpu_data, float* gpu_data,
     MPI_Status status;
 
     // Warm Up 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
             for (int i = 1; i < ppg; i++)
             {
                 MPI_Send(&(cpu_data[msg_size*i]), msg_size, MPI_FLOAT, rank+i, 
@@ -130,8 +130,8 @@ double time_alltoall_3step_msg(int size, float* cpu_data, float* gpu_data,
                 MPI_Recv(&(cpu_data[msg_size*i]), msg_size, MPI_FLOAT, rank+i, 
                        pong_tag, MPI_COMM_WORLD, &status);
             }
-            cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {
@@ -142,16 +142,16 @@ double time_alltoall_3step_msg(int size, float* cpu_data, float* gpu_data,
     tfinal = (MPI_Wtime() - t0) / n_tests;
     
 
-    cudaDeviceSynchronize();
-    cudaStreamSynchronize(stream);
+    gpuDeviceSynchronize();
+    gpuStreamSynchronize(stream);
     MPI_Barrier(group_comm);
     t0 = MPI_Wtime();
     for (int i = 0; i < n_tests; i++)
     {
         if (master)
         {
-            cudaMemcpyAsync(cpu_data, gpu_data, bytes, cudaMemcpyDeviceToHost, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(cpu_data, gpu_data, bytes, gpuMemcpyDeviceToHost, stream);
+            gpuStreamSynchronize(stream);
             for (int i = 1; i < ppg; i++)
             {
                 MPI_Send(&(cpu_data[msg_size*i]), msg_size, MPI_FLOAT, rank+i, 
@@ -174,8 +174,8 @@ double time_alltoall_3step_msg(int size, float* cpu_data, float* gpu_data,
                 MPI_Recv(&(cpu_data[msg_size*i]), msg_size, MPI_FLOAT, rank+i, 
                        pong_tag, MPI_COMM_WORLD, &status);
             }
-            cudaMemcpyAsync(gpu_data, cpu_data, bytes, cudaMemcpyHostToDevice, stream);
-            cudaStreamSynchronize(stream);
+            gpuMemcpyAsync(gpu_data, cpu_data, bytes, gpuMemcpyHostToDevice, stream);
+            gpuStreamSynchronize(stream);
         }
         else
         {

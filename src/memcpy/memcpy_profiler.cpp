@@ -1,5 +1,5 @@
-#include "memcpy_profiler.h"
-#include "memcpy_timer.h"
+#include "memcpy_profiler.hpp"
+#include "memcpy_timer.hpp"
 
 void profile_memcpy(gpuMemcpyKind copy_kind, int max_i, int n_tests)
 {

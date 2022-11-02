@@ -10,7 +10,7 @@ add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
 add_subdirectory(stats)
 
-add_library(heterobench heterobench.hpp ${utils_HEADERS}
+add_library(benchpress benchpress.hpp ${utils_HEADERS}
     ${collective_SOURCES} ${collective_HEADERS}
     ${memcpy_SOURCES} ${memcpy_HEADERS}
     ${ping_pong_SOURCES} ${ping_pong_HEADERS}
@@ -18,12 +18,15 @@ add_library(heterobench heterobench.hpp ${utils_HEADERS}
     ${stats_SOURCES} ${stats_HEADERS}
 )
 
+target_link_libraries(benchpress ${MPI_LIBRARIES} ${EXTERNAL_LIBS})
+
 if (NOT USE_HIP)
-    target_link_libraries(heterobench ${MPI_LIBRARIES} CUDA::cudart ${EXTERNAL_LIBS})
+    target_link_libraries(benchpress CUDA::cudart)
 endif(NOT USE_HIP)
 
-install(TARGETS heterobench DESTINATION "lib")
-install(FILES heterobench.hpp DESTINATION "include/BenchPress")
+
+install(TARGETS benchpress DESTINATION "lib")
+install(FILES benchpress.hpp DESTINATION "include/BenchPress")
 install(FILES ${utils_HEADERS} DESTINATION "include/BenchPress/utils")
 install(FILES ${collective_HEADERS} DESTINATION "include/BenchPress/collective") 
 install(FILES ${memcpy_HEADERS} DESTINATION "include/BenchPress/memcpy")

@@ -1,4 +1,4 @@
-#include "stats.h"
+#include "stats.hpp"
 
 void print_program_stats()
 {

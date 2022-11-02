@@ -1,4 +1,4 @@
-#include "ping_pong_timer.h"
+#include "ping_pong_timer.hpp"
 
 double time_ping_pong(bool active, int rank0, int rank1, float* data, 
         int size, int n_tests)

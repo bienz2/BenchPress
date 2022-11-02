@@ -5,7 +5,8 @@
 // while EXPECT_* variants continue with the run.
 
 #include "gtest/gtest.h"
-#include "memcpy/memcpy_profiler.h"
+#include "memcpy/memcpy_profiler.hpp"
+#include "utils/utils.hpp"
 
 int main(int argc, char** argv)
 {

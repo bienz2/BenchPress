@@ -1,4 +1,4 @@
-#include "memcpy_timer.h"
+#include "memcpy_timer.hpp"
 
 double time_memcpy(int bytes, float* orig_x, float* dest_x,
         gpuMemcpyKind copy_kind, gpuStream_t stream, 

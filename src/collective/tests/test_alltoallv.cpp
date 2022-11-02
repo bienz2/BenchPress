@@ -5,7 +5,8 @@
 // while EXPECT_* variants continue with the run.
 
 #include "gtest/gtest.h"
-#include "collective/alltoallv_profiler.h"
+#include "collective/alltoallv_profiler.hpp"
+#include "utils/utils.hpp"
 
 int main(int argc, char** argv)
 {

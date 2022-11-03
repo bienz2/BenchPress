@@ -35,6 +35,7 @@ include(options)
 include(testing)
 include(source)
 
+set(ATDM_MPI_LIB "mpi_amd")
 set(MPICH_GPU_SUPPORT_ENABLED 1)
 include_directories($ENV{ROCM_PATH}/include)
 set(CMAKE_EXE_LINKER_FLAGS "-L$ENV{ROCM_PATH}/lib -Wl,-rpath,$ENV{ROCM_PATH}/lib -lamdhip64 -L$ENV{CRAY_MPICH_DIR}/lib -Wl,-rpath,$ENV{CRAY_MPICH_DIR}/lib -l$ENV{ATDM_MPI_LIB} -L$ENV{CRAY_MPICH_ROOTDIR}/gtl/lib -Wl,-rpath,$ENV{CRAY_MPICH_ROOTDIR}/gtl/lib -lmpi_gtl_hsa -L$ENV{ROCM_PATH}/llvm/lib/clang/15.0.0/lib/linux/ -lclang_rt.builtins-x86_64 -x none")

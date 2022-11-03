@@ -17,6 +17,14 @@ if 0:
     if 0:
         folder = "%s/benchmarks/%s/mvapich"%(benchpress_dir, computer)
         folder_out = "%s/figures/lassen/mvapich"%(benchpress_dir)
+n_socket = n_gpus / 2
+
+if 1:
+    computer = "tioga"
+    n_gpus = 8
+    folder = "%s/benchmarks/tioga"%(benchpress_dir)
+    folder_out = "%s/figures/tioga"%(benchpress_dir)
+n_socket = n_gpus
 
 max_ppn = 40
 cuda_aware = 1

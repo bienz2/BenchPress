@@ -6,9 +6,10 @@ from benchpress import prof
 n_nodes = 2
 ppn = prof.n_gpus
 n_procs = ppn*n_nodes
-n_socket = ppn / 2
+n_socket = prof.n_socket 
 
 files = glob.glob("%s/ping_pong.*.out"%prof.folder)
+print(files)
 
 class Times():
     on_socket = ""

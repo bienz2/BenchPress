@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     /* Timing Standard MPI\_Alltoallv() calls, with whatever implementation is included in MPI */
 
     // Time the cost of MPI\_Alltoallv(...) call on GPU Memory
-#ifdef CUDA_AWARE
+#ifdef GPU_AWARE
     alltoallv_profile_cuda_aware(max_i, false);
 #endif
 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
      */
 
     // Time the cost of MPI\_Isend, MPI\_Irecv, and MPI\_Waitall with all process pairs on GPU Memory
-#ifdef CUDA_AWARE
+#ifdef GPU_AWARE
     alltoallv_profile_cuda_aware(max_i, true);
 #endif
 

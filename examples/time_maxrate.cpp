@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     profile_max_rate(false, max_i, n_iter);
 
-#ifdef CUDA_AWARE
+#ifdef GPU_AWARE
     profile_max_rate_gpu(false, max_i, n_iter);
 #endif
 

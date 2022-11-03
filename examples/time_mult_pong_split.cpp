@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     profile_ping_pong_mult(max_i, n_iter, true);
 
-#ifdef CUDA_AWARE
+#ifdef GPU_AWARE
     profile_ping_pong_mult_gpu(max_i, n_iter, true);
 #endif
 

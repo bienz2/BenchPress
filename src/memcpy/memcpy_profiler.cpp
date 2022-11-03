@@ -9,6 +9,7 @@ void profile_memcpy(gpuMemcpyKind copy_kind, int max_i, int n_tests)
 
     int num_gpus;
     gpuGetDeviceCount(&num_gpus);
+    if (rank == 0) printf("Num GPUs %d\n", num_gpus);
 
     int max_bytes = pow(2,max_i-1) * sizeof(float);
     int bytes, nt;
@@ -25,6 +26,7 @@ void profile_memcpy(gpuMemcpyKind copy_kind, int max_i, int n_tests)
     MPI_Comm_size(node_comm, &node_size);
     MPI_Comm_free(&node_comm);
     int procs_per_gpu = node_size / num_gpus;
+    if (procs_per_gpu < 1) procs_per_gpu = 1;
 
     
     // Time HostToDevice Memcpy Async
@@ -106,6 +108,7 @@ void profile_device_to_device(int max_i, int n_tests)
     MPI_Comm_size(node_comm, &node_size);
     MPI_Comm_free(&node_comm);
     int procs_per_gpu = node_size / num_gpus;
+    if (procs_per_gpu < 1) procs_per_gpu = 1;
 
     
     for (int proc = 0; proc < node_size; proc += procs_per_gpu)

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     // Time the cost of MPI\_Alltoallv(...) call on GPU Memory
 #ifdef GPU_AWARE
-    alltoallv_profile_cuda_aware(max_i, false);
+    alltoallv_profile_gpu_aware(max_i, false);
 #endif
 
     // Time the cost of copying data to CPU and calling MPI\_Alltoallv(...) on CPU Memory
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     // Time the cost of MPI\_Isend, MPI\_Irecv, and MPI\_Waitall with all process pairs on GPU Memory
 #ifdef GPU_AWARE
-    alltoallv_profile_cuda_aware(max_i, true);
+    alltoallv_profile_gpu_aware(max_i, true);
 #endif
 
     // Time the cost of copying data to the CPU and

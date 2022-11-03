@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     if (argc > 2) n_iter = atoi(argv[2]);
 
 #ifdef GPU_AWARE
-    allreduce_profile_cuda_aware(max_i);
+    allreduce_profile_gpu_aware(max_i);
 #endif
 
     allreduce_profile_3step(max_i);

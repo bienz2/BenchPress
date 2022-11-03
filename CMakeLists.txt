@@ -35,6 +35,11 @@ include(options)
 include(testing)
 include(source)
 
+set(MPICH_GPU_SUPPORT_ENABLED 1)
+include_directories($ENV{ROCM_PATH}/include)
+set(CMAKE_EXE_LINKER_FLAGS "-L$ENV{ROCM_PATH}/lib -Wl,-rpath,$ENV{ROCM_PATH}/lib -lamdhip64 -L$ENV{CRAY_MPICH_DIR}/lib -Wl,-rpath,$ENV{CRAY_MPICH_DIR}/lib -l$ENV{ATDM_MPI_LIB} -L$ENV{CRAY_MPICH_ROOTDIR}/gtl/lib -Wl,-rpath,$ENV{CRAY_MPICH_ROOTDIR}/gtl/lib -lmpi_gtl_hsa -L$ENV{ROCM_PATH}/llvm/lib/clang/15.0.0/lib/linux/ -lclang_rt.builtins-x86_64 -x none")
+set(CMAKE_SHARED_LINKER_FLAGS "-x none")
+
 set(MPIRUN "mpirun" CACHE STRING "MPIRUN command")
 set(MPICXX "mpicxx" CACHE STRING "MPICXX command")
 
@@ -54,7 +59,7 @@ if (GPU_AWARE)
     add_definitions(-DGPU_AWARE)
 endif (GPU_AWARE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --rocm-path=$ROCM_PATH -D__HIP_PLATFORM_AMD__")
 
 if (USE_HIP)
     add_definitions(-DHIP)

@@ -1,15 +1,21 @@
 from benchpress import prof
-from benchpress.ping_pong import ping_pong, node_pong, mult_pong, mult_pong_split
+from benchpress.ping_pong import ping_pong, ping_pong_3step, node_pong, mult_pong, mult_pong_split
 import pyfancyplot.plot as plt
 
 def plot_cpu_ping_pong(display_plot=False):
     cpu_times = ping_pong.cpu_times
+    print(cpu_times.on_socket, cpu_times.on_node, cpu_times.network)
     plt.add_luke_options()
     plt.set_palette(palette="deep", n_colors = 3)
-    x_data = [2**i for i in range(len(cpu_times.on_node))]
-    plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
-    plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
-    plt.line_plot(cpu_times.network, x_data, label = "Network")
+    if len(cpu_times.on_socket) > 0:
+        x_data = [2**i for i in range(len(cpu_times.on_socket))]
+        plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
+    if len(cpu_times.on_node) > 0:
+        x_data = [2**i for i in range(len(cpu_times.on_node))]
+        plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
+    if len(cpu_times.network) > 0:
+        x_data = [2**i for i in range(len(cpu_times.network))]
+        plt.line_plot(cpu_times.network, x_data, label = "Network")
     plt.add_anchored_legend(ncol=3)
     plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
     plt.set_scale('log', 'log')
@@ -24,10 +30,21 @@ def plot_gpu_ping_pong(display_plot=False):
         gpu_times = ping_pong.gpu_times
         plt.add_luke_options()
         plt.set_palette(palette="deep", n_colors = 3)
-        x_data = [2**i for i in range(len(gpu_times.on_node))]
-        plt.line_plot(gpu_times.on_socket, x_data, label = "On-Socket")
-        plt.line_plot(gpu_times.on_node, x_data, label = "On-Node")
-        plt.line_plot(gpu_times.network, x_data, label = "Network")
+        if len(gpu_times.on_socket) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_socket))]
+            plt.line_plot(gpu_times.on_socket, x_data, label = "On-Socket")
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.on_node) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_node))]
+            plt.line_plot(gpu_times.on_node, x_data, label = "On-Node")
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.network) > 0:
+            x_data = [2**i for i in range(len(gpu_times.network))]
+            plt.line_plot(gpu_times.network, x_data, label = "Network")
+        else:
+            plt.color_ctr += 1
         plt.add_anchored_legend(ncol=3)
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
         plt.set_scale('log', 'log')
@@ -47,13 +64,38 @@ def plot_ping_pong_comparison(display_plot=False):
         plt.set_palette(palette="deep", n_colors = 3)
         x_data = [2**i for i in range(len(cpu_times.on_node))]
 
-        plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
-        plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
-        plt.line_plot(cpu_times.network, x_data, label = "Network")
+        if len(cpu_times.on_socket) > 0:
+            x_data = [2**i for i in range(len(cpu_times.on_socket))]
+            plt.line_plot(cpu_times.on_socket, x_data, label = "On-Socket")
+        else:
+            plt.color_ctr += 1
+        if len(cpu_times.on_node) > 0:
+            x_data = [2**i for i in range(len(cpu_times.on_node))]
+            plt.line_plot(cpu_times.on_node, x_data, label = "On-Node")
+        else:
+            plt.color_ctr += 1
+        if len(cpu_times.network) > 0:
+            x_data = [2**i for i in range(len(cpu_times.network))]
+            plt.line_plot(cpu_times.network, x_data, label = "Network")
+        else:
+            plt.color_ctr += 1
 
-        plt.line_plot(gpu_times.on_socket, x_data, tickmark='--')
-        plt.line_plot(gpu_times.on_node, x_data, tickmark='--')
-        plt.line_plot(gpu_times.network, x_data, tickmark='--')
+        if len(gpu_times.on_socket) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_socket))]
+            plt.line_plot(gpu_times.on_socket, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.on_node) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_node))]
+            plt.line_plot(gpu_times.on_node, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.network) > 0:
+            x_data = [2**i for i in range(len(gpu_times.network))]
+            plt.line_plot(gpu_times.network, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+
 
         plt.add_anchored_legend(ncol=3)
         plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
@@ -191,4 +233,54 @@ def plot_gpu_mult_pong(display_plot=False, constant_node_size=False):
             else:
                 plt.save_plot("%s/%s_gpu_mult_pong.pdf"%(prof.folder_out, prof.computer))
 
+
+def plot_gpu_aware_comparison(display_plot=False, constant_node_size=False):
+    if prof.cuda_aware:
+        gpu_times_3step = ping_pong_3step.gpu_times
+        gpu_times = ping_pong.gpu_times
+
+        plt.add_luke_options()
+        plt.set_palette(palette="deep", n_colors = 3)
+
+        if len(gpu_times_3step.on_socket) > 0:
+            x_data = [2**i for i in range(len(gpu_times_3step.on_socket))]
+            plt.line_plot(gpu_times_3step.on_socket, x_data, label = "On-Socket")
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times_3step.on_node) > 0:
+            x_data = [2**i for i in range(len(gpu_times_3step.on_node))]
+            plt.line_plot(gpu_times_3step.on_node, x_data, label = "On-Node")
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times_3step.network) > 0:
+            x_data = [2**i for i in range(len(gpu_times_3step.network))]
+            plt.line_plot(gpu_times_3step.network, x_data, label = "Network")
+        else:
+            plt.color_ctr += 1
+
+        if len(gpu_times.on_socket) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_socket))]
+            plt.line_plot(gpu_times.on_socket, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.on_node) > 0:
+            x_data = [2**i for i in range(len(gpu_times.on_node))]
+            plt.line_plot(gpu_times.on_node, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+        if len(gpu_times.network) > 0:
+            x_data = [2**i for i in range(len(gpu_times.network))]
+            plt.line_plot(gpu_times.network, x_data, tickmark='--')
+        else:
+            plt.color_ctr += 1
+
+
+        plt.add_anchored_legend(ncol=3)
+        plt.set_yticks([1e-7,1e-6,1e-5,1e-4,1e-3],['1e-7','1e-6','1e-5','1e-4','1e-3'])
+        plt.set_scale('log', 'log')
+        plt.add_labels("Message Size (Bytes)", "Measured Time (Seconds)")
+        if display_plot:
+            plt.display_plot()
+        else:
+            plt.save_plot("%s/%s_gpu_aware_compare.pdf"%(prof.folder_out, prof.computer))
 

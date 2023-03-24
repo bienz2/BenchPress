@@ -1,4 +1,7 @@
 include_directories(${benchpress_INCDIR})
+if(NOT USE_HIP)
+    set_source_files_properties(time_memcpy.cpp time_memcpy_mult.cpp time_allreduce.cpp time_alltoall.cpp time_alltoallv.cpp time_allreduce_standard.cpp time_ping_pong.cpp time_ping_pong_3step.cpp time_ping_pong_cpu.cpp time_ping_pong_gpu.cpp time_maxrate.cpp time_mult_pong.cpp time_mult_pong_split.cpp time_node_pong.cpp time_node_pong_cpu.cpp time_node_pong_gpu.cpp output_run_parameters.cpp PROPERTIES LANGUAGE CUDA)
+endif()
 
 add_executable(time_memcpy time_memcpy.cpp)
 target_link_libraries(time_memcpy benchpress)

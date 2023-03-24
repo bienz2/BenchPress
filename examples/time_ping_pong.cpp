@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-    int max_i = 18;
+    int max_i = 24;
     int n_iter = 1000;
 
     if (argc > 1) max_i = atoi(argv[1]);

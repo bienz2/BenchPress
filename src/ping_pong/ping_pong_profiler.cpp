@@ -359,7 +359,7 @@ void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
         return;
     }
 
-    gpuMallocHost((void**)&data, max_bytes);
+    gpuMallocHost((void**)&data, max_bytes * max_n);
 
     // Rank 0 is master
     if (rank == 0) 
@@ -392,9 +392,9 @@ void profile_ping_pong_mult(int max_i, int n_tests, bool split_data)
 
         if (rank == 0) printf("Size %d\t", size);
         if (i > 14) nt = n_tests / 10;
-        if (i > 20) nt = n_tests / 100;
         for (int n = 0; n < max_n; n++)
         {
+	    if (n > 15 || i > 20) nt = n_tests / 100;
             if (split_data)
                 s = size / (n+1);
             else s = size;

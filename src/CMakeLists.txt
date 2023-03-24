@@ -10,6 +10,10 @@ add_subdirectory(memcpy)
 add_subdirectory(ping_pong)
 add_subdirectory(stats)
 
+if(NOT USE_HIP)
+    set_source_files_properties(${collective_SOURCES} ${memcpy_SOURCES} ${ping_pong_SOURCES} ${spmv_SOURCES} ${stats_SOURCES} PROPERTIES LANGUAGE CUDA)
+endif()
+
 add_library(benchpress benchpress.hpp ${utils_HEADERS}
     ${collective_SOURCES} ${collective_HEADERS}
     ${memcpy_SOURCES} ${memcpy_HEADERS}

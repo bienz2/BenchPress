@@ -18,6 +18,7 @@
 
 // Memcpy
 #define gpuMemcpyAsync cudaMemcpyAsync
+#define gpuMemcpyKind cudaMemcpyKind
 #define gpuMemcpyDeviceToHost cudaMemcpyDeviceToHost
 #define gpuMemcpyHostToDevice cudaMemcpyHostToDevice
 #define gpuMemcpyDeviceToDevice cudaMemcpyDeviceToDevice
